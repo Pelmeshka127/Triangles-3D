@@ -14,6 +14,11 @@ inline bool IsEqual(double a, double b)
     return (std::abs(a - b) < Epsilon);
 }
 
+// inline bool IsValueBetween(double a, double b, double c)
+// {
+//     return 
+// }
+
 }
 
 #endif

@@ -1,26 +1,25 @@
-#include "Include/line.hpp"
+#include "Geometry/point.hpp"
+#include "Geometry/line.hpp"
 
 int main()
 {
-    Point p1(1,2,3);;
+    Point p1(0,0,0);
 
-    Vector v1(-4, 1, 2);
+    Point p2(2,0,0);
 
-    // Vector v2(4, 5, -3);
+    Point p3(0,-1,0);
 
-    // std::cout << &v1 << std::endl;
+    Point p4(0,1,0);
 
-    // std::cout << &v2 << std::endl;
+    LineSegment line1(p1, p2);
+    
+    LineSegment line2(p3, p4);
 
-    // Vector v = v1 + v2;
+    std::cout << line1.DoesLineSegmentIntersect(line1, line2) << std::endl;
 
-    // std::cout << &v << std::endl;
+    // std::cout << std::endl;
 
-    // v.PrintVector();
-
-    Line l(p1, v1);
-
-    l.PrintLine();
+    // std::cout <<(std::min(0, 0) <= 0 && 0 <= std::max(0,0)) <<std::endl;
 
     return 0;
 }

@@ -5,6 +5,8 @@
 
 #include "point.hpp"
 
+//-------------------------------------------------------------------------------//
+
 class Triangle 
 {
     private:
@@ -16,6 +18,10 @@ class Triangle
         Triangle(const Point &p1, const Point &p2, const Point &p3) : p1_{p1}, p2_{p2}, p3_{p3} {}
 
         ~Triangle() {}
+
+        void Dump() const;
 };
+
+//-------------------------------------------------------------------------------//
 
 #endif
