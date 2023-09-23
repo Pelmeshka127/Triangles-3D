@@ -1,11 +1,14 @@
-FLAGS = -std=c++17 -O0
+alltask: triangles
 
-OPT_FLAGS = -DNDEBUG -std=c++17 -O2
+FLAGS 	  	= -std=c++17 -O0 
 
-# alltask: triangles
+OPT_FLAGS 	= -DNDEBUG -std=c++17 -O2
 
-triangles: main.o point.o plane.o line.o vector.o triangle.o intersection.o
-	g++ obj/main.o obj/intersection.o obj/point.o obj/plane.o obj/line.o obj/vector.o obj/triangle.o $(FLAGS) -o triangles
+triangles: main.o point.o plane.o line.o vector.o triangle.o intersection.o double_numbers.o
+	g++ obj/main.o obj/point.o obj/plane.o obj/line.o obj/vector.o obj/triangle.o obj/intersection.o obj/double_numbers.o $(FLAGS) -o triangles
+
+# main.o: ./main.cpp ./Intersection/intersection.cpp ./Geometry/point.cpp ./Geometry/plane.cpp ./Geometry/line.cpp ./Geometry/vector.cpp ./Geometry/triangle.cpp ./MathLibs/double_numbers.cpp
+# 	g++ -c ./main.cpp ./Intersection/intersection.cpp ./Geometry/point.cpp ./Geometry/plane.cpp ./Geometry/line.cpp ./Geometry/vector.cpp ./Geometry/triangle.cpp ./MathLibs/double_numbers.cpp $(FLAGS) -o ./obj/main.o
 
 main.o: ./main.cpp
 	g++ -c ./main.cpp $(FLAGS) -o obj/main.o
@@ -27,3 +30,6 @@ vector.o: ./Geometry/vector.cpp
 
 triangle.o: ./Geometry/triangle.cpp
 	g++ -c ./Geometry/triangle.cpp $(FLAGS) -o obj/triangle.o
+
+double_numbers.o: ./MathLibs/double_numbers.cpp
+	g++ -c ./MathLibs/double_numbers.cpp $(FLAGS) -o obj/double_numbers.o

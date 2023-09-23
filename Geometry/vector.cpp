@@ -137,9 +137,11 @@ Vector Vector::CrossProductVector(const Vector &v1, const Vector &v2) const
 
 bool Vector::IsCollinear(const Vector &v1, const Vector &v2) const
 {
-    return double_numbers::IsEqual( v1.y_ * v2.z_ - v1.z_ * v2.y_ +
-                                    v1.z_ * v2.x_ - v1.x_ * v2.z_ +
-                                    v1.x_ * v2.y_ - v1.y_ * v2.x_, 0);
+    // return double_numbers::IsEqual( v1.y_ * v2.z_ - v1.z_ * v2.y_ +
+    //                                 v1.z_ * v2.x_ - v1.x_ * v2.z_ +
+    //                                 v1.x_ * v2.y_ - v1.y_ * v2.x_, 0);
+
+    return double_numbers::IsEqual(v1.CrossProductValue(v1, v2), 0);
 }
 
 //-------------------------------------------------------------------------------//

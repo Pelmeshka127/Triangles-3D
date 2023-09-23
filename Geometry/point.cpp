@@ -32,20 +32,20 @@ bool Point::IsEqual(const Point &point) const
 
 //-------------------------------------------------------------------------------//
 
-double Point::GetDistance(const Point &p1, const Point &p2) const
+double Point::GetDistance(const Point &point) const
 {
-    return (std::sqrt(  (p1.GetX() - p2.GetX()) * (p1.GetX() - p2.GetX()) +
-                        (p1.GetY() - p2.GetY()) * (p1.GetY() - p2.GetY()) +
-                        (p1.GetZ() - p2.GetZ()) * (p1.GetZ() - p2.GetZ())   ));
+    return (std::sqrt(  (x_ - point.x_) * (x_ - point.x_) +
+                        (y_ - point.y_) * (y_ - point.y_) +
+                        (z_ - point.z_) * (z_ - point.z_)  ));
 }
 
 //-------------------------------------------------------------------------------//
 
-double Point::CrossProductValue(const Point &p1, const Point &p2) const
+double Point::CrossProductValue(const Point &point) const
 {
-    double first_value  = p1.y_ * p2.z_ - p1.z_ * p2.y_;
-    double second_value = p1.z_ * p2.x_ - p1.x_ * p2.z_;
-    double third_value  = p1.x_ * p2.y_ - p1.y_ * p2.x_;
+    double first_value  = y_ * point.z_ - z_ * point.y_;
+    double second_value = z_ * point.x_ - x_ * point.z_;
+    double third_value  = x_ * point.y_ - y_ * point.x_;
 
     return first_value + second_value + third_value;
 }

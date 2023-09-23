@@ -2,6 +2,7 @@
 #define INTERSECTION_HPP_
 
 #include "../Geometry/point.hpp"
+#include "../Geometry/plane.hpp"
 
 double  Direction(const Point& p1, const Point& p2, const Point& p3);
 

@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "point.hpp"
+#include "plane.hpp"
+#include "line.hpp"
 
 //-------------------------------------------------------------------------------//
 
@@ -14,12 +16,24 @@ class Triangle
         const Point p2_;
         const Point p3_;
 
+        const Segment l1_;
+        const Segment l2_;
+        const Segment l3_;
+
+        const Plane triangle_plane_;
+
     public:
-        Triangle(const Point &p1, const Point &p2, const Point &p3) : p1_{p1}, p2_{p2}, p3_{p3} {}
+        Triangle(const Point &p1, const Point &p2, const Point &p3) : p1_{p1}, p2_{p2}, p3_{p3}, 
+            l1_{Segment(p1, p2)}, l2_{Segment(p2, p3)}, l3_{Segment(p3, p1)},
+            triangle_plane_{Plane(p1, p2, p3)} {}
 
         ~Triangle() {}
 
-        void Dump() const;
+        bool TrianglesIntersect(const Triangle& triangle) const;
+
+        bool CoplanarTrianglesIntersect(const Triangle& triangle) const;
+
+        void TriangleDump() const;
 };
 
 //-------------------------------------------------------------------------------//

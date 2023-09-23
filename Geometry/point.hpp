@@ -28,9 +28,9 @@ class Point
 
         bool    IsEqual(const Point &point) const;
         
-        double  GetDistance(const Point &p1, const Point &p2) const;
+        double  GetDistance(const Point &point) const;
 
-        double  CrossProductValue(const Point &p1, const Point &p2) const;
+        double  CrossProductValue(const Point &Point) const;
 
 
         Point   operator=(const Point p) const;

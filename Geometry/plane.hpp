@@ -28,7 +28,11 @@ class Plane
 
         ~Plane() {}
 
-        void Dump() const;
+        bool ArePlanesParallel(const Plane& plane) const;
+
+        bool ArePlanesEqual(const Plane& plane) const;
+
+        void PlaneDump() const;
 }; 
 
 //-------------------------------------------------------------------------------//

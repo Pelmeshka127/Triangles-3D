@@ -13,7 +13,7 @@
 
 //-------------------------------------------------------------------------------//
 
-class LineSegment
+class Segment
 {
     private:
         const Point FirstPoint_;
@@ -22,13 +22,13 @@ class LineSegment
 
     public:
 
-        LineSegment(const Point &p1, const Point &p2) : FirstPoint_{p1}, SecondPoint_{p2} {}
+        Segment(const Point &p1, const Point &p2) : FirstPoint_{p1}, SecondPoint_{p2} {}
 
-        ~LineSegment() {}
+        ~Segment() {}
 
-        bool DoesLineSegmentIntersect(const LineSegment &l1, const LineSegment &l2) const;
+        bool IsSegmentIntersect(const Segment &line) const;
 
-        // void PrintLineSegment() const;
+        void PrintSegment() const;
 };
 
 //-------------------------------------------------------------------------------//
