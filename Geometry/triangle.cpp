@@ -16,10 +16,20 @@ bool Triangle::TrianglesIntersect(const Triangle& triangle) const
 
 bool Triangle::CoplanarTrianglesIntersect(const Triangle& triangle) const
 {
+    // std::cout << l1_.IsSegmentIntersect(triangle.l1_) << std::endl; 
+    // std::cout << l1_.IsSegmentIntersect(triangle.l2_) << std::endl; 
+    // std::cout << l1_.IsSegmentIntersect(triangle.l3_) << std::endl;
+    // std::cout << l2_.IsSegmentIntersect(triangle.l2_) << std::endl; 
+    // std::cout << l2_.IsSegmentIntersect(triangle.l2_) << std::endl; 
+    // std::cout << l2_.IsSegmentIntersect(triangle.l3_) << std::endl;
+    // std::cout << l3_.IsSegmentIntersect(triangle.l1_) << std::endl; 
+    // std::cout << l3_.IsSegmentIntersect(triangle.l2_) << std::endl; 
+    // std::cout << l3_.IsSegmentIntersect(triangle.l3_) << std::endl;
+
     if (l1_.IsSegmentIntersect(triangle.l1_) || 
         l1_.IsSegmentIntersect(triangle.l2_) || 
         l1_.IsSegmentIntersect(triangle.l3_) ||
-        l2_.IsSegmentIntersect(triangle.l2_) || 
+        l2_.IsSegmentIntersect(triangle.l1_) || 
         l2_.IsSegmentIntersect(triangle.l2_) || 
         l2_.IsSegmentIntersect(triangle.l3_) ||
         l3_.IsSegmentIntersect(triangle.l1_) || 
