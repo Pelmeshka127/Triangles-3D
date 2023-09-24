@@ -28,9 +28,14 @@ class Point
 
         bool    IsEqual(const Point &point) const;
         
+        double  MinCoordinate(const Point& p1, const Point& p2, const int coordinate) const;
+
+        double  MaxCoordinate(const Point& p1, const Point& p2, const int coordinate) const;
+        
         double  GetDistance(const Point &point) const;
 
         double  CrossProductValue(const Point &Point) const;
+
 
 
         Point   operator=(const Point p) const;

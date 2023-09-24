@@ -1,6 +1,8 @@
 #include "intersection.hpp"
 #include "../Geometry/vector.hpp"
 
+//-------------------------------------------------------------------------------//
+
 double Direction(const Point& p1, const Point& p2, const Point& p3)
 {
     Vector v1(p1, p2);
@@ -9,6 +11,8 @@ double Direction(const Point& p1, const Point& p2, const Point& p3)
 
     return v1.CrossProductValue(v1, v2);
 }
+
+//-------------------------------------------------------------------------------//
 
 bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3)
 {
@@ -26,3 +30,5 @@ bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3)
             std::min(p1.GetY(), p2.GetY()) <= p3.GetY() && p3.GetY() <= std::max(p1.GetY(), p2.GetY()) &&
             std::min(p1.GetZ(), p2.GetZ()) <= p3.GetZ() && p3.GetZ() <= std::max(p1.GetZ(), p2.GetZ()) );
 }
+
+//-------------------------------------------------------------------------------//

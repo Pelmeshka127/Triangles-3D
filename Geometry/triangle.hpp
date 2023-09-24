@@ -33,6 +33,8 @@ class Triangle
 
         bool CoplanarTrianglesIntersect(const Triangle& triangle) const;
 
+        bool IsPointInTriangle(const Point& point) const;
+
         void TriangleDump() const;
 };
 

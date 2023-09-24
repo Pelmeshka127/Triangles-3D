@@ -8,17 +8,17 @@ int main()
 {
     std::clock_t start = clock();
 
-    Point p1(0,0,0);
+    Point p1(0,-3,0);
 
     Point p2(2,0,0);
 
-    Point p3(0,-1,0);
+    Point p3(-3,0,0);
 
-    Point a1(3,3,0);
+    Point a1(0,4,0);
 
-    Point a2(5,1,0);
+    Point a2(3,0,0);
 
-    Point a3(2,0,0);
+    Point a3(-2,0,0);
 
     // Segment l1(p1, p2);
 
