@@ -6,8 +6,18 @@
 bool Triangle::TrianglesIntersect(const Triangle& triangle) const
 {
     if (triangle_plane_.ArePlanesEqual(triangle.triangle_plane_))
+    {
+        std::cout << "Triangles are coplanar" << std::endl;
         return CoplanarTrianglesIntersect(triangle);
+    }
 
+    if (triangle.triangle_plane_.AllDistancesHaveOneSign(p1_, p2_, p3_))
+    {
+        std::cout << "All distances from T1 points to P2 have one sign" << std::endl;
+        return false;
+    }
+
+    std::cout << "Variant that haven't been done" << std::endl;
     return false;
 }
 
@@ -15,16 +25,6 @@ bool Triangle::TrianglesIntersect(const Triangle& triangle) const
 
 bool Triangle::CoplanarTrianglesIntersect(const Triangle& triangle) const
 {
-    // std::cout << l1_.IsSegmentIntersect(triangle.l1_) << std::endl; 
-    // std::cout << l1_.IsSegmentIntersect(triangle.l2_) << std::endl; 
-    // std::cout << l1_.IsSegmentIntersect(triangle.l3_) << std::endl;
-    // std::cout << l2_.IsSegmentIntersect(triangle.l2_) << std::endl; 
-    // std::cout << l2_.IsSegmentIntersect(triangle.l2_) << std::endl; 
-    // std::cout << l2_.IsSegmentIntersect(triangle.l3_) << std::endl;
-    // std::cout << l3_.IsSegmentIntersect(triangle.l1_) << std::endl; 
-    // std::cout << l3_.IsSegmentIntersect(triangle.l2_) << std::endl; 
-    // std::cout << l3_.IsSegmentIntersect(triangle.l3_) << std::endl;
-
     // Проверка всех отрезков одного треугольника на пересечние
     // Со всеми отрезками другого треугольника
 
@@ -36,7 +36,7 @@ bool Triangle::CoplanarTrianglesIntersect(const Triangle& triangle) const
         l2_.IsSegmentIntersect(triangle.l3_) ||
         l3_.IsSegmentIntersect(triangle.l1_) || 
         l3_.IsSegmentIntersect(triangle.l2_) || 
-        l3_.IsSegmentIntersect(triangle.l3_)   ) 
+        l3_.IsSegmentIntersect(triangle.l3_)  ) 
     {
         return true;
     }
@@ -44,7 +44,7 @@ bool Triangle::CoplanarTrianglesIntersect(const Triangle& triangle) const
     // Достаточно проверить одну точку каждого треугольника 
     // Чтобы понять не находится ли один треугольник внутри другого
 
-    else if (IsPointInTriangle(triangle.p1_) || triangle.IsPointInTriangle(p1_))
+    else if (IsPointBetweenPoints(triangle.p1_) || triangle.IsPointBetweenPoints(p1_))
         return true;
 
 
@@ -53,26 +53,8 @@ bool Triangle::CoplanarTrianglesIntersect(const Triangle& triangle) const
 
 //-------------------------------------------------------------------------------//
 
-bool Triangle::IsPointInTriangle(const Point& point) const
+bool Triangle::IsPointBetweenPoints(const Point& point) const
 {
-    // std::cout << "MAX and MIN\n";
-    // std::cout << p1_.MinCoordinate(p2_, p3_, cords::X) << std::endl;
-    // std::cout << point.GetX() << std::endl;
-    // std::cout << p1_.MaxCoordinate(p2_, p3_, cords::X) << std::endl;
-    // std::cout <<std::endl;
-    // std::cout << p1_.MinCoordinate(p2_, p3_, cords::Y) << std::endl;
-    // std::cout << point.GetY() << std::endl;
-    // std::cout << p1_.MaxCoordinate(p2_, p3_, cords::Y) << std::endl;
-    // std::cout << std::endl;
-    // std::cout << p1_.MinCoordinate(p2_, p3_, cords::Z) << std::endl;
-    // std::cout << point.GetZ() << std::endl;
-    // std::cout << p1_.MaxCoordinate(p2_, p3_, cords::Z) << std::endl;
-    // std::cout << "END MAX AND MIN\n";
-
-    // std::cout << (p1_.MinCoordinate(p2_, p3_, cords::X) < point.GetX() < p1_.MaxCoordinate(p2_, p3_, cords::X) &&
-    //             p1_.MinCoordinate(p2_, p3_, cords::Y) < point.GetY() < p1_.MaxCoordinate(p2_, p3_, cords::Y) &&
-    //             p1_.MinCoordinate(p2_, p3_, cords::Z) < point.GetZ() < p1_.MaxCoordinate(p2_, p3_, cords::Z)) << std::endl;
-    
     return (p1_.MinCoordinate(p2_, p3_, cords::X) <= point.GetX() && point.GetX() <= p1_.MaxCoordinate(p2_, p3_, cords::X) &&
             p1_.MinCoordinate(p2_, p3_, cords::Y) <= point.GetY() && point.GetY() <= p1_.MaxCoordinate(p2_, p3_, cords::Y) &&
             p1_.MinCoordinate(p2_, p3_, cords::Z) <= point.GetZ() && point.GetZ() <= p1_.MaxCoordinate(p2_, p3_, cords::Z));

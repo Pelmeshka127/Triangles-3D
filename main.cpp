@@ -10,23 +10,15 @@ int main()
 
     Point p1(0,-3,0);
 
-    Point p2(2,0,0);
+    Point p2(2,0,-2);
 
     Point p3(-3,0,0);
 
-    Point a1(0,4,0);
+    Point a1(0,4,1);
 
-    Point a2(3,0,0);
+    Point a2(3,0,1);
 
-    Point a3(-2,0,0);
-
-    // Segment l1(p1, p2);
-
-    // Segment l2(a1, a3);
-
-    // bool res = l1.IsSegmentIntersect(l2);
-
-    // std::cout << "Lines intersection " << res << std::endl;
+    Point a3(-2,0,1);
     
     Triangle Triangle1(p1, p2, p3);
 

@@ -29,13 +29,13 @@ class Triangle
 
         ~Triangle() {}
 
-        bool TrianglesIntersect(const Triangle& triangle) const;
+        bool    TrianglesIntersect(const Triangle& triangle) const;
 
-        bool CoplanarTrianglesIntersect(const Triangle& triangle) const;
+        bool    CoplanarTrianglesIntersect(const Triangle& triangle) const;
 
-        bool IsPointInTriangle(const Point& point) const;
+        bool    IsPointBetweenPoints(const Point& point) const;
 
-        void TriangleDump() const;
+        void    TriangleDump() const;
 };
 
 //-------------------------------------------------------------------------------//

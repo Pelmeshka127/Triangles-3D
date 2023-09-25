@@ -28,11 +28,15 @@ class Plane
 
         ~Plane() {}
 
-        bool ArePlanesParallel(const Plane& plane) const;
+        bool    ArePlanesParallel(const Plane& plane)           const;
 
-        bool ArePlanesEqual(const Plane& plane) const;
+        bool    ArePlanesEqual(const Plane& plane)              const;
 
-        void PlaneDump() const;
+        double  DistanceFromPointToPlane(const Point& point)    const;
+
+        bool    AllDistancesHaveOneSign(const Point& p1, const Point& p2, const Point &p3) const;
+
+        void    PlaneDump()                                     const;
 }; 
 
 //-------------------------------------------------------------------------------//
