@@ -20,11 +20,11 @@ class Point
 
         ~Point() {}
 
-        double  GetX() const;
+        double  X() const;
         
-        double  GetY() const;
+        double  Y() const;
         
-        double  GetZ() const;
+        double  Z() const;
 
         bool    IsEqual(const Point &point) const;
         

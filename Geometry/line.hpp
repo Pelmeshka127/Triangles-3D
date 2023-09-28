@@ -5,7 +5,7 @@
 #include <cmath>
 
 #include "point.hpp"
-#include "../Intersection/intersection.hpp"
+#include "vector.hpp"
 
 // (x - x1) / (x1 - x2) = (y - y1) / (y1 - y2) = (z - z1) / (z - z2)
 
@@ -21,8 +21,14 @@ class Segment
         const Point SecondPoint_;
 
     public:
+        // Segment() {}
 
         Segment(const Point &p1, const Point &p2) : FirstPoint_{p1}, SecondPoint_{p2} {}
+
+        // Segment(const Point &point, const Vector& direct_vector) : FirstPoint_{point}, 
+        // SecondPoint_{
+        //     Point(point.GetX() + direct_vector.)
+        // } {}
 
         ~Segment() {}
 

@@ -2,6 +2,27 @@
 
 //-------------------------------------------------------------------------------//
 
+double Vector::X() const
+{
+    return x_;
+}
+
+//-------------------------------------------------------------------------------//
+
+double Vector::Y() const
+{
+    return y_;
+}
+
+//-------------------------------------------------------------------------------//
+
+double Vector::Z() const
+{
+    return z_;
+}
+
+//-------------------------------------------------------------------------------//
+
 bool Vector::IsNullVector(const Vector &v1) const
 {
     return (double_numbers::IsEqual(v1.x_, 0) &&
@@ -63,7 +84,7 @@ Vector Vector::operator-(const Vector &v) const
 
 //-------------------------------------------------------------------------------//
 
-Vector& Vector::operator*=(const int &number)
+Vector& Vector::operator*=(const float &number)
 {
     x_ *= number;
     y_ *= number;
@@ -74,7 +95,7 @@ Vector& Vector::operator*=(const int &number)
 
 //-------------------------------------------------------------------------------//
 
-Vector Vector::operator*(const int &number) const
+Vector Vector::operator*(const float &number) const
 {
     return Vector(x_ * number, y_ * number, z_ * number);
 }
@@ -97,7 +118,7 @@ double Vector::Length() const
 
 //-------------------------------------------------------------------------------//
 
-double Vector::ScalarProduct(const Vector &v1, const Vector &v2) const
+double Vector::DotProduct(const Vector &v1, const Vector &v2) const
 {
     return (v1.x_ * v2.x_ + v1.y_ * v2.y_ + v1.z_ * v2.z_);
 }
@@ -106,7 +127,7 @@ double Vector::ScalarProduct(const Vector &v1, const Vector &v2) const
 
 bool Vector::IsOrthogonal(const Vector &v1, const Vector &v2) const
 {
-    return (double_numbers::IsEqual(ScalarProduct(v1, v2), 0));
+    return (double_numbers::IsEqual(DotProduct(v1, v2), 0));
 }
 
 //-------------------------------------------------------------------------------//
@@ -148,7 +169,7 @@ bool Vector::IsCollinear(const Vector &v1, const Vector &v2) const
 
 double Vector::MixedProduct(const Vector &v1, const Vector &v2, const Vector &v3) const
 {
-    return (ScalarProduct(v1, CrossProductVector(v2, v3)));
+    return (DotProduct(v1, CrossProductVector(v2, v3)));
 }
 
 //-------------------------------------------------------------------------------//

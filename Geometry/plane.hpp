@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "point.hpp"
+#include "vector.hpp"
 
 // Ax + By + Cz + D = 0 //
 
@@ -18,23 +19,35 @@ class Plane
         const double C_;
         const double D_;
 
+        const Point  plane_point_; // рандомная точка, лежащая в плоскости
+
+        const Vector normal_vector_;
+
     public:
         Plane(const Point& p1, const Point& p2, const Point& p3) :
-            A_{(p2.GetY() - p1.GetY()) * (p3.GetZ() - p1.GetZ()) - (p3.GetY() - p1.GetY()) * (p2.GetZ() - p1.GetZ())},
-            B_{(p2.GetZ() - p1.GetZ()) * (p3.GetX() - p1.GetX()) - (p3.GetZ() - p1.GetZ()) * (p2.GetX() - p1.GetX())},
-            C_{(p2.GetX() - p1.GetX()) * (p3.GetY() - p1.GetY()) - (p3.GetX() - p1.GetX()) * (p2.GetY() - p1.GetY())},
-            D_{-1 * (p1.GetX() * A_ + p1.GetY() * B_ + p1.GetZ() * C_)}
+            A_{(p2.Y() - p1.Y()) * (p3.Z() - p1.Z()) - (p3.Y() - p1.Y()) * (p2.Z() - p1.Z())},
+            B_{(p2.Z() - p1.Z()) * (p3.X() - p1.X()) - (p3.Z() - p1.Z()) * (p2.X() - p1.X())},
+            C_{(p2.X() - p1.X()) * (p3.Y() - p1.Y()) - (p3.X() - p1.X()) * (p2.Y() - p1.Y())},
+            D_{-1 * (p1.X() * A_ + p1.Y() * B_ + p1.Z() * C_)},
+            plane_point_{p1},
+            normal_vector_{A_, B_, C_}
             {}
 
         ~Plane() {}
 
+        double  A()  const;
+
+        double  B()  const;
+        
+        double  C()  const;
+
+        double  D()  const;
+
+        Vector  n()  const;
+
         bool    ArePlanesParallel(const Plane& plane)           const;
 
         bool    ArePlanesEqual(const Plane& plane)              const;
-
-        double  DistanceFromPointToPlane(const Point& point)    const;
-
-        bool    AllDistancesHaveOneSign(const Point& p1, const Point& p2, const Point &p3) const;
 
         void    PlaneDump()                                     const;
 }; 

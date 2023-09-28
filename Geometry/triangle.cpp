@@ -1,5 +1,6 @@
 #include "triangle.hpp"
 #include "../MathLibs/coordinates.hpp"
+#include "../Intersection/intersection.hpp"
 
 //-------------------------------------------------------------------------------//
 
@@ -11,11 +12,14 @@ bool Triangle::TrianglesIntersect(const Triangle& triangle) const
         return CoplanarTrianglesIntersect(triangle);
     }
 
-    if (triangle.triangle_plane_.AllDistancesHaveOneSign(p1_, p2_, p3_))
+    if (DistancesFromPointsToPlaneHaveOneSign(triangle.triangle_plane_, p1_, p2_, p3_) ||
+        DistancesFromPointsToPlaneHaveOneSign(triangle_plane_, triangle.p1_, triangle.p2_, triangle.p3_))
     {
         std::cout << "All distances from T1 points to P2 have one sign" << std::endl;
         return false;
     }
+
+    SegmentOfPlanesIntersection(triangle_plane_, triangle.triangle_plane_);
 
     std::cout << "Variant that haven't been done" << std::endl;
     return false;
@@ -44,7 +48,7 @@ bool Triangle::CoplanarTrianglesIntersect(const Triangle& triangle) const
     // Достаточно проверить одну точку каждого треугольника 
     // Чтобы понять не находится ли один треугольник внутри другого
 
-    else if (IsPointBetweenPoints(triangle.p1_) || triangle.IsPointBetweenPoints(p1_))
+    else if (IsPointInTriangle(triangle.p1_) || triangle.IsPointInTriangle(p1_))
         return true;
 
 
@@ -53,11 +57,11 @@ bool Triangle::CoplanarTrianglesIntersect(const Triangle& triangle) const
 
 //-------------------------------------------------------------------------------//
 
-bool Triangle::IsPointBetweenPoints(const Point& point) const
+bool Triangle::IsPointInTriangle(const Point& point) const
 {
-    return (p1_.MinCoordinate(p2_, p3_, cords::X) <= point.GetX() && point.GetX() <= p1_.MaxCoordinate(p2_, p3_, cords::X) &&
-            p1_.MinCoordinate(p2_, p3_, cords::Y) <= point.GetY() && point.GetY() <= p1_.MaxCoordinate(p2_, p3_, cords::Y) &&
-            p1_.MinCoordinate(p2_, p3_, cords::Z) <= point.GetZ() && point.GetZ() <= p1_.MaxCoordinate(p2_, p3_, cords::Z));
+    return (p1_.MinCoordinate(p2_, p3_, cords::X) <= point.X() && point.X() <= p1_.MaxCoordinate(p2_, p3_, cords::X) &&
+            p1_.MinCoordinate(p2_, p3_, cords::Y) <= point.Y() && point.Y() <= p1_.MaxCoordinate(p2_, p3_, cords::Y) &&
+            p1_.MinCoordinate(p2_, p3_, cords::Z) <= point.Z() && point.Z() <= p1_.MaxCoordinate(p2_, p3_, cords::Z));
 }
 
 //-------------------------------------------------------------------------------//

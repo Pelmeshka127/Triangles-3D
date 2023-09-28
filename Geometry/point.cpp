@@ -3,21 +3,21 @@
 
 //-------------------------------------------------------------------------------//
 
-double Point::GetX() const
+double Point::X() const
 {
     return x_;
 }
 
 //-------------------------------------------------------------------------------//
 
-double Point::GetY() const
+double Point::Y() const
 {
     return y_;
 }
 
 //-------------------------------------------------------------------------------//
 
-double Point::GetZ() const
+double Point::Z() const
 {
     return z_;
 }
