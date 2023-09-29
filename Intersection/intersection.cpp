@@ -20,6 +20,8 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
         return false;        
     }
 
+    SegmentOfPlanesIntersection(t1.GetTrianglePlane(), t2.GetTrianglePlane());
+
     return false;
 }
 
@@ -119,6 +121,26 @@ bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3)
 
 //-------------------------------------------------------------------------------//
 
+bool DistancesFromPointsToPlaneHaveOneSign(const Plane& plane, const Point&p1, const Point& p2, const Point& p3)
+{
+    std::cout << "\nThe distances from points to plane:" << std::endl;
+    std::cout << DistanceFromPointToPlane(plane, p1) << std::endl;
+    std::cout << DistanceFromPointToPlane(plane, p2) << std::endl;
+    std::cout << DistanceFromPointToPlane(plane, p3) << std::endl;
+    std::cout << "End of distances\n\n";
+
+    if (DistanceFromPointToPlane(plane, p1) > 0 && DistanceFromPointToPlane(plane, p2) > 0 &&
+        DistanceFromPointToPlane(plane, p3) > 0 || DistanceFromPointToPlane(plane, p1) < 0 &&
+        DistanceFromPointToPlane(plane, p2) < 0 && DistanceFromPointToPlane(plane, p3) < 0)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
 double DistanceFromPointToPlane(const Plane& plane, const Point& point)
 {
     using namespace double_numbers;
@@ -143,26 +165,6 @@ double DistanceFromPointToPlane(const Plane& plane, const Point& point)
 }
 
 //-------------------------------------------------------------------------------//
- 
-bool DistancesFromPointsToPlaneHaveOneSign(const Plane& plane, const Point&p1, const Point& p2, const Point& p3)
-{
-    std::cout << "\nThe distances from points to plane:" << std::endl;
-    std::cout << DistanceFromPointToPlane(plane, p1) << std::endl;
-    std::cout << DistanceFromPointToPlane(plane, p2) << std::endl;
-    std::cout << DistanceFromPointToPlane(plane, p3) << std::endl;
-    std::cout << "End of distances\n\n";
-
-    if (DistanceFromPointToPlane(plane, p1) > 0 && DistanceFromPointToPlane(plane, p2) > 0 &&
-        DistanceFromPointToPlane(plane, p3) > 0 || DistanceFromPointToPlane(plane, p1) < 0 &&
-        DistanceFromPointToPlane(plane, p2) < 0 && DistanceFromPointToPlane(plane, p3) < 0)
-    {
-        return true;
-    }
-
-    return false;
-}
-
-//-------------------------------------------------------------------------------//
 
 Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2)
 {
@@ -176,9 +178,9 @@ Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2)
     std::cout << "Direct ";
     direct_vector.PrintVector();
 
-    double s1 = p1.D();
+    double s1 = -p1.D();
     
-    double s2 = p2.D();
+    double s2 = -p2.D();
 
     double n1_n2_dot = p1.n().DotProduct(p1.n(), p2.n());
 

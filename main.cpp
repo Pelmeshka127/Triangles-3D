@@ -9,13 +9,13 @@ int main()
 {
     std::clock_t start = clock();
 
-    Point p1(0,1, 1);
+    Point p1(0,0, 1);
 
     Point p2(-1,2,1);
 
-    Point p3(-1, 1, 1);
+    Point p3(-1, 0, 1);
 
-    Point a1(0,2,1);
+    Point a1(0,2,2);
 
     Point a2(1,0,1);
 
