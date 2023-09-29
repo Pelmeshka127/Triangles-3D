@@ -2,6 +2,93 @@
 
 //-------------------------------------------------------------------------------//
 
+bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
+{
+    if (t1.GetTrianglePlane().ArePlanesEqual(t2.GetTrianglePlane()))
+    {
+        std::cout << "Coplanar triangles" << std::endl;
+        return CoplanarTrianglesIntersection(t1, t2);
+    }
+
+    if (DistancesFromPointsToPlaneHaveOneSign(
+        t1.GetTrianglePlane(), t2.GetFirstPoint(), t2.GetSecondPoint(), t2.GetThirdPoint()) ||
+        DistancesFromPointsToPlaneHaveOneSign(
+        t2.GetTrianglePlane(), t1.GetFirstPoint(), t1.GetSecondPoint(), t1.GetThirdPoint()
+        ))
+    {
+        std::cout << "All distances from T1 points to P2 have one sign" << std::endl;
+        return false;        
+    }
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
+{
+    // Проверка всех отрезков одного треугольника на пересечние
+    // Со всеми отрезками другого треугольника
+
+    if (AreSegmentsIntersect (t1.GetFirstLine(),  t2.GetFirstLine() )  || 
+        AreSegmentsIntersect (t1.GetFirstLine(),  t2.GetSecondLine())  || 
+        AreSegmentsIntersect (t1.GetFirstLine(),  t2.GetThirdLine() )  ||
+        AreSegmentsIntersect (t1.GetSecondLine(), t2.GetFirstLine() )  || 
+        AreSegmentsIntersect (t1.GetSecondLine(), t2.GetSecondLine())  || 
+        AreSegmentsIntersect (t1.GetSecondLine(), t2.GetThirdLine() )  ||
+        AreSegmentsIntersect (t1.GetThirdLine(),  t2.GetFirstLine() )  || 
+        AreSegmentsIntersect (t1.GetThirdLine(),  t2.GetSecondLine())  || 
+        AreSegmentsIntersect (t1.GetThirdLine(),  t2.GetThirdLine() )  ) 
+    {
+        return true;
+    }
+
+    // Достаточно проверить одну точку каждого треугольника 
+    // Чтобы понять не находится ли один треугольник внутри другого
+
+    else if (t1.IsPointInTriangle(t2.GetFirstPoint()) || t2.IsPointInTriangle(t1.GetFirstPoint()))
+        return true;
+
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool AreSegmentsIntersect(const Segment& l1, const Segment& l2)
+{
+    double drc1 = Direction(l2.GetFirstPoint(), l2.GetSecondPoint(), l1.GetFirstPoint() );
+    // std::cout << drc1 << std::endl;
+    
+    double drc2 = Direction(l2.GetFirstPoint(), l2.GetSecondPoint(), l1.GetSecondPoint());
+    // std::cout << drc2 << std::endl;
+    
+    double drc3 = Direction(l1.GetFirstPoint(), l1.GetSecondPoint(), l2.GetFirstPoint() );
+    // std::cout << drc3 << std::endl;
+    
+    double drc4 = Direction(l1.GetFirstPoint(), l1.GetSecondPoint(), l2.GetSecondPoint());
+    // std::cout << drc4 << std::endl;
+
+    if ((drc1 * drc2 < 0) && (drc3 * drc4 < 0))
+        return true;
+
+    else if (drc1 == 0 && IsOnSegment(l2.GetFirstPoint(), l2.GetSecondPoint(), l1.GetFirstPoint()))
+        return true;
+
+    else if (drc2 == 0 && IsOnSegment(l2.GetFirstPoint(), l2.GetSecondPoint(), l1.GetSecondPoint()))
+        return true;
+
+    else if (drc3 == 0 && IsOnSegment(l1.GetFirstPoint(), l1.GetSecondPoint(), l2.GetFirstPoint()))
+        return true;
+
+    else if (drc4 == 0 && IsOnSegment(l1.GetFirstPoint(), l1.GetSecondPoint(), l2.GetSecondPoint()))
+        return true;
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
 double Direction(const Point& p1, const Point& p2, const Point& p3)
 {
     Vector v1(p1, p2);

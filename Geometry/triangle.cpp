@@ -4,55 +4,51 @@
 
 //-------------------------------------------------------------------------------//
 
-bool Triangle::TrianglesIntersect(const Triangle& triangle) const
+Point Triangle::GetFirstPoint() const
 {
-    if (triangle_plane_.ArePlanesEqual(triangle.triangle_plane_))
-    {
-        std::cout << "Triangles are coplanar" << std::endl;
-        return CoplanarTrianglesIntersect(triangle);
-    }
-
-    if (DistancesFromPointsToPlaneHaveOneSign(triangle.triangle_plane_, p1_, p2_, p3_) ||
-        DistancesFromPointsToPlaneHaveOneSign(triangle_plane_, triangle.p1_, triangle.p2_, triangle.p3_))
-    {
-        std::cout << "All distances from T1 points to P2 have one sign" << std::endl;
-        return false;
-    }
-
-    SegmentOfPlanesIntersection(triangle_plane_, triangle.triangle_plane_);
-
-    std::cout << "Variant that haven't been done" << std::endl;
-    return false;
+    return p1_;
 }
 
 //-------------------------------------------------------------------------------//
 
-bool Triangle::CoplanarTrianglesIntersect(const Triangle& triangle) const
+Point Triangle::GetSecondPoint() const
 {
-    // Проверка всех отрезков одного треугольника на пересечние
-    // Со всеми отрезками другого треугольника
+    return p2_;
+}
 
-    if (l1_.IsSegmentIntersect(triangle.l1_) || 
-        l1_.IsSegmentIntersect(triangle.l2_) || 
-        l1_.IsSegmentIntersect(triangle.l3_) ||
-        l2_.IsSegmentIntersect(triangle.l1_) || 
-        l2_.IsSegmentIntersect(triangle.l2_) || 
-        l2_.IsSegmentIntersect(triangle.l3_) ||
-        l3_.IsSegmentIntersect(triangle.l1_) || 
-        l3_.IsSegmentIntersect(triangle.l2_) || 
-        l3_.IsSegmentIntersect(triangle.l3_)  ) 
-    {
-        return true;
-    }
+//-------------------------------------------------------------------------------//
 
-    // Достаточно проверить одну точку каждого треугольника 
-    // Чтобы понять не находится ли один треугольник внутри другого
+Point Triangle::GetThirdPoint() const
+{
+    return p3_;
+}
 
-    else if (IsPointInTriangle(triangle.p1_) || triangle.IsPointInTriangle(p1_))
-        return true;
+//-------------------------------------------------------------------------------//
 
+Segment Triangle::GetFirstLine() const
+{
+    return l1_;
+}
 
-    return false;
+//-------------------------------------------------------------------------------//
+
+Segment Triangle::GetSecondLine() const
+{
+    return l2_;
+}
+
+//-------------------------------------------------------------------------------//
+
+Segment Triangle::GetThirdLine() const
+{
+    return l3_;
+}
+
+//-------------------------------------------------------------------------------//
+
+Plane Triangle::GetTrianglePlane() const
+{
+    return triangle_plane_;
 }
 
 //-------------------------------------------------------------------------------//

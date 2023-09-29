@@ -29,9 +29,19 @@ class Triangle
 
         ~Triangle() {}
 
-        bool    TrianglesIntersect(const Triangle& triangle) const;
+        Point   GetFirstPoint() const;
 
-        bool    CoplanarTrianglesIntersect(const Triangle& triangle) const;
+        Point   GetSecondPoint() const;
+
+        Point   GetThirdPoint() const;
+
+        Segment GetFirstLine()  const;
+
+        Segment GetSecondLine() const;
+
+        Segment GetThirdLine()  const;
+
+        Plane   GetTrianglePlane()  const;
 
         bool    IsPointInTriangle(const Point& point) const;
 

@@ -3,6 +3,7 @@
 #include "Geometry/point.hpp"
 #include "Geometry/line.hpp"
 #include "Geometry/triangle.hpp"
+#include "Intersection/intersection.hpp"
 
 int main()
 {
@@ -14,11 +15,11 @@ int main()
 
     Point p3(-1, 1, 1);
 
-    Point a1(0,0,2);
+    Point a1(0,2,1);
 
-    Point a2(1,0,0);
+    Point a2(1,0,1);
 
-    Point a3(-2,0,0);
+    Point a3(-2,0,1);
     
     Triangle Triangle1(p1, p2, p3);
 
@@ -28,7 +29,7 @@ int main()
 
     Triangle2.TriangleDump();
 
-    std::cout << Triangle1.TrianglesIntersect(Triangle2) << std::endl;
+    std::cout << TriangleIntersection(Triangle1, Triangle2) << std::endl;
 
     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 

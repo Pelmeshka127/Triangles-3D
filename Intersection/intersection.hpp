@@ -5,6 +5,7 @@
 #include "../Geometry/plane.hpp"
 #include "../Geometry/vector.hpp"
 #include "../Geometry/line.hpp"
+#include "../Geometry/triangle.hpp"
 
 
 //-------------------------------------------------------------------------------//
@@ -29,11 +30,15 @@ Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2);
 
 //-------------------------------------------------------------------------------//
 
-bool CoplanarTriangleIntersection(const Triangle& t1, const Triangle& t2);
+bool TriangleIntersection(const Triangle& t1, const Triangle& t2);
 
 //-------------------------------------------------------------------------------//
 
+bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2);
 
+//-------------------------------------------------------------------------------//
+
+bool AreSegmentsIntersect(const Segment& l1, const Segment& l2);
 
 //-------------------------------------------------------------------------------//
 

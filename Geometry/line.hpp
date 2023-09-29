@@ -21,18 +21,13 @@ class Segment
         const Point SecondPoint_;
 
     public:
-        // Segment() {}
-
         Segment(const Point &p1, const Point &p2) : FirstPoint_{p1}, SecondPoint_{p2} {}
-
-        // Segment(const Point &point, const Vector& direct_vector) : FirstPoint_{point}, 
-        // SecondPoint_{
-        //     Point(point.GetX() + direct_vector.)
-        // } {}
 
         ~Segment() {}
 
-        bool IsSegmentIntersect(const Segment &line) const;
+        Point GetFirstPoint() const;
+
+        Point GetSecondPoint() const;
 
         void PrintSegment() const;
 };
