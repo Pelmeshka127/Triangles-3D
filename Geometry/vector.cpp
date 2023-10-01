@@ -102,6 +102,13 @@ Vector Vector::operator*(const float &number) const
 
 //-------------------------------------------------------------------------------//
 
+double Vector::operator*(const Point& point) const
+{
+    return (x_ * point.X() + y_ * point.Y() + z_ * point.Z());
+}
+
+//-------------------------------------------------------------------------------//
+
 bool Vector::operator==(const Vector &v) const
 {
     return (double_numbers::IsEqual(x_, v.x_) &&
@@ -115,6 +122,13 @@ double Vector::Length() const
 {
     return (std::sqrt(x_ * x_ + y_ * y_ + z_ * z_));
 }
+
+//-------------------------------------------------------------------------------//
+
+// double Vector::DotProduct(const Vector& v, const Point& p) const
+// {
+//     return (v.x_ * p.X() + v.y_ * p.Y() + v.z_ * p.Z());
+// }
 
 //-------------------------------------------------------------------------------//
 

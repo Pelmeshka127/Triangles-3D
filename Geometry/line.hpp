@@ -20,14 +20,27 @@ class Segment
         
         const Point SecondPoint_;
 
+        const Vector DirectionVector_;
+
     public:
-        Segment(const Point &p1, const Point &p2) : FirstPoint_{p1}, SecondPoint_{p2} {}
+        Segment(const Point &p1, const Point &p2) : 
+        FirstPoint_{p1}, SecondPoint_{p2},
+        DirectionVector_{p2.X() - p1.X(), p2.Y() - p1.Y(), p2.Z() - p1.Z()} {}
+
+        Segment(const Point& p, const Vector& v) : 
+        FirstPoint_{p}, DirectionVector_{v},
+        SecondPoint_{p.X() + v.X(), p.Y() + v.Y(), p.Z() + v.Z()} {}
+
+        Segment(const Point& p1, const Point& p2, const Vector& v) :
+        FirstPoint_{p1}, SecondPoint_{p2}, DirectionVector_{v} {}
 
         ~Segment() {}
 
-        Point GetFirstPoint() const;
+        Point   FirstPoint() const;
 
-        Point GetSecondPoint() const;
+        Point   SecondPoint() const;
+
+        Vector  DirectionVector() const;
 
         void PrintSegment() const;
 };

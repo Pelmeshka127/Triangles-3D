@@ -4,49 +4,49 @@
 
 //-------------------------------------------------------------------------------//
 
-Point Triangle::GetFirstPoint() const
+Point Triangle::FirstPoint() const
 {
     return p1_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Point Triangle::GetSecondPoint() const
+Point Triangle::SecondPoint() const
 {
     return p2_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Point Triangle::GetThirdPoint() const
+Point Triangle::ThirdPoint() const
 {
     return p3_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Segment Triangle::GetFirstLine() const
+Segment Triangle::FirstLine() const
 {
     return l1_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Segment Triangle::GetSecondLine() const
+Segment Triangle::SecondLine() const
 {
     return l2_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Segment Triangle::GetThirdLine() const
+Segment Triangle::ThirdLine() const
 {
     return l3_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Plane Triangle::GetTrianglePlane() const
+Plane Triangle::TrianglePlane() const
 {
     return triangle_plane_;
 }
@@ -74,13 +74,13 @@ void Triangle::TriangleDump() const
     
     p3_.PrintPoint();
 
-    std::cout << "The line segments of triangle are:" << std::endl;
+    // std::cout << "The line segments of triangle are:" << std::endl;
 
-    l1_.PrintSegment();
+    // l1_.PrintSegment();
 
-    l2_.PrintSegment();
+    // l2_.PrintSegment();
 
-    l3_.PrintSegment();
+    // l3_.PrintSegment();
 
     std::cout << "Plane equation of the triangle" << std::endl;
     

@@ -3,16 +3,23 @@
 
 //-------------------------------------------------------------------------------//
 
-Point Segment::GetFirstPoint() const
+Point Segment::FirstPoint() const
 {
     return FirstPoint_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Point Segment::GetSecondPoint() const
+Point Segment::SecondPoint() const
 {
     return SecondPoint_;
+}
+
+//-------------------------------------------------------------------------------//
+
+Vector Segment::DirectionVector() const
+{
+    return DirectionVector_;
 }
 
 //-------------------------------------------------------------------------------//

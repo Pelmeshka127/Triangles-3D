@@ -29,19 +29,19 @@ class Triangle
 
         ~Triangle() {}
 
-        Point   GetFirstPoint() const;
+        Point   FirstPoint() const;
 
-        Point   GetSecondPoint() const;
+        Point   SecondPoint() const;
 
-        Point   GetThirdPoint() const;
+        Point   ThirdPoint() const;
 
-        Segment GetFirstLine()  const;
+        Segment FirstLine()  const;
 
-        Segment GetSecondLine() const;
+        Segment SecondLine() const;
 
-        Segment GetThirdLine()  const;
+        Segment ThirdLine()  const;
 
-        Plane   GetTrianglePlane()  const;
+        Plane   TrianglePlane()  const;
 
         bool    IsPointInTriangle(const Point& point) const;
 

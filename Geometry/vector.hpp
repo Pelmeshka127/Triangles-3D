@@ -52,12 +52,16 @@ class Vector
 
         Vector  operator*(const float &number) const;
 
+        double  operator*(const Point& point) const;
+
         bool    operator==(const Vector &v) const;
 
 
         double  Length() const;
 
         double  DotProduct(const Vector &v1, const Vector &v2) const;
+
+        // double  DotProduct(const Vector& v, const Point& p) const;
 
         bool    IsOrthogonal(const Vector &v1, const Vector &v2) const;
 

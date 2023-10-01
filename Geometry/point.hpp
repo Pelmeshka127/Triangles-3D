@@ -11,9 +11,9 @@
 class Point 
 {
     private:
-        const double x_;
-        const double y_;
-        const double z_;
+        double x_;
+        double y_;
+        double z_;
 
     public:
         Point(double x = NAN, double y = NAN, double z = NAN) : x_{x}, y_{y}, z_{z} {}
@@ -40,9 +40,17 @@ class Point
 
         Point   operator=(const Point p) const;
 
-        Point   operator-(const Point &p) const;
+        Point   operator-(const Point& p) const;
 
-        Point   operator+(const Point &p) const;
+        Point   operator+(const Point& p) const;
+
+        Point&  operator*=(const Point& p);
+
+        Point   operator*(const Point& p) const;
+
+        // Point&  operator*=(const Vector& v);
+
+        // Point   operator*(const Vector& v) const;
 
 
         void    PrintPoint() const;

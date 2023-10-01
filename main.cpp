@@ -5,11 +5,13 @@
 #include "Geometry/triangle.hpp"
 #include "Intersection/intersection.hpp"
 
+#include <vector>
+
 int main()
 {
     std::clock_t start = clock();
 
-    Point p1(0,0, 1);
+    Point p1(-0.5,0, 1);
 
     Point p2(-1,2,1);
 
@@ -19,7 +21,7 @@ int main()
 
     Point a2(1,0,1);
 
-    Point a3(-2,0,1);
+    Point a3(0,0,1);
     
     Triangle Triangle1(p1, p2, p3);
 
@@ -30,6 +32,12 @@ int main()
     Triangle2.TriangleDump();
 
     std::cout << TriangleIntersection(Triangle1, Triangle2) << std::endl;
+
+    // std::vector<int> v1{1,2,3};
+
+    // std::vector<int> v2{3,4,5};
+
+    // int d = v1 * v2;
 
     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 
