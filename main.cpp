@@ -11,15 +11,15 @@ int main()
 {
     std::clock_t start = clock();
 
-    Point p1(-0.5,0, 1);
+    Point p1(0,-1,0);
 
-    Point p2(-1,2,1);
+    Point p2(1,-1,0);
 
-    Point p3(-1, 0, 1);
+    Point p3(0,1,0);
 
-    Point a1(0,2,2);
+    Point a1(0,0,0);
 
-    Point a2(1,0,1);
+    Point a2(2,0,1);
 
     Point a3(0,0,1);
     

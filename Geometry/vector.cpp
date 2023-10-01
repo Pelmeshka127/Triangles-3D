@@ -118,6 +118,13 @@ bool Vector::operator==(const Vector &v) const
 
 //-------------------------------------------------------------------------------//
 
+Point Vector::operator+(const Point& p) const
+{
+    return Point(x_ + p.X(), y_ + p.Y(), z_ + p.Z());
+}
+
+//-------------------------------------------------------------------------------//
+
 double Vector::Length() const
 {
     return (std::sqrt(x_ * x_ + y_ * y_ + z_ * z_));

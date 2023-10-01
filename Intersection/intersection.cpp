@@ -138,11 +138,11 @@ bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3)
 
 bool DistancesFromPointsToPlaneHaveOneSign(const Plane& plane, const Point&p1, const Point& p2, const Point& p3)
 {
-    std::cout << "\nThe distances from points to plane:" << std::endl;
-    std::cout << DistanceFromPointToPlane(plane, p1) << std::endl;
-    std::cout << DistanceFromPointToPlane(plane, p2) << std::endl;
-    std::cout << DistanceFromPointToPlane(plane, p3) << std::endl;
-    std::cout << "End of distances\n\n";
+    // std::cout << "\nThe distances from points to plane:" << std::endl;
+    // std::cout << DistanceFromPointToPlane(plane, p1) << std::endl;
+    // std::cout << DistanceFromPointToPlane(plane, p2) << std::endl;
+    // std::cout << DistanceFromPointToPlane(plane, p3) << std::endl;
+    // std::cout << "End of distances\n\n";
 
     if (DistanceFromPointToPlane(plane, p1) > 0 && DistanceFromPointToPlane(plane, p2) > 0 &&
         DistanceFromPointToPlane(plane, p3) > 0 || DistanceFromPointToPlane(plane, p1) < 0 &&
@@ -179,10 +179,6 @@ double DistanceFromPointToPlane(const Plane& plane, const Point& point)
         return 0;
     }
 
-    // double normal_length = std::sqrt(plane.A() * plane.A() + plane.B() * plane.B() + plane.C() * plane.C());
-
-    // std::cout << "Normal length is " << normal_length << std::endl;
-
     double distance = (plane.A() * point.X() + plane.B() * point.Y() + plane.C() * point.Z() + plane.D());
 
     return distance;
@@ -193,34 +189,6 @@ double DistanceFromPointToPlane(const Plane& plane, const Point& point)
 bool FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2)
 {
     Segment int_line = SegmentOfPlanesIntersection(t1.TrianglePlane(), t2.TrianglePlane());
-
-    // Point project_p1_t1 = (int_line.GetSecondPoint() - int_line.GetFirstPoint()) * (t1.GetFirstPoint()  - int_line.GetFirstPoint());
-
-    // Point project_p2_t1 = (int_line.GetSecondPoint() - int_line.GetFirstPoint()) * (t1.GetSecondPoint() - int_line.GetFirstPoint());
-
-    // Point project_p3_t1 = (int_line.GetSecondPoint() - int_line.GetFirstPoint()) * (t1.GetThirdPoint()  - int_line.GetFirstPoint());
-
-    // Point project_p1_t2 = (int_line.GetSecondPoint() - int_line.GetFirstPoint()) * (t2.GetFirstPoint()  - int_line.GetFirstPoint());
-
-    // Point project_p2_t2 = (int_line.GetSecondPoint() - int_line.GetFirstPoint()) * (t2.GetSecondPoint()  - int_line.GetFirstPoint());
-
-    // Point project_p3_t2 = (int_line.GetSecondPoint() - int_line.GetFirstPoint()) * (t2.GetThirdPoint()  - int_line.GetFirstPoint());
-
-    // std::cout << "\nпроекции точек на пряму\n";
-
-    // project_p1_t1.PrintPoint();
-
-    // project_p2_t1.PrintPoint();
-
-    // project_p3_t1.PrintPoint();
-
-    // project_p1_t2.PrintPoint();
-
-    // project_p2_t2.PrintPoint();
-
-    // project_p3_t2.PrintPoint();
-
-    // std::cout << "konec\n\n";
 
     std::vector<double> dist_from_t1_to_points(3), dist_from_t2_to_points(3);
 
@@ -236,22 +204,22 @@ bool FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2)
 
     dist_from_t2_to_points[2] = DistanceFromPointToTriangle(t2, t1.ThirdPoint());
 
-    std::cout << "The distances:" << std::endl;
-    std::cout << "From t1 to points of t2:" << std::endl;
-    std::cout << dist_from_t1_to_points[0] << std::endl;
-    std::cout << dist_from_t1_to_points[1] << std::endl;
-    std::cout << dist_from_t1_to_points[2] << std::endl;
-    std::cout << "From t12 to points of t1:" << std::endl;
-    std::cout << dist_from_t2_to_points[0] << std::endl;
-    std::cout << dist_from_t2_to_points[1] << std::endl;
-    std::cout << dist_from_t2_to_points[2] << std::endl;
-    std::cout << "The end of distances"<< std::endl;
+    // std::cout << "The distances:" << std::endl;
+    // std::cout << "From t1 to points of t2:" << std::endl;
+    // std::cout << dist_from_t1_to_points[0] << std::endl;
+    // std::cout << dist_from_t1_to_points[1] << std::endl;
+    // std::cout << dist_from_t1_to_points[2] << std::endl;
+    // std::cout << "From t12 to points of t1:" << std::endl;
+    // std::cout << dist_from_t2_to_points[0] << std::endl;
+    // std::cout << dist_from_t2_to_points[1] << std::endl;
+    // std::cout << dist_from_t2_to_points[2] << std::endl;
+    // std::cout << "The end of distances"<< std::endl;
 
     std::cout << "Calling function for t options" << std::endl;
 
-    std::vector<double> t_options_1 = GetOptionsOfLine(t1, int_line, dist_from_t2_to_points);
+    std::vector<double> t_options_1 = GetLineOptions(t1, dist_from_t2_to_points, int_line);
 
-    std::vector<double> t_options_2 = GetOptionsOfLine(t2, int_line, dist_from_t1_to_points);
+    std::vector<double> t_options_2 = GetLineOptions(t2, dist_from_t1_to_points, int_line);
 
     for (auto x : t_options_1)
     {
@@ -263,13 +231,23 @@ bool FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2)
         std::cout<< x << std::endl;
     }
 
-    return OverlapIntervals(t_options_1, t_options_2);
+    // Point p11 = int_line.DirectionVector() * t_options_1[0] + int_line.FirstPoint();
 
-    // double t_0_1 = project_p1_t1.X() + ((project_p2_t1.X() - project_p1_t1.X()) * (DistanceFromPointToPlane(t2.GetTrianglePlane(), t1.GetFirstPoint())) / (DistanceFromPointToPlane(t2.GetTrianglePlane(), t1.GetFirstPoint()) - DistanceFromPointToPlane(t2.GetTrianglePlane(), t1.GetSecondPoint())));
+    // Point p12 = int_line.DirectionVector() * t_options_1[1] + int_line.FirstPoint();
 
-    // std::cout << "The t for p1 in t1 is: " << t_0_1 << std::endl;
+    // Point p21 = int_line.DirectionVector() * t_options_2[0] + int_line.FirstPoint();
 
-    // return false;
+    // Point p22 = int_line.DirectionVector() * t_options_2[1] + int_line.FirstPoint();
+
+    // p11.PrintPoint();
+    // p12.PrintPoint();
+    // p21.PrintPoint();
+    // p22.PrintPoint();
+
+    // if (IsOnSegment(p11, p12, p21) || IsOnSegment(p21, p22, p11))
+    //     return true;
+
+    return IntervalOverlap(t_options_1, t_options_2);
 }
 
 //-------------------------------------------------------------------------------//
@@ -302,10 +280,6 @@ Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2)
 
     Point line_point1(a * p1.A() + b * p2.A(), a * p1.B() + b * p2.B(), a * p1.C() + b * p2.C());
 
-    // Point line_point2(line_point1.X() + direct_vector.X(),
-    //                   line_point1.Y() + direct_vector.Y(),
-    //                   line_point1.Z() + direct_vector.Z());
-
     Segment intersection_line(line_point1, direct_vector);
 
     intersection_line.PrintSegment();
@@ -315,21 +289,32 @@ Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2)
 
 //-------------------------------------------------------------------------------//
 
-std::vector<double> GetOptionsOfLine(const Triangle& t, const Segment& int_line, std::vector<double>& distance)
+std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>& dis, const Segment& int_line)
 {
+    std::cout << "\n\nWorking with triangle ";
+    t.TriangleDump();
+    std::cout << "Distances:" << std::endl;
+    std::cout << dis[0] << " " << dis[1] << " " << dis[2] << "\n\n";
+
     double p0 = int_line.DirectionVector() * t.FirstPoint()  - int_line.DirectionVector() * int_line.FirstPoint();
 
     double p1 = int_line.DirectionVector() * t.SecondPoint() - int_line.DirectionVector() * int_line.FirstPoint();
 
     double p2 = int_line.DirectionVector() * t.ThirdPoint()  - int_line.DirectionVector() * int_line.FirstPoint();
 
+    std::cout << "Projects" << std::endl;
+
+    std::cout << p0 << " " << p1 << " " << p2 << std::endl;
+
+    std::cout << "End projects" << std::endl;
+
     std::vector<double> t_options(2);
 
-    if (distance[0] * distance[1] > 0)
+    if (dis[0] * dis[1] > 0)
     {
-        t_options[0] = p0 + (p2 - p0) * ((distance[0]) / (distance[0]) - distance[2]);
+        t_options[0] = p0 + (p2 - p0) * (dis[0] / (dis[0] - dis[2]));
 
-        t_options[1] = p1 + (p2 - p1) * ((distance[1]) / (distance[1]) - distance[2]);
+        t_options[1] = p1 + (p2 - p1) * (dis[1] / (dis[1] - dis[2]));
 
         if (t_options[0] > t_options[1])
             std::swap(t_options[0], t_options[1]);
@@ -337,11 +322,11 @@ std::vector<double> GetOptionsOfLine(const Triangle& t, const Segment& int_line,
         return t_options;
     }
 
-    if (distance[0] * distance[2] > 0)
+    if (dis[0] * dis[2] > 0)
     {
-        t_options[0] = p0 + (p1 - p0) * ((distance[0]) / (distance[0]) - distance[1]);
+        t_options[0] = p0 + (p1 - p0) * (dis[0] / (dis[0] - dis[1]));
 
-        t_options[1] = p2 + (p1 - p2) * ((distance[2]) / (distance[2]) - distance[1]);
+        t_options[1] = p2 + (p1 - p2) * (dis[2] / (dis[2] - dis[1]));
 
         if (t_options[0] > t_options [1])
             std::swap(t_options[0], t_options[1]);
@@ -349,11 +334,11 @@ std::vector<double> GetOptionsOfLine(const Triangle& t, const Segment& int_line,
         return t_options;
     }
 
-    if (distance[1] * distance[2] > 0)
+    if (dis[1] * dis[2] > 0)
     {
-        t_options[0] = p1 + (p0 - p1) * ((distance[1]) / (distance[1] - distance[0]));
+        t_options[0] = p1 + (p0 - p1) * (dis[1] / (dis[1] - dis[0]));
 
-        t_options[1] = p2 + (p0 - p1) * ((distance[2]) / (distance[2] - distance[0]));
+        t_options[1] = p2 + (p0 - p2) * (dis[2] / (dis[2] - dis[0]));
 
         if (t_options[0] > t_options[1])
             std::swap(t_options[0], t_options[1]);
@@ -361,25 +346,29 @@ std::vector<double> GetOptionsOfLine(const Triangle& t, const Segment& int_line,
         return t_options;
     }
 
+    // t_options[0] = p0 + (p1 - p0) * (dis[0] / (dis[0] - dis[1]));
+
+    // t_options[1] = p0 + (p2 - p0) * (dis[0] / (dis[0] - dis[2]));
+
+    // t_options[2] = p1 + (p0 - p1) * (dis[1] / (dis[1] - dis[0]));
+    
+    // t_options[3] = p1 + (p2 - p1) * (dis[1] / (dis[1] - dis[2]));
+
+    // t_options[4] = p2 + (p0 - p2) * (dis[2] / (dis[2] - dis[0]));
+
+    // t_options[5] = p2 + (p1 - p2) * (dis[2] / (dis[2] - dis[1]));
+
     return t_options;
 }
 
 //-------------------------------------------------------------------------------//
 
-bool OverlapIntervals(const std::vector<double>& t1, const std::vector<double>& t2)
+bool IntervalOverlap(std::vector<double>& t1, std::vector<double>& t2)
 {
-    using namespace double_numbers;
-
     if (t1[0] <= t2[0] && t2[0] <= t1[1])
         return true;
 
     if (t2[0] <= t1[0] && t1[0] <= t2[1])
-        return true;
-
-    if (IsEqual(t2[0], t1[1]))
-        return true;
-
-    if (IsEqual(t2[1], t1[0]))
         return true;
 
     return false;

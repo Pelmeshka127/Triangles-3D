@@ -49,10 +49,12 @@ Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2);
 
 //-------------------------------------------------------------------------------//
 
-std::vector<double> GetOptionsOfLine(const Triangle& t, const Segment& int_line, std::vector<double>& distance);
+std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>& dis, const Segment& int_line);
 
 //-------------------------------------------------------------------------------//
 
-bool OverlapIntervals(const std::vector<double>& t1, const std::vector<double>& t2);
+bool IntervalOverlap(std::vector<double>& t1, std::vector<double>& t2);
+
+//-------------------------------------------------------------------------------//
 
 #endif

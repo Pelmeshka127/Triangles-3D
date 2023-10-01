@@ -52,6 +52,8 @@ class Vector
 
         Vector  operator*(const float &number) const;
 
+        Point   operator+(const Point& p) const;
+
         double  operator*(const Point& point) const;
 
         bool    operator==(const Vector &v) const;
