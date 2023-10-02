@@ -36,11 +36,11 @@ class Segment
 
         ~Segment() {}
 
-        Point   FirstPoint() const;
+        Point   Point1() const;
 
-        Point   SecondPoint() const;
+        Point   Point2() const;
 
-        Vector  DirectionVector() const;
+        Vector  DirVector() const;
 
         void PrintSegment() const;
 };

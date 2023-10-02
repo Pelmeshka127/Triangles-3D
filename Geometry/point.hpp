@@ -31,8 +31,6 @@ class Point
         double  MinCoordinate(const Point& p1, const Point& p2, const int coordinate) const;
 
         double  MaxCoordinate(const Point& p1, const Point& p2, const int coordinate) const;
-        
-        double  GetDistance(const Point &point) const;
 
         double  CrossProductValue(const Point &Point) const;
 
@@ -48,9 +46,6 @@ class Point
 
         Point   operator*(const Point& p) const;
 
-        // Point&  operator*=(const Vector& v);
-
-        // Point   operator*(const Vector& v) const;
 
 
         void    PrintPoint() const;

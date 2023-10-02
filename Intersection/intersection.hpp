@@ -9,39 +9,39 @@
 
 //-------------------------------------------------------------------------------//
 
-bool AreSegmentsIntersect(const Segment& l1, const Segment& l2);
+bool    AreSegmentsIntersect(const Segment& l1, const Segment& l2);
 
 //-------------------------------------------------------------------------------//
 
-double Direction(const Point& p1, const Point& p2, const Point& p3);
+double  Direction(const Point& p1, const Point& p2, const Point& p3);
 
 //-------------------------------------------------------------------------------//
 
-bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
+bool    IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
 
 //-------------------------------------------------------------------------------//
 
-bool TriangleIntersection(const Triangle& t1, const Triangle& t2);
+bool    TriangleIntersection(const Triangle& t1, const Triangle& t2);
 
 //-------------------------------------------------------------------------------//
 
-bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2);
+bool    CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2);
 
 //-------------------------------------------------------------------------------//
 
-double DistanceFromPointToPlane(const Plane& plane, const Point& point);
+double  DistanceFromPointToPlane(const Plane& plane, const Point& point);
 
 //-------------------------------------------------------------------------------//
 
-double DistanceFromPointToTriangle(const Triangle& t, const Point& p);
+double  DistanceFromPointToTriangle(const Triangle& t, const Point& p);
 
 //-------------------------------------------------------------------------------//
 
-bool DistancesFromPointsToPlaneHaveOneSign(const Plane& plane, const Point&p1, const Point& p2, const Point& p3);
+bool    DistancesFromPointsToPlaneHaveOneSign(const Plane& plane, const Point&p1, const Point& p2, const Point& p3);
 
 //-------------------------------------------------------------------------------//
 
-bool FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2);
+bool    FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2);
 
 //-------------------------------------------------------------------------------//
 
@@ -53,7 +53,7 @@ std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>&
 
 //-------------------------------------------------------------------------------//
 
-bool IntervalOverlap(std::vector<double>& t1, std::vector<double>& t2);
+bool    IntervalOverlap(std::vector<double>& t1, std::vector<double>& t2);
 
 //-------------------------------------------------------------------------------//
 

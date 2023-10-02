@@ -76,15 +76,6 @@ double Point::MaxCoordinate(const Point& p1, const Point& p2, const int coordina
 
 //-------------------------------------------------------------------------------//
 
-double Point::GetDistance(const Point &point) const
-{
-    return (std::sqrt(  (x_ - point.x_) * (x_ - point.x_) +
-                        (y_ - point.y_) * (y_ - point.y_) +
-                        (z_ - point.z_) * (z_ - point.z_)  ));
-}
-
-//-------------------------------------------------------------------------------//
-
 double Point::CrossProductValue(const Point &point) const
 {
     double first_value  = y_ * point.z_ - z_ * point.y_;

@@ -66,6 +66,11 @@
         "iterator": "cpp",
         "utility": "cpp",
         "__tree": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "deque": "cpp",
+        "format": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "stack": "cpp"
     }
 }

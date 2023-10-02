@@ -23,25 +23,27 @@ class Triangle
         const Plane triangle_plane_;
 
     public:
-        Triangle(const Point &p1, const Point &p2, const Point &p3) : p1_{p1}, p2_{p2}, p3_{p3}, 
+
+        Triangle(const Point &p1, const Point &p2, const Point &p3) : 
+            p1_{p1}, p2_{p2}, p3_{p3}, 
             l1_{Segment(p1, p2)}, l2_{Segment(p2, p3)}, l3_{Segment(p3, p1)},
             triangle_plane_{Plane(p1, p2, p3)} {}
 
         ~Triangle() {}
 
-        Point   FirstPoint() const;
+        Point   Point1() const;
 
-        Point   SecondPoint() const;
+        Point   Point2() const;
 
-        Point   ThirdPoint() const;
+        Point   Point3() const;
 
-        Segment FirstLine()  const;
+        Segment Line1()  const;
 
-        Segment SecondLine() const;
+        Segment Line2() const;
 
-        Segment ThirdLine()  const;
+        Segment Line3()  const;
 
-        Plane   TrianglePlane()  const;
+        Plane   GetPlane()  const;
 
         bool    IsPointInTriangle(const Point& point) const;
 

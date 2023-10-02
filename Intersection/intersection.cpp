@@ -9,7 +9,7 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
     // сначала рассмотрим случай треугольников, лежащих в параллельных
     // или совпадающих плоскостях
 
-    if (t1.TrianglePlane().ArePlanesEqual(t2.TrianglePlane()))
+    if (t1.GetPlane().ArePlanesEqual(t2.GetPlane()))
     {
         std::cout << "Coplanar triangles" << std::endl;
         return CoplanarTrianglesIntersection(t1, t2);
@@ -18,13 +18,10 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
     // если все точки одного треугольника лежат по одну сторону от плоскости
     // другого тругольника, то пересечение невозможно
 
-    if (DistancesFromPointsToPlaneHaveOneSign(
-        t1.TrianglePlane(), t2.FirstPoint(), t2.SecondPoint(), t2.ThirdPoint()) ||
-        DistancesFromPointsToPlaneHaveOneSign(
-        t2.TrianglePlane(), t1.FirstPoint(), t1.SecondPoint(), t1.ThirdPoint()
-        ))
+    if (DistancesFromPointsToPlaneHaveOneSign(t1.GetPlane(), t2.Point1(), t2.Point2(), t2.Point3()) ||
+        DistancesFromPointsToPlaneHaveOneSign(t2.GetPlane(), t1.Point1(), t1.Point2(), t1.Point3()) )
     {
-        std::cout << "All distances from T1 points to P2 have one sign" << std::endl;
+        // std::cout << "All distances from T1 points to P2 have one sign" << std::endl;
         return false;        
     }
 
@@ -33,7 +30,7 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
 
     else
     {
-        std::cout << "Triangles segment" << std::endl;
+        // std::cout << "Triangles segment" << std::endl;
         return FindTrianglesIntersectionByLine(t1, t2);
     }
 
@@ -47,15 +44,15 @@ bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
     // Проверка всех отрезков одного треугольника на пересечние
     // Со всеми отрезками другого треугольника
 
-    if (AreSegmentsIntersect (t1.FirstLine(),  t2.FirstLine() )  || 
-        AreSegmentsIntersect (t1.FirstLine(),  t2.SecondLine())  || 
-        AreSegmentsIntersect (t1.FirstLine(),  t2.ThirdLine() )  ||
-        AreSegmentsIntersect (t1.SecondLine(), t2.FirstLine() )  || 
-        AreSegmentsIntersect (t1.SecondLine(), t2.SecondLine())  || 
-        AreSegmentsIntersect (t1.SecondLine(), t2.ThirdLine() )  ||
-        AreSegmentsIntersect (t1.ThirdLine(),  t2.FirstLine() )  || 
-        AreSegmentsIntersect (t1.ThirdLine(),  t2.SecondLine())  || 
-        AreSegmentsIntersect (t1.ThirdLine(),  t2.ThirdLine() )  ) 
+    if (AreSegmentsIntersect (t1.Line1(),  t2.Line1())  || 
+        AreSegmentsIntersect (t1.Line1(),  t2.Line2())  || 
+        AreSegmentsIntersect (t1.Line1(),  t2.Line3())  ||
+        AreSegmentsIntersect (t1.Line2(),  t2.Line1())  || 
+        AreSegmentsIntersect (t1.Line2(),  t2.Line2())  || 
+        AreSegmentsIntersect (t1.Line2(),  t2.Line3())  ||
+        AreSegmentsIntersect (t1.Line3(),  t2.Line1())  || 
+        AreSegmentsIntersect (t1.Line3(),  t2.Line2())  || 
+        AreSegmentsIntersect (t1.Line3(),  t2.Line3())  ) 
     {
         return true;
     }
@@ -63,7 +60,7 @@ bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
     // Достаточно проверить одну точку каждого треугольника 
     // Чтобы понять не находится ли один треугольник внутри другого
 
-    else if (t1.IsPointInTriangle(t2.FirstPoint()) || t2.IsPointInTriangle(t1.FirstPoint()))
+    else if (t1.IsPointInTriangle(t2.Point1()) || t2.IsPointInTriangle(t1.Point1()))
         return true;
 
 
@@ -74,31 +71,31 @@ bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
 
 bool AreSegmentsIntersect(const Segment& l1, const Segment& l2)
 {
-    double drc1 = Direction(l2.FirstPoint(), l2.SecondPoint(), l1.FirstPoint() );
+    double drc1 = Direction(l2.Point1(), l2.Point2(), l1.Point1() );
     // std::cout << drc1 << std::endl;
     
-    double drc2 = Direction(l2.FirstPoint(), l2.SecondPoint(), l1.SecondPoint());
+    double drc2 = Direction(l2.Point1(), l2.Point2(), l1.Point2());
     // std::cout << drc2 << std::endl;
     
-    double drc3 = Direction(l1.FirstPoint(), l1.SecondPoint(), l2.FirstPoint() );
+    double drc3 = Direction(l1.Point1(), l1.Point2(), l2.Point1() );
     // std::cout << drc3 << std::endl;
     
-    double drc4 = Direction(l1.FirstPoint(), l1.SecondPoint(), l2.SecondPoint());
+    double drc4 = Direction(l1.Point1(), l1.Point2(), l2.Point2());
     // std::cout << drc4 << std::endl;
 
     if ((drc1 * drc2 < 0) && (drc3 * drc4 < 0))
         return true;
 
-    else if (drc1 == 0 && IsOnSegment(l2.FirstPoint(), l2.SecondPoint(), l1.FirstPoint()))
+    else if (drc1 == 0 && IsOnSegment(l2.Point1(), l2.Point2(), l1.Point1()))
         return true;
 
-    else if (drc2 == 0 && IsOnSegment(l2.FirstPoint(), l2.SecondPoint(), l1.SecondPoint()))
+    else if (drc2 == 0 && IsOnSegment(l2.Point1(), l2.Point2(), l1.Point2()))
         return true;
 
-    else if (drc3 == 0 && IsOnSegment(l1.FirstPoint(), l1.SecondPoint(), l2.FirstPoint()))
+    else if (drc3 == 0 && IsOnSegment(l1.Point1(), l1.Point2(), l2.Point1()))
         return true;
 
-    else if (drc4 == 0 && IsOnSegment(l1.FirstPoint(), l1.SecondPoint(), l2.SecondPoint()))
+    else if (drc4 == 0 && IsOnSegment(l1.Point1(), l1.Point2(), l2.Point2()))
         return true;
 
     return false;
@@ -125,9 +122,9 @@ bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3)
 
     // std::cout << res << std::endl;
 
-    // std::cout <<(std::min(p1.GetX(), p2.GetX()) <= p3.GetX() && p3.GetX() <= std::max(p1.GetX(), p2.GetX())) <<std::endl;
-    // std::cout <<(std::min(p1.GetY(), p2.GetY()) <= p3.GetY() && p3.GetY() <= std::max(p1.GetY(), p2.GetY())) <<std::endl;
-    // std::cout <<(std::min(p1.GetZ(), p2.GetZ()) <= p3.GetZ() && p3.GetZ() <= std::max(p1.GetZ(), p2.GetZ())) <<std::endl;
+    // std::cout <<(std::min(p1.X(), p2.X()) <= p3.X() && p3.X() <= std::max(p1.X(), p2.X())) <<std::endl;
+    // std::cout <<(std::min(p1.Y(), p2.Y()) <= p3.Y() && p3.Y() <= std::max(p1.Y(), p2.Y())) <<std::endl;
+    // std::cout <<(std::min(p1.Z(), p2.Z()) <= p3.Z() && p3.Z() <= std::max(p1.Z(), p2.Z())) <<std::endl;
 
     return (std::min(p1.X(), p2.X()) <= p3.X() && p3.X() <= std::max(p1.X(), p2.X()) &&
             std::min(p1.Y(), p2.Y()) <= p3.Y() && p3.Y() <= std::max(p1.Y(), p2.Y()) &&
@@ -158,7 +155,7 @@ bool DistancesFromPointsToPlaneHaveOneSign(const Plane& plane, const Point&p1, c
 
 double DistanceFromPointToTriangle(const Triangle& t, const Point& p)
 {
-    return (t.TrianglePlane().n() * p + t.TrianglePlane().D());
+    return (t.GetPlane().n() * p + t.GetPlane().D());
 }
 
 //-------------------------------------------------------------------------------//
@@ -188,21 +185,21 @@ double DistanceFromPointToPlane(const Plane& plane, const Point& point)
 
 bool FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2)
 {
-    Segment int_line = SegmentOfPlanesIntersection(t1.TrianglePlane(), t2.TrianglePlane());
+    Segment int_line = SegmentOfPlanesIntersection(t1.GetPlane(), t2.GetPlane());
 
     std::vector<double> dist_from_t1_to_points(3), dist_from_t2_to_points(3);
 
-    dist_from_t1_to_points[0] = DistanceFromPointToTriangle(t1, t2.FirstPoint());
+    dist_from_t1_to_points[0] = DistanceFromPointToTriangle(t1, t2.Point1());
 
-    dist_from_t1_to_points[1] = DistanceFromPointToTriangle(t1, t2.SecondPoint());
+    dist_from_t1_to_points[1] = DistanceFromPointToTriangle(t1, t2.Point2());
 
-    dist_from_t1_to_points[2] = DistanceFromPointToTriangle(t1, t2.ThirdPoint());
+    dist_from_t1_to_points[2] = DistanceFromPointToTriangle(t1, t2.Point3());
 
-    dist_from_t2_to_points[0] = DistanceFromPointToTriangle(t2, t1.FirstPoint());
+    dist_from_t2_to_points[0] = DistanceFromPointToTriangle(t2, t1.Point1());
 
-    dist_from_t2_to_points[1] = DistanceFromPointToTriangle(t2, t1.SecondPoint());
+    dist_from_t2_to_points[1] = DistanceFromPointToTriangle(t2, t1.Point2());
 
-    dist_from_t2_to_points[2] = DistanceFromPointToTriangle(t2, t1.ThirdPoint());
+    dist_from_t2_to_points[2] = DistanceFromPointToTriangle(t2, t1.Point3());
 
     // std::cout << "The distances:" << std::endl;
     // std::cout << "From t1 to points of t2:" << std::endl;
@@ -215,37 +212,21 @@ bool FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2)
     // std::cout << dist_from_t2_to_points[2] << std::endl;
     // std::cout << "The end of distances"<< std::endl;
 
-    std::cout << "Calling function for t options" << std::endl;
+    // std::cout << "Calling function for t options" << std::endl;
 
     std::vector<double> t_options_1 = GetLineOptions(t1, dist_from_t2_to_points, int_line);
 
     std::vector<double> t_options_2 = GetLineOptions(t2, dist_from_t1_to_points, int_line);
 
-    for (auto x : t_options_1)
-    {
-        std::cout<< x << std::endl;
-    }
+    // for (auto x : t_options_1)
+    // {
+    //     std::cout<< x << std::endl;
+    // }
 
-    for (auto x : t_options_2)
-    {
-        std::cout<< x << std::endl;
-    }
-
-    // Point p11 = int_line.DirectionVector() * t_options_1[0] + int_line.FirstPoint();
-
-    // Point p12 = int_line.DirectionVector() * t_options_1[1] + int_line.FirstPoint();
-
-    // Point p21 = int_line.DirectionVector() * t_options_2[0] + int_line.FirstPoint();
-
-    // Point p22 = int_line.DirectionVector() * t_options_2[1] + int_line.FirstPoint();
-
-    // p11.PrintPoint();
-    // p12.PrintPoint();
-    // p21.PrintPoint();
-    // p22.PrintPoint();
-
-    // if (IsOnSegment(p11, p12, p21) || IsOnSegment(p21, p22, p11))
-    //     return true;
+    // for (auto x : t_options_2)
+    // {
+    //     std::cout<< x << std::endl;
+    // }
 
     return IntervalOverlap(t_options_1, t_options_2);
 }
@@ -261,8 +242,8 @@ Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2)
         std::cerr << "Zero vector in " << __PRETTY_FUNCTION__ << std::endl;
     }
 
-    std::cout << "Direct ";
-    direct_vector.PrintVector();
+    // std::cout << "Direct ";
+    // direct_vector.PrintVector();
 
     double s1 = -p1.D();
     
@@ -282,7 +263,7 @@ Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2)
 
     Segment intersection_line(line_point1, direct_vector);
 
-    intersection_line.PrintSegment();
+    // intersection_line.PrintSegment();
 
     return intersection_line;
 }
@@ -291,22 +272,22 @@ Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2)
 
 std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>& dis, const Segment& int_line)
 {
-    std::cout << "\n\nWorking with triangle ";
-    t.TriangleDump();
-    std::cout << "Distances:" << std::endl;
-    std::cout << dis[0] << " " << dis[1] << " " << dis[2] << "\n\n";
+    // std::cout << "\n\nWorking with triangle ";
+    // t.TriangleDump();
+    // std::cout << "Distances:" << std::endl;
+    // std::cout << dis[0] << " " << dis[1] << " " << dis[2] << "\n\n";
 
-    double p0 = int_line.DirectionVector() * t.FirstPoint()  - int_line.DirectionVector() * int_line.FirstPoint();
+    double p0 = int_line.DirVector() * t.Point1()  - int_line.DirVector() * int_line.Point1();
 
-    double p1 = int_line.DirectionVector() * t.SecondPoint() - int_line.DirectionVector() * int_line.FirstPoint();
+    double p1 = int_line.DirVector() * t.Point2() - int_line.DirVector() * int_line.Point1();
 
-    double p2 = int_line.DirectionVector() * t.ThirdPoint()  - int_line.DirectionVector() * int_line.FirstPoint();
+    double p2 = int_line.DirVector() * t.Point3()  - int_line.DirVector() * int_line.Point1();
 
-    std::cout << "Projects" << std::endl;
+    // std::cout << "Projects" << std::endl;
 
-    std::cout << p0 << " " << p1 << " " << p2 << std::endl;
+    // std::cout << p0 << " " << p1 << " " << p2 << std::endl;
 
-    std::cout << "End projects" << std::endl;
+    // std::cout << "End projects" << std::endl;
 
     std::vector<double> t_options(2);
 
@@ -345,18 +326,6 @@ std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>&
 
         return t_options;
     }
-
-    // t_options[0] = p0 + (p1 - p0) * (dis[0] / (dis[0] - dis[1]));
-
-    // t_options[1] = p0 + (p2 - p0) * (dis[0] / (dis[0] - dis[2]));
-
-    // t_options[2] = p1 + (p0 - p1) * (dis[1] / (dis[1] - dis[0]));
-    
-    // t_options[3] = p1 + (p2 - p1) * (dis[1] / (dis[1] - dis[2]));
-
-    // t_options[4] = p2 + (p0 - p2) * (dis[2] / (dis[2] - dis[0]));
-
-    // t_options[5] = p2 + (p1 - p2) * (dis[2] / (dis[2] - dis[1]));
 
     return t_options;
 }

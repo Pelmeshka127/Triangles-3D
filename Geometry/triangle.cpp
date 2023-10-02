@@ -4,49 +4,49 @@
 
 //-------------------------------------------------------------------------------//
 
-Point Triangle::FirstPoint() const
+Point Triangle::Point1() const
 {
     return p1_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Point Triangle::SecondPoint() const
+Point Triangle::Point2() const
 {
     return p2_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Point Triangle::ThirdPoint() const
+Point Triangle::Point3() const
 {
     return p3_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Segment Triangle::FirstLine() const
+Segment Triangle::Line1() const
 {
     return l1_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Segment Triangle::SecondLine() const
+Segment Triangle::Line2() const
 {
     return l2_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Segment Triangle::ThirdLine() const
+Segment Triangle::Line3() const
 {
     return l3_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Plane Triangle::TrianglePlane() const
+Plane Triangle::GetPlane() const
 {
     return triangle_plane_;
 }
