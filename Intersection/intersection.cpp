@@ -11,7 +11,7 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
 
     if (t1.GetPlane().ArePlanesEqual(t2.GetPlane()))
     {
-        std::cout << "Coplanar triangles" << std::endl;
+        // std::cout << "Coplanar triangles" << std::endl;
         return CoplanarTrianglesIntersection(t1, t2);
     }
 
