@@ -19,6 +19,8 @@ double  Direction(const Point& p1, const Point& p2, const Point& p3);
 
 bool    IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
 
+bool    IsPointInTriangle(const Point& p, const Triangle& t);
+
 //-------------------------------------------------------------------------------//
 
 bool    TriangleIntersection(const Triangle& t1, const Triangle& t2);

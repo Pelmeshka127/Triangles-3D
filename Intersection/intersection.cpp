@@ -54,14 +54,18 @@ bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
         AreSegmentsIntersect (t1.Line3(),  t2.Line2())  || 
         AreSegmentsIntersect (t1.Line3(),  t2.Line3())  ) 
     {
+        std::cout << "Segments intersect" << std::endl;
         return true;
     }
 
     // Достаточно проверить одну точку каждого треугольника 
     // Чтобы понять не находится ли один треугольник внутри другого
 
-    else if (t1.IsPointInTriangle(t2.Point1()) || t2.IsPointInTriangle(t1.Point1()))
+    else if (IsPointInTriangle(t2.Point1(), t1) || IsPointInTriangle(t1.Point1(), t2))
+    {
+        std::cout << "One is in another" << std::endl;
         return true;
+    }
 
 
     return false;
@@ -129,6 +133,26 @@ bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3)
     return (std::min(p1.X(), p2.X()) <= p3.X() && p3.X() <= std::max(p1.X(), p2.X()) &&
             std::min(p1.Y(), p2.Y()) <= p3.Y() && p3.Y() <= std::max(p1.Y(), p2.Y()) &&
             std::min(p1.Z(), p2.Z()) <= p3.Z() && p3.Z() <= std::max(p1.Z(), p2.Z()) );
+}
+
+//-------------------------------------------------------------------------------//
+
+bool IsPointInTriangle(const Point& p, const Triangle& t)
+{
+    Vector AB(t.Point1(), t.Point2());
+    Vector AP(t.Point1(), p);
+
+    Vector BC(t.Point2(), t.Point3());
+    Vector BP(t.Point2(), p);
+
+    Vector CA(t.Point3(), t.Point1());
+    Vector CP(t.Point3(), p);
+
+    double d1 = AB.CrossProductValue(AB, AP);
+    double d2 = BC.CrossProductValue(BC, BP);
+    double d3 = CA.CrossProductValue(CA, CP);
+
+    return (d1 * d2 >= 0 && d1 * d3 >=0 && d2 * d3 >= 0);
 }
 
 //-------------------------------------------------------------------------------//
