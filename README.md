@@ -2,12 +2,25 @@
 
 
 ## Установка и запуск проекта
+Для установки
 ```
 git clone git@github.com:Pelmeshka127/Triangles-3D.git
 
 cd Triangles-3D
-
+```
+Запуск через Makefile
+```
 make
+
+./triangles
+```
+Запуск через CMake
+```
+cmake -B build
+
+cd build
+
+cmake --build .
 
 ./triangles
 ```
