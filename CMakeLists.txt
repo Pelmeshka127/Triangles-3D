@@ -9,7 +9,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(SRC_GEOMETRY ./Geometry/point.cpp ./Geometry/vector.cpp ./Geometry/line.cpp ./Geometry/plane.cpp ./Geometry/triangle.cpp)
 set(SRC_INTERSECTION ./Intersection/intersection.cpp)
 set(SRC_MATH ./MathLibs/double_numbers.cpp)
+set(SRC_OCTO ./Octree/octree.cpp)
 
-set(SRC_FILES main.cpp ${SRC_GEOMETRY} ${SRC_INTERSECTION} ${SRC_MATH})
+set(SRC_FILES main.cpp ${SRC_GEOMETRY} ${SRC_INTERSECTION} ${SRC_MATH} ${SRC_OCTO})
 
 add_executable(triangles ${SRC_FILES})

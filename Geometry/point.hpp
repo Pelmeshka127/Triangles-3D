@@ -35,7 +35,6 @@ class Point
         double  CrossProductValue(const Point &Point) const;
 
 
-
         Point   operator=(const Point p) const;
 
         Point   operator-(const Point& p) const;
@@ -46,6 +45,7 @@ class Point
 
         Point   operator*(const Point& p) const;
 
+        Point   operator*(const double& n) const;
 
 
         void    PrintPoint() const;

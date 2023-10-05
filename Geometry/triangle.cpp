@@ -4,21 +4,21 @@
 
 //-------------------------------------------------------------------------------//
 
-Point Triangle::Point1() const
+Point Triangle::P1() const
 {
     return p1_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Point Triangle::Point2() const
+Point Triangle::P2() const
 {
     return p2_;
 }
 
 //-------------------------------------------------------------------------------//
 
-Point Triangle::Point3() const
+Point Triangle::P3() const
 {
     return p3_;
 }

@@ -126,21 +126,10 @@ Point Point::operator*(const Point& p) const
 
 //-------------------------------------------------------------------------------//
 
-// Point& Point::operator*=(const Vector& v)
-// {
-//     x_ *= v.X();
-//     y_ *= v.Y();
-//     z_ *= v.Z();
-
-//     return *this;
-// }
-
-// //-------------------------------------------------------------------------------//
-
-// Point Point::operator*(const Vector& v) const
-// {
-//     return Point(x_ * v.X(), y_ * v.Y(), z_ * v.Z());
-// }
+Point Point::operator*(const double& n) const
+{
+    return Point(x_ * n, y_ * n, z_ * n);
+}
 
 //-------------------------------------------------------------------------------//
 

@@ -31,11 +31,11 @@ class Triangle
 
         ~Triangle() {}
 
-        Point   Point1() const;
+        Point   P1() const;
 
-        Point   Point2() const;
+        Point   P2() const;
 
-        Point   Point3() const;
+        Point   P3() const;
 
         Segment Line1()  const;
 

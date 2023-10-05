@@ -18,8 +18,8 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
     // если все точки одного треугольника лежат по одну сторону от плоскости
     // другого тругольника, то пересечение невозможно
 
-    if (DistancesFromPointsToPlaneHaveOneSign(t1.GetPlane(), t2.Point1(), t2.Point2(), t2.Point3()) ||
-        DistancesFromPointsToPlaneHaveOneSign(t2.GetPlane(), t1.Point1(), t1.Point2(), t1.Point3()) )
+    if (DistancesFromPointsToPlaneHaveOneSign(t1.GetPlane(), t2.P1(), t2.P2(), t2.P3()) ||
+        DistancesFromPointsToPlaneHaveOneSign(t2.GetPlane(), t1.P1(), t1.P2(), t1.P3()) )
     {
         // std::cout << "All distances from T1 points to P2 have one sign" << std::endl;
         return false;        
@@ -61,7 +61,7 @@ bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
     // Достаточно проверить одну точку каждого треугольника 
     // Чтобы понять не находится ли один треугольник внутри другого
 
-    else if (IsPointInTriangle(t2.Point1(), t1) || IsPointInTriangle(t1.Point1(), t2))
+    else if (IsPointInTriangle(t2.P1(), t1) || IsPointInTriangle(t1.P1(), t2))
     {
         std::cout << "One is in another" << std::endl;
         return true;
@@ -139,14 +139,14 @@ bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3)
 
 bool IsPointInTriangle(const Point& p, const Triangle& t)
 {
-    Vector AB(t.Point1(), t.Point2());
-    Vector AP(t.Point1(), p);
+    Vector AB(t.P1(), t.P2());
+    Vector AP(t.P1(), p);
 
-    Vector BC(t.Point2(), t.Point3());
-    Vector BP(t.Point2(), p);
+    Vector BC(t.P2(), t.P3());
+    Vector BP(t.P2(), p);
 
-    Vector CA(t.Point3(), t.Point1());
-    Vector CP(t.Point3(), p);
+    Vector CA(t.P3(), t.P1());
+    Vector CP(t.P3(), p);
 
     double d1 = AB.CrossProductValue(AB, AP);
     double d2 = BC.CrossProductValue(BC, BP);
@@ -213,17 +213,17 @@ bool FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2)
 
     std::vector<double> dist_from_t1_to_points(3), dist_from_t2_to_points(3);
 
-    dist_from_t1_to_points[0] = DistanceFromPointToTriangle(t1, t2.Point1());
+    dist_from_t1_to_points[0] = DistanceFromPointToTriangle(t1, t2.P1());
 
-    dist_from_t1_to_points[1] = DistanceFromPointToTriangle(t1, t2.Point2());
+    dist_from_t1_to_points[1] = DistanceFromPointToTriangle(t1, t2.P2());
 
-    dist_from_t1_to_points[2] = DistanceFromPointToTriangle(t1, t2.Point3());
+    dist_from_t1_to_points[2] = DistanceFromPointToTriangle(t1, t2.P3());
 
-    dist_from_t2_to_points[0] = DistanceFromPointToTriangle(t2, t1.Point1());
+    dist_from_t2_to_points[0] = DistanceFromPointToTriangle(t2, t1.P1());
 
-    dist_from_t2_to_points[1] = DistanceFromPointToTriangle(t2, t1.Point2());
+    dist_from_t2_to_points[1] = DistanceFromPointToTriangle(t2, t1.P2());
 
-    dist_from_t2_to_points[2] = DistanceFromPointToTriangle(t2, t1.Point3());
+    dist_from_t2_to_points[2] = DistanceFromPointToTriangle(t2, t1.P3());
 
     // std::cout << "The distances:" << std::endl;
     // std::cout << "From t1 to points of t2:" << std::endl;
@@ -301,11 +301,11 @@ std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>&
     // std::cout << "Distances:" << std::endl;
     // std::cout << dis[0] << " " << dis[1] << " " << dis[2] << "\n\n";
 
-    double p0 = int_line.DirVector() * t.Point1()  - int_line.DirVector() * int_line.Point1();
+    double p0 = int_line.DirVector() * t.P1()  - int_line.DirVector() * int_line.Point1();
 
-    double p1 = int_line.DirVector() * t.Point2() - int_line.DirVector() * int_line.Point1();
+    double p1 = int_line.DirVector() * t.P2() - int_line.DirVector() * int_line.Point1();
 
-    double p2 = int_line.DirVector() * t.Point3()  - int_line.DirVector() * int_line.Point1();
+    double p2 = int_line.DirVector() * t.P3()  - int_line.DirVector() * int_line.Point1();
 
     // std::cout << "Projects" << std::endl;
 

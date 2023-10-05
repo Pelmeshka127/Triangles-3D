@@ -7,6 +7,8 @@
 #include "Geometry/line.hpp"
 #include "Geometry/triangle.hpp"
 #include "Intersection/intersection.hpp"
+#include "Octree/octree.hpp"
+#include "MathLibs/coordinates.hpp"
 
 // int main()
 // {
@@ -65,6 +67,8 @@ int main(int argc, char **argv)
 
     std::vector<Triangle> triangles;
 
+    double BoundingBoxX = 0, BoundingBoxY = 0, BoundingBoxZ = 0;
+
     for (int i = 0; i < tr_numbers; i++)
     {
         double p1x = 0, p1y = 0, p1z = 0, p2x = 0, p2y = 0, p2z = 0, p3x = 0, p3y = 0, p3z = 0;
@@ -81,12 +85,30 @@ int main(int argc, char **argv)
         Triangle t(p1, p2, p3);
 
         triangles.push_back(t);
+
+        if (BoundingBoxX < p1.MaxCoordinate(p2, p3, cords::X))
+            BoundingBoxX = p1.MaxCoordinate(p2, p3, cords::X);
+
+        if (BoundingBoxY < p1.MaxCoordinate(p2, p3, cords::Y))
+            BoundingBoxY = p1.MaxCoordinate(p2, p3, cords::Y);
+
+        if (BoundingBoxZ < p1.MaxCoordinate(p1, p2, cords::Z))
+            BoundingBoxZ = p1.MaxCoordinate(p1, p2, cords::Z);
     }
 
-    for (auto x: triangles)
-    {
-        // x.TriangleDump();
-    }
+    double CubeDimension = std::max(std::max(BoundingBoxX, BoundingBoxY), BoundingBoxZ);
+
+    Point MaxSize{CubeDimension, CubeDimension, CubeDimension};
+    Point MinSize{-1 * CubeDimension, -1 * CubeDimension, -1 * CubeDimension};
+
+    Octree my_oct_tree(MaxSize, MinSize, triangles);
+
+    my_oct_tree.OctreeDump();
+
+    // GetPartOfSpace(my_oct_tree, triangles[0]);
+
+    // std::cout << "Bounding Box's max value:" << std::endl;
+    // std::cout << BoundingBoxX << " " << BoundingBoxY << " " << BoundingBoxZ << std::endl;
 
     std::set<size_t> intersecting_triangles;
 
@@ -94,23 +116,21 @@ int main(int argc, char **argv)
     {
         for (size_t j = 0; j < tr_numbers; j++)
         {
-            if (i != j)
+            if (i == j)
+                continue;
+            if (TriangleIntersection(triangles[i], triangles[j]))
             {
-                if (TriangleIntersection(triangles[i], triangles[j]))
-                {
-                    // std::cout << "Triangle " << i << " intersects triangle " << j << std::endl;
-                    intersecting_triangles.insert(i);
-                }
+                // std::cout << "Triangle " << i << " intersects triangle " << j << std::endl;
+                std::cout << GetPartOfSpace(my_oct_tree, triangles[i]) << std::endl;
+                intersecting_triangles.insert(i);
             }
         }
     }
 
     for (auto x: intersecting_triangles)
     {
-        std::cout << x << " ";
+        std::cout << x << std::endl;
     }
-
-    std::cout << std::endl;
 
     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 
