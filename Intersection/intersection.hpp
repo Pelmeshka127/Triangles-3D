@@ -49,6 +49,8 @@ bool    FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2);
 
 Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2);
 
+bool DistancesAreNotZero(double d1, double d2);
+
 //-------------------------------------------------------------------------------//
 
 std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>& dis, const Segment& int_line);

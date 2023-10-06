@@ -14,17 +14,17 @@
 // {
 //     std::clock_t start = clock();
 
-//     Point p1(0,3,0);
+//     Point p1(1,1,0);
 
-//     Point p2(0,-2,0);
+//     Point p2(3,1,0);
 
-//     Point p3(-2,-1,3);
+//     Point p3(1,1,2);
 
-//     Point a1(-2,-2,-1);
+//     Point a1(2,2,2);
 
-//     Point a2(0,0,2);
+//     Point a2(1,1,2);
 
-//     Point a3(-2,2,-1);
+//     Point a3(2,1,2);
     
 //     Triangle Triangle1(p1, p2, p3);
 
@@ -105,11 +105,8 @@ int main(int argc, char **argv)
 
     my_oct_tree.OctreeDump();
 
-    // GetPartOfSpace(my_oct_tree, triangles[0]);
-
-    // std::cout << "Bounding Box's max value:" << std::endl;
-    // std::cout << BoundingBoxX << " " << BoundingBoxY << " " << BoundingBoxZ << std::endl;
-
+    std::cout << "The count of triangle in space is " << my_oct_tree.GetTriangleCount() << std::endl;
+ 
     std::set<size_t> intersecting_triangles;
 
     for (size_t i = 0; i < tr_numbers; i++)
@@ -121,7 +118,7 @@ int main(int argc, char **argv)
             if (TriangleIntersection(triangles[i], triangles[j]))
             {
                 // std::cout << "Triangle " << i << " intersects triangle " << j << std::endl;
-                std::cout << GetPartOfSpace(my_oct_tree, triangles[i]) << std::endl;
+                std::cout << "Triangle " << i << " is in " << GetPartOfSpace(my_oct_tree, triangles[i]) << std::endl;
                 intersecting_triangles.insert(i);
             }
         }

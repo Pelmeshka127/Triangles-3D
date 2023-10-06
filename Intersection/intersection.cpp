@@ -315,7 +315,7 @@ std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>&
 
     std::vector<double> t_options(2);
 
-    if (dis[0] * dis[1] >= 0)
+    if (dis[0] * dis[1] >= 0 && DistancesAreNotZero(dis[1], dis[2]) && DistancesAreNotZero(dis[0], dis[2]))
     {
         t_options[0] = p0 + (p2 - p0) * (dis[0] / (dis[0] - dis[2]));
 
@@ -327,7 +327,7 @@ std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>&
         return t_options;
     }
 
-    if (dis[0] * dis[2] >= 0)
+    if (dis[0] * dis[2] >= 0 && DistancesAreNotZero(dis[0], dis[1]) && DistancesAreNotZero(dis[2], dis[1]))
     {
         t_options[0] = p0 + (p1 - p0) * (dis[0] / (dis[0] - dis[1]));
 
@@ -339,7 +339,7 @@ std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>&
         return t_options;
     }
 
-    if (dis[1] * dis[2] >= 0)
+    if (dis[1] * dis[2] >= 0 && DistancesAreNotZero(dis[1], dis[0]) && DistancesAreNotZero(dis[2], dis[0]))
     {
         t_options[0] = p1 + (p0 - p1) * (dis[1] / (dis[1] - dis[0]));
 
@@ -352,6 +352,15 @@ std::vector<double> GetLineOptions(const Triangle& t, const std::vector<double>&
     }
 
     return t_options;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool DistancesAreNotZero(double d1, double d2)
+{
+    using namespace double_numbers;
+
+    return (!IsEqual(d1, 0) && !IsEqual(d2, 0));
 }
 
 //-------------------------------------------------------------------------------//

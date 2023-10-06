@@ -32,9 +32,13 @@ class Octree
 
         ~Octree() {};
 
+        size_t GetTriangleCount() const;
+
         Point GetMaxSize() const;
 
         Point GetMinSize() const;
+
+        std::vector<Triangle> GetTriangles() const;
 
         void OctreeDump() const;
 };
@@ -42,6 +46,10 @@ class Octree
 //-------------------------------------------------------------------------------//
 
 int GetPartOfSpace(const Octree& octree, const Triangle& triangle);
+
+//-------------------------------------------------------------------------------//
+
+int DivideSpace(const Octree&octree, const Triangle& triangle);
 
 //-------------------------------------------------------------------------------//
 

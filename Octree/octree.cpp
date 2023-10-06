@@ -14,6 +14,13 @@ void Octree::OctreeDump() const
 
 //-------------------------------------------------------------------------------//
 
+size_t Octree::GetTriangleCount() const
+{
+    return triangles_.size();
+}
+
+//-------------------------------------------------------------------------------//
+
 Point Octree::GetMaxSize() const
 {
     return max_size_;
@@ -24,6 +31,13 @@ Point Octree::GetMaxSize() const
 Point Octree::GetMinSize() const
 {
     return min_size_;
+}
+
+//-------------------------------------------------------------------------------//
+
+std::vector<Triangle> Octree::GetTriangles() const
+{
+    return triangles_;
 }
 
 //-------------------------------------------------------------------------------//
@@ -41,21 +55,21 @@ int GetPartOfSpace(const Octree& octree, const Triangle& triangle)
         return 0;
     }
 
-    else if (triangle.P1().X() < mid.X() && triangle.P1().Y() > mid.Y() && triangle.P1().Z() > mid.Z() &&
+    if (triangle.P1().X() < mid.X() && triangle.P1().Y() > mid.Y() && triangle.P1().Z() > mid.Z() &&
         triangle.P2().X() < mid.X() && triangle.P2().Y() > mid.Y() && triangle.P2().Z() > mid.Z() &&
         triangle.P3().X() < mid.X() && triangle.P3().Y() > mid.Y() && triangle.P3().Z() > mid.Z())
     {
         return 1;
     }
 
-    else if (triangle.P1().X() > mid.X() && triangle.P1().Y() < mid.Y() && triangle.P1().Z() > mid.Z() &&
+    if (triangle.P1().X() > mid.X() && triangle.P1().Y() < mid.Y() && triangle.P1().Z() > mid.Z() &&
         triangle.P2().X() > mid.X() && triangle.P2().Y() < mid.Y() && triangle.P2().Z() > mid.Z() &&
         triangle.P3().X() > mid.X() && triangle.P3().Y() < mid.Y() && triangle.P3().Z() > mid.Z())
     {
         return 2;
     }
 
-    else if (triangle.P1().X() < mid.X() && triangle.P1().Y() < mid.Y() && triangle.P1().Z() > mid.Z() &&
+    if (triangle.P1().X() < mid.X() && triangle.P1().Y() < mid.Y() && triangle.P1().Z() > mid.Z() &&
         triangle.P2().X() < mid.X() && triangle.P2().Y() < mid.Y() && triangle.P2().Z() > mid.Z() &&
         triangle.P3().X() < mid.X() && triangle.P3().Y() < mid.Y() && triangle.P3().Z() > mid.Z())
     {
@@ -63,28 +77,28 @@ int GetPartOfSpace(const Octree& octree, const Triangle& triangle)
     }
     
 
-    else if (triangle.P1().X() > mid.X() && triangle.P1().Y() > mid.Y() && triangle.P1().Z() < mid.Z() &&
+    if (triangle.P1().X() > mid.X() && triangle.P1().Y() > mid.Y() && triangle.P1().Z() < mid.Z() &&
         triangle.P2().X() > mid.X() && triangle.P2().Y() > mid.Y() && triangle.P2().Z() < mid.Z() &&
         triangle.P3().X() > mid.X() && triangle.P3().Y() > mid.Y() && triangle.P3().Z() < mid.Z())
     {
         return 4;
     }
 
-    else if (triangle.P1().X() < mid.X() && triangle.P1().Y() > mid.Y() && triangle.P1().Z() < mid.Z() &&
+    if (triangle.P1().X() < mid.X() && triangle.P1().Y() > mid.Y() && triangle.P1().Z() < mid.Z() &&
         triangle.P2().X() < mid.X() && triangle.P2().Y() > mid.Y() && triangle.P2().Z() < mid.Z() &&
         triangle.P3().X() < mid.X() && triangle.P3().Y() > mid.Y() && triangle.P3().Z() < mid.Z())
     {
         return 5;
     }
 
-    else if (triangle.P1().X() < mid.X() && triangle.P1().Y() > mid.Y() && triangle.P1().Z() < mid.Z() &&
+    if (triangle.P1().X() < mid.X() && triangle.P1().Y() > mid.Y() && triangle.P1().Z() < mid.Z() &&
         triangle.P2().X() < mid.X() && triangle.P2().Y() > mid.Y() && triangle.P2().Z() < mid.Z() &&
         triangle.P3().X() < mid.X() && triangle.P3().Y() > mid.Y() && triangle.P3().Z() < mid.Z())
     {
         return 6;
     }
 
-    else if (triangle.P1().X() < mid.X() && triangle.P1().Y() < mid.Y() && triangle.P1().Z() < mid.Z() &&
+    if (triangle.P1().X() < mid.X() && triangle.P1().Y() < mid.Y() && triangle.P1().Z() < mid.Z() &&
         triangle.P2().X() < mid.X() && triangle.P2().Y() < mid.Y() && triangle.P2().Z() < mid.Z() &&
         triangle.P3().X() < mid.X() && triangle.P3().Y() < mid.Y() && triangle.P3().Z() < mid.Z())
     {
@@ -93,5 +107,22 @@ int GetPartOfSpace(const Octree& octree, const Triangle& triangle)
 
     return -1;
 }
+
+//-------------------------------------------------------------------------------//
+
+int DivideSpace(const Octree& octree, const Triangle& triangles)
+{
+    if (octree.GetTriangleCount() <= 8)
+        return 0;
+
+    for (auto triangle: octree.GetTriangle())
+    {
+        switch()
+    }
+
+    return 0;
+}
+
+//-------------------------------------------------------------------------------//
 
 //-------------------------------------------------------------------------------//
