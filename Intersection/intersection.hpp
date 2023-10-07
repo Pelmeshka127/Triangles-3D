@@ -8,7 +8,7 @@
 
 //-------------------------------------------------------------------------------//
 
-int TriangleIntersection(std::set<size_t> intersects, const Node* node);
+int TriangleIntersection(std::set<size_t>& intersects, Node* const node);
 
 //-------------------------------------------------------------------------------//
 

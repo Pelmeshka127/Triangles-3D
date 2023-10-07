@@ -177,6 +177,10 @@ int main(int argc, char **argv)
 
         Triangle t(p1, p2, p3);
 
+        t.number = i;
+
+        // std::cout << t.number << std::endl;
+
         triangles.push_back(t);
 
         if (BoundingBoxX < p1.MaxCoordinate(p2, p3, cords::X))
@@ -198,8 +202,6 @@ int main(int argc, char **argv)
 
     DivideSpace(oct.Root());
 
-    std::cout << oct.Root()->node_triangles_.size() << std::endl;
-
     std::set<size_t> intersecting_triangles;
 
     TriangleIntersection(intersecting_triangles, oct.Root());
@@ -220,10 +222,10 @@ int main(int argc, char **argv)
     //     }
     // }
 
-    // for (auto x: intersecting_triangles)
-    // {
-    //     std::cout << x << std::endl;
-    // }
+    for (auto x: intersecting_triangles)
+    {
+        std::cout << x << std::endl;
+    }
 
     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 

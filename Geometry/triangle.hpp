@@ -7,6 +7,14 @@
 #include "plane.hpp"
 #include "line.hpp"
 
+static const int NonInitialized = -1;
+
+enum TriangleState
+{
+    NonIntersect = false,
+    Intersect    = true,
+};
+
 //-------------------------------------------------------------------------------//
 
 class Triangle 
@@ -23,6 +31,10 @@ class Triangle
         const Plane triangle_plane_;
 
     public:
+
+        int number  = NonInitialized;
+
+        bool status = NonIntersect;
 
         Triangle(const Point &p1, const Point &p2, const Point &p3) : 
             p1_{p1}, p2_{p2}, p3_{p3}, 

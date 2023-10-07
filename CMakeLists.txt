@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(SRC_GEOMETRY ./Geometry/point.cpp ./Geometry/vector.cpp ./Geometry/line.cpp ./Geometry/plane.cpp ./Geometry/triangle.cpp)
-set(SRC_INTERSECTION ./Intersection/double_intersection.cpp)
+set(SRC_INTERSECTION ./Intersection/double_intersection.cpp ./Intersection/intersection.cpp)
 set(SRC_MATH ./MathLibs/double_numbers.cpp)
 set(SRC_OCTO ./Octree/octree.cpp)
 
