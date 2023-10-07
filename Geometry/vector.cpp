@@ -146,13 +146,6 @@ double Vector::DotProduct(const Vector &v1, const Vector &v2) const
 
 //-------------------------------------------------------------------------------//
 
-bool Vector::IsOrthogonal(const Vector &v1, const Vector &v2) const
-{
-    return (double_numbers::IsEqual(DotProduct(v1, v2), 0));
-}
-
-//-------------------------------------------------------------------------------//
-
 double Vector::CrossProductValue(const Vector &v1, const Vector &v2) const
 {
     double x_new = v1.y_ * v2.z_ - v1.z_ * v2.y_;
@@ -173,31 +166,6 @@ Vector Vector::CrossProductVector(const Vector &v1, const Vector &v2) const
     double z_new = v1.x_ * v2.y_ - v1.y_ * v2.x_;
 
     return Vector(x_new, y_new, z_new);
-}
-
-//-------------------------------------------------------------------------------//
-
-bool Vector::IsCollinear(const Vector &v1, const Vector &v2) const
-{
-    // return double_numbers::IsEqual( v1.y_ * v2.z_ - v1.z_ * v2.y_ +
-    //                                 v1.z_ * v2.x_ - v1.x_ * v2.z_ +
-    //                                 v1.x_ * v2.y_ - v1.y_ * v2.x_, 0);
-
-    return double_numbers::IsEqual(v1.CrossProductValue(v1, v2), 0);
-}
-
-//-------------------------------------------------------------------------------//
-
-double Vector::MixedProduct(const Vector &v1, const Vector &v2, const Vector &v3) const
-{
-    return (DotProduct(v1, CrossProductVector(v2, v3)));
-}
-
-//-------------------------------------------------------------------------------//
-
-bool Vector::AreCoplanar(const Vector &v1, const Vector &v2, const Vector &v3) const
-{
-    return double_numbers::IsEqual(MixedProduct(v1, v2, v3), 0);
 }
 
 //-------------------------------------------------------------------------------//

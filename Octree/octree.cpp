@@ -106,7 +106,7 @@ int DivideSpace(Node* node)
     // node->MaxSize_.PrintPoint();
     // node->MinSize_.PrintPoint();
 
-    std::cout << "The size of this main node "<< node << " is " << node->src_triangles_.size() << std::endl;
+    // std::cout << "The size of this main node "<< node << " is " << node->src_triangles_.size() << std::endl;
     for (auto triangle = node->src_triangles_.begin(); triangle != node->src_triangles_.end(); triangle++)
     {
         int space_part = PartOfSpace(node, *triangle);
@@ -211,21 +211,21 @@ int DivideSpace(Node* node)
         }
     }
 
-    std::cout << "The size of this main node "<< node << " after function is " << node->node_triangles_.size() << std::endl;
+    // std::cout << "The size of this main node "<< node << " after function is " << node->node_triangles_.size() << std::endl;
+
+    // for (size_t i = 0; i < 8; i++)
+    // {
+    //     if (node->child_[i])
+    //     {
+    //         // std::cout << "The " << i << " child node "<< node->child_[i] <<" has size " << node->child_[i]->src_triangles_.size() << std::endl;
+    //     }
+    // }
 
     for (size_t i = 0; i < 8; i++)
     {
         if (node->child_[i])
         {
-            std::cout << "The " << i << " child node "<< node->child_[i] <<" has size " << node->child_[i]->src_triangles_.size() << std::endl;
-        }
-    }
-
-    for (size_t i = 0; i < 8; i++)
-    {
-        if (node->child_[i])
-        {
-            std::cout << "Working with " << node->child_[i] << " " << i << std::endl;
+            // std::cout << "Working with " << node->child_[i] << " " << i << std::endl;
             DivideSpace(node->child_[i]);
         }
     }

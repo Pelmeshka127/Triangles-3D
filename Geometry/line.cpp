@@ -1,5 +1,4 @@
 #include "line.hpp"
-#include "../Intersection/intersection.hpp"
 
 //-------------------------------------------------------------------------------//
 

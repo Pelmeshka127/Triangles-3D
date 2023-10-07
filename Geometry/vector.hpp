@@ -63,17 +63,9 @@ class Vector
 
         double  DotProduct(const Vector &v1, const Vector &v2) const;
 
-        bool    IsOrthogonal(const Vector &v1, const Vector &v2) const;
-
         double  CrossProductValue(const Vector &v1, const Vector &v2) const;
 
         Vector  CrossProductVector(const Vector &v1, const Vector &v2) const;
-
-        bool    IsCollinear(const Vector &v1, const Vector &v2) const;
-
-        double  MixedProduct(const Vector &v1, const Vector &v2, const Vector &v3) const;
-
-        bool    AreCoplanar(const Vector &v1, const Vector &v2, const Vector &v3) const;
 
         void    PrintVector() const;
 };

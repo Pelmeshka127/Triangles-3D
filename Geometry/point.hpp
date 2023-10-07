@@ -32,8 +32,6 @@ class Point
 
         double  MaxCoordinate(const Point& p1, const Point& p2, const int coordinate) const;
 
-        double  CrossProductValue(const Point &Point) const;
-
 
         Point   operator=(const Point p) const;
 

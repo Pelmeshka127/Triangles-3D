@@ -76,17 +76,6 @@ double Point::MaxCoordinate(const Point& p1, const Point& p2, const int coordina
 
 //-------------------------------------------------------------------------------//
 
-double Point::CrossProductValue(const Point &point) const
-{
-    double first_value  = y_ * point.z_ - z_ * point.y_;
-    double second_value = z_ * point.x_ - x_ * point.z_;
-    double third_value  = x_ * point.y_ - y_ * point.x_;
-
-    return first_value + second_value + third_value;
-}
-
-//-------------------------------------------------------------------------------//
-
 Point Point::operator=(const Point p) const
 {
     return Point(p.x_, p.y_, p.z_);

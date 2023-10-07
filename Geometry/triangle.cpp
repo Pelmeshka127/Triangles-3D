@@ -1,6 +1,6 @@
 #include "triangle.hpp"
 #include "../MathLibs/coordinates.hpp"
-#include "../Intersection/intersection.hpp"
+#include "../Intersection/double_intersection.hpp"
 
 //-------------------------------------------------------------------------------//
 
