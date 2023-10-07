@@ -32,9 +32,9 @@ Node* Octree::Root() const
 
 //-------------------------------------------------------------------------------//
 
-SpacePart::SpacePart PartOfSpace(const Node& node, const Triangle& triangle)
+SpacePart::SpacePart PartOfSpace(const Node* node, const Triangle& triangle)
 {
-    Point mid = (node.MaxSize_ + node.MinSize_) * 0.5;
+    Point mid = (node->MaxSize_ + node->MinSize_) * 0.5;
 
     if (triangle.P1().X() > mid.X() && triangle.P1().Y() > mid.Y() && triangle.P1().Z() > mid.Z() &&
         triangle.P2().X() > mid.X() && triangle.P2().Y() > mid.Y() && triangle.P2().Z() > mid.Z() &&
@@ -79,9 +79,9 @@ SpacePart::SpacePart PartOfSpace(const Node& node, const Triangle& triangle)
         return SpacePart::Sixth;
     }
 
-    if (triangle.P1().X() < mid.X() && triangle.P1().Y() > mid.Y() && triangle.P1().Z() < mid.Z() &&
-        triangle.P2().X() < mid.X() && triangle.P2().Y() > mid.Y() && triangle.P2().Z() < mid.Z() &&
-        triangle.P3().X() < mid.X() && triangle.P3().Y() > mid.Y() && triangle.P3().Z() < mid.Z())
+    if (triangle.P1().X() > mid.X() && triangle.P1().Y() < mid.Y() && triangle.P1().Z() < mid.Z() &&
+        triangle.P2().X() > mid.X() && triangle.P2().Y() < mid.Y() && triangle.P2().Z() < mid.Z() &&
+        triangle.P3().X() > mid.X() && triangle.P3().Y() < mid.Y() && triangle.P3().Z() < mid.Z())
     {
         return SpacePart::Seventh;
     }
@@ -98,25 +98,29 @@ SpacePart::SpacePart PartOfSpace(const Node& node, const Triangle& triangle)
 
 //-------------------------------------------------------------------------------//
 
-int DivideSpace(Node& node)
+int DivideSpace(Node* node)
 {
-    // if (node.triangles_.size() <= 8)
-    //     return 0;
+    if (node->src_triangles_.size() <= 8)
+        return 0;
 
-    for (auto triangle = node.triangles_.begin(); triangle != node.triangles_.end(); triangle++)
+    // node->MaxSize_.PrintPoint();
+    // node->MinSize_.PrintPoint();
+
+    std::cout << "The size of this main node "<< node << " is " << node->src_triangles_.size() << std::endl;
+    for (auto triangle = node->src_triangles_.begin(); triangle != node->src_triangles_.end(); triangle++)
     {
         int space_part = PartOfSpace(node, *triangle);
-
-        // std::cout << space_part << std::endl;3
+        // std::cout << space_part << std::endl;
 
         if (space_part != SpacePart::Multy)
         {
-            if (node.child_[space_part] == nullptr)
+            // std::cout << node->child_[space_part] << " and " << space_part << std::endl;
+            if (node->child_[space_part] == nullptr)
             {
-                Point min = node.MinSize_;
+                // std::cout << space_part << std::endl;
+                Point min = node->MinSize_;
 
-                Point max = node.MaxSize_;
-
+                Point max = node->MaxSize_;
                 switch(space_part)
                 {
                     case SpacePart::First:
@@ -124,61 +128,61 @@ int DivideSpace(Node& node)
                         // x > 0, y > 0, z > 0
                         Point max_size = max;
                         Point min_size = (min + max) * 0.5;
-                        node.child_[space_part] = new Node(max_size, min_size);
+                        node->child_[space_part] = new Node(max_size, min_size);
                         break;
                     }
 
                     case SpacePart::Second:
                     {
                         // x < 0, y > 0, z > 0
-                        Point max_size = ((min.X() + max.X()) * 0.5, max.Y(), max.Z());
-                        Point min_size = (min.X(), (min.Y() + max.Y()) * 0.5, (min.Z() + max.Z()) * 0.5);
-                        node.child_[space_part] = new Node(max_size, min_size);
+                        Point max_size = Point((min.X() + max.X()) * 0.5, max.Y(), max.Z());
+                        Point min_size = Point(min.X(), (min.Y() + max.Y()) * 0.5, (min.Z() + max.Z()) * 0.5);
+                        node->child_[space_part] = new Node(max_size, min_size);
                         break;
                     }
 
                     case SpacePart::Third:
                     {
                         // x > 0, y < 0, z > 0
-                        Point max_size = (max.X(), (min.Y() + max.Y()) * 0.5, max.Z());
-                        Point min_size = ((min.X() + max.X()) * 0.5, min.Y(), (min.Z() + max.Z()) * 0.5);
-                        node.child_[space_part] = new Node(max_size, min_size);
+                        Point max_size = Point(max.X(), (min.Y() + max.Y()) * 0.5, max.Z());
+                        Point min_size = Point((min.X() + max.X()) * 0.5, min.Y(), (min.Z() + max.Z()) * 0.5);
+                        node->child_[space_part] = new Node(max_size, min_size);
                         break;
                     }
 
                     case SpacePart::Forth:
                     {
                         // x < 0, y < 0, z > 0
-                        Point max_size = ((min.X() + max.X()) * 0.5, (min.Y() + max.Y()) * 0.5, max.Z());
-                        Point min_size = (min.X(), min.Y(), (min.Z() + max.Z()) * 0.5);
-                        node.child_[space_part] = new Node(max_size, min_size);
+                        Point max_size = Point((min.X() + max.X()) * 0.5, (min.Y() + max.Y()) * 0.5, max.Z());
+                        Point min_size = Point(min.X(), min.Y(), (min.Z() + max.Z()) * 0.5);
+                        node->child_[space_part] = new Node(max_size, min_size);
                         break;
                     }
 
                     case SpacePart::Fifth:
                     {
                         // x > 0, y > 0, z < 0
-                        Point max_size = (max.X(), max.Y(), (min.Z() + max.Z()) * 0.5);
-                        Point min_size = ((min.X() + max.X()) * 0.5, (min.Y() + max.Y()) * 0.5, min.Z());
-                        node.child_[space_part] = new Node(max_size, min_size);
+                        Point max_size = Point(max.X(), max.Y(), (min.Z() + max.Z()) * 0.5);
+                        Point min_size = Point((min.X() + max.X()) * 0.5, (min.Y() + max.Y()) * 0.5, min.Z());
+                        node->child_[space_part] = new Node(max_size, min_size);
                         break;
                     }
 
                     case SpacePart::Sixth:
                     {
                         // x < 0, y > 0, z > 0
-                        Point max_size = ((min.X() + max.X()) * 0.5, max.Y(), (min.Z() + max.Z()) * 0.5);
-                        Point min_size = (min.X(), (min.Y() + max.Y()) * 0.5, min.Z());
-                        node.child_[space_part] = new Node(max_size, min_size);
+                        Point max_size = Point((min.X() + max.X()) * 0.5, max.Y(), (min.Z() + max.Z()) * 0.5);
+                        Point min_size = Point(min.X(), (min.Y() + max.Y()) * 0.5, min.Z());
+                        node->child_[space_part] = new Node(max_size, min_size);
                         break;
                     }
 
                     case SpacePart::Seventh:
                     {
                         // x > 0, y < 0, z > 0
-                        Point max_size = (max.X(), (min.Y() + max.Y()) * 0.5, (min.Z() + max.Z()) * 0.5);
-                        Point min_size = ((min.X() + max.X()) * 0.5, min.Y(), min.Z());
-                        node.child_[space_part] = new Node(max_size, min_size);
+                        Point max_size = Point(max.X(), (min.Y() + max.Y()) * 0.5, (min.Z() + max.Z()) * 0.5);
+                        Point min_size = Point((min.X() + max.X()) * 0.5, min.Y(), min.Z());
+                        node->child_[space_part] = new Node(max_size, min_size);
                         break;
                     }
 
@@ -186,8 +190,8 @@ int DivideSpace(Node& node)
                     {
                         // x < 0, y < 0, z < 0
                         Point max_size = (min + max) * 0.5;
-                        Point min_size = (min.X(), min.Y(), min.Z());
-                        node.child_[space_part] = new Node(max_size, min_size);
+                        Point min_size = Point(min.X(), min.Y(), min.Z());
+                        node->child_[space_part] = new Node(max_size, min_size);
                         break;
                     }
 
@@ -197,24 +201,33 @@ int DivideSpace(Node& node)
                         return -1;
                     }
                 }
-
-                node.child_[space_part]->triangles_.push_back(*triangle);
-                node.triangles_.erase(triangle);
-                std::cout << node.child_[space_part]->triangles_.size() << std::endl;
-                
             }
+            node->child_[space_part]->src_triangles_.push_back(*triangle);
+            // std::cout << "The " << space_part << " child node has size " << node.child_[space_part]->src_triangles_.size() << std::endl;
         }
         else
         {
-            // node.triangles_.push_back(*triangle);
-            std::cout << node.triangles_.size() << std::endl;
+            node->node_triangles_.push_back(*triangle);
+        }
+    }
+
+    std::cout << "The size of this main node "<< node << " after function is " << node->node_triangles_.size() << std::endl;
+
+    for (size_t i = 0; i < 8; i++)
+    {
+        if (node->child_[i])
+        {
+            std::cout << "The " << i << " child node "<< node->child_[i] <<" has size " << node->child_[i]->src_triangles_.size() << std::endl;
         }
     }
 
     for (size_t i = 0; i < 8; i++)
     {
-        if (node.child_[i])
-            DivideSpace(*node.child_[i]);
+        if (node->child_[i])
+        {
+            std::cout << "Working with " << node->child_[i] << " " << i << std::endl;
+            DivideSpace(node->child_[i]);
+        }
     }
 
     return 0;

@@ -14,14 +14,14 @@ namespace SpacePart
 {
 
 enum SpacePart {
-    First   = 1,
-    Second  = 2,
-    Third   = 3,
-    Forth   = 4,
-    Fifth   = 5,
-    Sixth   = 6,
-    Seventh = 7,
-    Eighth  = 8,
+    First,
+    Second,
+    Third,
+    Forth,
+    Fifth,
+    Sixth,
+    Seventh,
+    Eighth,
     Multy   = -1,
 };
 
@@ -36,7 +36,9 @@ class Node
 
         Point MinSize_;
 
-        std::list<Triangle> triangles_{};
+        std::list<Triangle> src_triangles_{};
+
+        std::list<Triangle> node_triangles_{};
         
         Node *parent_ = nullptr;
 
@@ -48,7 +50,7 @@ class Node
             MaxSize_{max_size}, MinSize_{min_size} {}
 
         Node(const Point& max_size, const Point& min_size, const std::list<Triangle> triangle) : 
-            triangles_{triangle}, MaxSize_{max_size}, MinSize_{min_size} {}
+            src_triangles_{triangle}, MaxSize_{max_size}, MinSize_{min_size} {}
 };
 
 //-------------------------------------------------------------------------------//
@@ -85,11 +87,11 @@ class Octree
 
 //-------------------------------------------------------------------------------//
 
-SpacePart::SpacePart PartOfSpace(const Node& node, const Triangle& triangle);
+SpacePart::SpacePart PartOfSpace(const Node* node, const Triangle& triangle);
 
 //-------------------------------------------------------------------------------//
 
-int DivideSpace(Node& node);
+int DivideSpace(Node* node);
 
 //-------------------------------------------------------------------------------//
 

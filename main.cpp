@@ -105,7 +105,7 @@ int main(int argc, char **argv)
 
     Octree oct(MaxSize, MinSize, triangles);
 
-    DivideSpace(*oct.Root());
+    DivideSpace(oct.Root());
 
     // triangles.erase(triangles.begin());
 
