@@ -65,7 +65,9 @@ int main(int argc, char **argv)
 
     const std::clock_t start = clock();
 
-    std::vector<Triangle> triangles;
+    std::list<Triangle> triangles;
+
+    // triangles.reserve(tr_numbers);
 
     double BoundingBoxX = 0, BoundingBoxY = 0, BoundingBoxZ = 0;
 
@@ -101,33 +103,32 @@ int main(int argc, char **argv)
     Point MaxSize{CubeDimension, CubeDimension, CubeDimension};
     Point MinSize{-1 * CubeDimension, -1 * CubeDimension, -1 * CubeDimension};
 
-    Octree my_oct_tree(MaxSize, MinSize, triangles);
+    Octree oct(MaxSize, MinSize, triangles);
 
-    my_oct_tree.OctreeDump();
+    DivideSpace(*oct.Root());
 
-    std::cout << "The count of triangle in space is " << my_oct_tree.GetTriangleCount() << std::endl;
- 
-    std::set<size_t> intersecting_triangles;
+    // triangles.erase(triangles.begin());
 
-    for (size_t i = 0; i < tr_numbers; i++)
-    {
-        for (size_t j = 0; j < tr_numbers; j++)
-        {
-            if (i == j)
-                continue;
-            if (TriangleIntersection(triangles[i], triangles[j]))
-            {
-                // std::cout << "Triangle " << i << " intersects triangle " << j << std::endl;
-                std::cout << "Triangle " << i << " is in " << GetPartOfSpace(my_oct_tree, triangles[i]) << std::endl;
-                intersecting_triangles.insert(i);
-            }
-        }
-    }
+    // std::set<size_t> intersecting_triangles;
 
-    for (auto x: intersecting_triangles)
-    {
-        std::cout << x << std::endl;
-    }
+    // for (size_t i = 0; i < tr_numbers; i++)
+    // {
+    //     for (size_t j = 0; j < tr_numbers; j++)
+    //     {
+    //         if (i == j)
+    //             continue;
+    //         if (TriangleIntersection(triangles[i], triangles[j]))
+    //         {
+    //             std::cout << "Triangle " << i << " is in " << PartOfSpace(*(oct.Root()), triangles[i]) << std::endl;
+    //             intersecting_triangles.insert(i);
+    //         }
+    //     }
+    // }
+
+    // for (auto x: intersecting_triangles)
+    // {
+    //     std::cout << x << std::endl;
+    // }
 
     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 

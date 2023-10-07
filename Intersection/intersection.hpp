@@ -19,6 +19,8 @@ double  Direction(const Point& p1, const Point& p2, const Point& p3);
 
 bool    IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
 
+//-------------------------------------------------------------------------------//
+
 bool    IsPointInTriangle(const Point& p, const Triangle& t);
 
 //-------------------------------------------------------------------------------//
@@ -49,7 +51,9 @@ bool    FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2);
 
 Segment SegmentOfPlanesIntersection(const Plane& p1, const Plane& p2);
 
-bool DistancesAreNotZero(double d1, double d2);
+//-------------------------------------------------------------------------------//
+
+bool    DistancesAreNotZero(double d1, double d2);
 
 //-------------------------------------------------------------------------------//
 
