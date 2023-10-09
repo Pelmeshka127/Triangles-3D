@@ -54,7 +54,7 @@ bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
         AreSegmentsIntersect (t1.Line3(),  t2.Line2())  || 
         AreSegmentsIntersect (t1.Line3(),  t2.Line3())  ) 
     {
-        std::cout << "Segments intersect" << std::endl;
+        // std::cout << "Segments intersect" << std::endl;
         return true;
     }
 
@@ -230,7 +230,7 @@ bool FindTrianglesIntersectionByLine(const Triangle& t1, const Triangle& t2)
     // std::cout << dist_from_t1_to_points[0] << std::endl;
     // std::cout << dist_from_t1_to_points[1] << std::endl;
     // std::cout << dist_from_t1_to_points[2] << std::endl;
-    // std::cout << "From t12 to points of t1:" << std::endl;
+    // std::cout << "From t2 to points of t1:" << std::endl;
     // std::cout << dist_from_t2_to_points[0] << std::endl;
     // std::cout << dist_from_t2_to_points[1] << std::endl;
     // std::cout << dist_from_t2_to_points[2] << std::endl;
@@ -360,7 +360,7 @@ bool DistancesAreNotZero(double d1, double d2)
 {
     using namespace double_numbers;
 
-    return (!IsEqual(d1, 0) && !IsEqual(d2, 0));
+    return (!IsEqual(d1 - d2, 0));
 }
 
 //-------------------------------------------------------------------------------//

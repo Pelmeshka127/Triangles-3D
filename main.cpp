@@ -68,7 +68,7 @@
 
 //     const std::clock_t start = clock();
 
-//     std::list<Triangle> triangles;
+//     std::vector<Triangle> triangles;
 
 //     // triangles.reserve(tr_numbers);
 
@@ -89,6 +89,8 @@
 
 //         Triangle t(p1, p2, p3);
 
+//         // t.TriangleDump();
+
 //         triangles.push_back(t);
 
 //         if (BoundingBoxX < p1.MaxCoordinate(p2, p3, cords::X))
@@ -101,37 +103,37 @@
 //             BoundingBoxZ = p1.MaxCoordinate(p1, p2, cords::Z);
 //     }
 
-//     double CubeDimension = std::max(std::max(BoundingBoxX, BoundingBoxY), BoundingBoxZ);
+//     // double CubeDimension = std::max(std::max(BoundingBoxX, BoundingBoxY), BoundingBoxZ);
 
-//     Point MaxSize{CubeDimension, CubeDimension, CubeDimension};
-//     Point MinSize{-1 * CubeDimension, -1 * CubeDimension, -1 * CubeDimension};
+//     // Point MaxSize{CubeDimension, CubeDimension, CubeDimension};
+//     // Point MinSize{-1 * CubeDimension, -1 * CubeDimension, -1 * CubeDimension};
 
-//     Octree oct(MaxSize, MinSize, triangles);
+//     // Octree oct(MaxSize, MinSize, triangles);
 
-//     DivideSpace(oct.Root());
+//     // DivideSpace(oct.Root());
 
 //     // triangles.erase(triangles.begin());
 
-//     // std::set<size_t> intersecting_triangles;
+//     std::set<size_t> intersecting_triangles;
 
-//     // for (size_t i = 0; i < tr_numbers; i++)
-//     // {
-//     //     for (size_t j = 0; j < tr_numbers; j++)
-//     //     {
-//     //         if (i == j)
-//     //             continue;
-//     //         if (TriangleIntersection(triangles[i], triangles[j]))
-//     //         {
-//     //             std::cout << "Triangle " << i << " is in " << PartOfSpace(*(oct.Root()), triangles[i]) << std::endl;
-//     //             intersecting_triangles.insert(i);
-//     //         }
-//     //     }
-//     // }
+//     for (size_t i = 0; i < tr_numbers; i++)
+//     {
+//         for (size_t j = 0; j < tr_numbers; j++)
+//         {
+//             if (i == j)
+//                 continue;
+//             if (TwoTriangleIntersection(triangles[i], triangles[j]))
+//             {
+//                 // std::cout << "Triangle " << i << " is in " << PartOfSpace(*(oct.Root()), triangles[i]) << std::endl;
+//                 intersecting_triangles.insert(i);
+//             }
+//         }
+//     }
 
-//     // for (auto x: intersecting_triangles)
-//     // {
-//     //     std::cout << x << std::endl;
-//     // }
+//     for (auto x: intersecting_triangles)
+//     {
+//         std::cout << x << std::endl;
+//     }
 
 //     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 
@@ -206,22 +208,6 @@ int main(int argc, char **argv)
 
     TriangleIntersection(intersecting_triangles, oct.Root());
 
-    // int num = 0;
-
-    // for (auto i = triangles.begin(); i != triangles.end(); i++, num++)
-    // {
-    //     for (auto j = triangles.begin(); j != triangles.end(); j++)
-    //     {
-    //         if (i == j)
-    //             continue;
-    //         if (TwoTriangleIntersection(*i, *j))
-    //         {
-    //             // std::cout << "Triangle " << i << " intersects triangle " << j << std::endl;
-    //             intersecting_triangles.insert(num);
-    //         }
-    //     }
-    // }
-
     for (auto x: intersecting_triangles)
     {
         std::cout << x << std::endl;
@@ -232,4 +218,4 @@ int main(int argc, char **argv)
     return 0;
 }
 
-//-------------------------------------------------------------------------------//
+// //-------------------------------------------------------------------------------//

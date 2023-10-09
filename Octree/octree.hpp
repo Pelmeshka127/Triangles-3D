@@ -51,6 +51,8 @@ class Node
 
         Node(const Point& max_size, const Point& min_size, const std::list<Triangle> triangle) : 
             src_triangles_{triangle}, MaxSize_{max_size}, MinSize_{min_size} {}
+
+        void Dump() const;
 };
 
 //-------------------------------------------------------------------------------//
