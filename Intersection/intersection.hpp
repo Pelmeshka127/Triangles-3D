@@ -8,16 +8,24 @@
 
 //-------------------------------------------------------------------------------//
 
-int TriangleIntersection(std::set<size_t>& intersects, Node* const root);
+int FindIntersectionsInNode(Node* const node, bool* FlagArray);
 
 //-------------------------------------------------------------------------------//
 
-int FindIntersectsInNode(std::set<size_t>& intersects, Node* const node);
+int FindIntersectionsWithChildren(Node* const node, const Triangle& tr, bool* FlagArray);
 
 //-------------------------------------------------------------------------------//
 
-int FindIntersectionWithChildren(std::set<size_t>& intersects, const Triangle& triangle, Node* child);
+// int TriangleIntersection(std::set<size_t>& intersects, Node* const root);
 
-//-------------------------------------------------------------------------------//
+// //-------------------------------------------------------------------------------//
+
+// int FindIntersectsInNode(std::set<size_t>& intersects, Node* const node);
+
+// //-------------------------------------------------------------------------------//
+
+// int FindIntersectionWithChildren(std::set<size_t>& intersects, const Triangle& triangle, Node* child);
+
+// //-------------------------------------------------------------------------------//
 
 #endif

@@ -122,7 +122,7 @@ SpacePart::SpacePart PartOfSpace(const Node* node, const Triangle& triangle)
 
 int DivideSpace(Node* node)
 {
-    if (node->src_triangles_.size() <= 8)
+    if (node->src_triangles_.size() <= 32)
     {
         for (auto t = node->src_triangles_.begin(); t != node->src_triangles_.end(); t++)
             node->node_triangles_.push_back(*t);

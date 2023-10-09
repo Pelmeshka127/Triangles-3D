@@ -206,11 +206,21 @@ int main(int argc, char **argv)
 
     std::set<size_t> intersecting_triangles;
 
-    TriangleIntersection(intersecting_triangles, oct.Root());
+    // TriangleIntersection(intersecting_triangles, oct.Root());
 
-    for (auto x: intersecting_triangles)
+    // for (auto x: intersecting_triangles)
+    // {
+    //     std::cout << x << std::endl;
+    // }
+
+    bool *FlagArray = new bool [tr_numbers]{};
+
+    FindIntersectionsInNode(oct.Root(), FlagArray);
+
+    for (size_t i = 0; i < tr_numbers; i++)
     {
-        std::cout << x << std::endl;
+        if (FlagArray[i])
+            std::cout << i << std::endl;
     }
 
     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
