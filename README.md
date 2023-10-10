@@ -17,7 +17,7 @@ cd build/src/
 
 cmake --build .
 
-./triangles <TestFile>
+./triangles
 ```
 
 В данный момент дорабатывается версия для CMake.
