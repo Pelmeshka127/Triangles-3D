@@ -4,7 +4,8 @@
 #include <iostream>
 #include <cmath>
 
-#include "../MathLibs/double_numbers.hpp"
+#include "coordinates.hpp"
+#include "double_numbers.hpp"
 
 //-------------------------------------------------------------------------------//
 

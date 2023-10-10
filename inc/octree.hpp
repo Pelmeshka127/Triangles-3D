@@ -6,7 +6,7 @@
 #include <iterator>
 #include <list>
 
-#include "../Geometry/triangle.hpp"
+#include "triangle.hpp"
 
 //-------------------------------------------------------------------------------//
 

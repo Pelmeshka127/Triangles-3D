@@ -1,11 +1,11 @@
 #ifndef DOUBLE_INTERSECTION_HPP_
 #define DOUBLE_INTERSECTION_HPP_
 
-#include "../Geometry/point.hpp"
-#include "../Geometry/plane.hpp"
-#include "../Geometry/vector.hpp"
-#include "../Geometry/line.hpp"
-#include "../Geometry/triangle.hpp"
+#include "point.hpp"
+#include "plane.hpp"
+#include "vector.hpp"
+#include "line.hpp"
+#include "triangle.hpp"
 
 //-------------------------------------------------------------------------------//
 

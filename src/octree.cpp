@@ -126,25 +126,17 @@ int DivideSpace(Node* node)
     {
         for (auto t = node->src_triangles_.begin(); t != node->src_triangles_.end(); t++)
             node->node_triangles_.push_back(*t);
-        // node->Dump();
         return 0;
     }
 
-    // node->MaxSize_.PrintPoint();
-    // node->MinSize_.PrintPoint();
-
-    // std::cout << "The size of this main node "<< node << " is " << node->src_triangles_.size() << std::endl;
     for (auto triangle = node->src_triangles_.begin(); triangle != node->src_triangles_.end(); triangle++)
     {
         int space_part = PartOfSpace(node, *triangle);
-        // std::cout << space_part << std::endl;
 
         if (space_part != SpacePart::Multy)
         {
-            // std::cout << node->child_[space_part] << " and " << space_part << std::endl;
             if (node->child_[space_part] == nullptr)
             {
-                // std::cout << space_part << std::endl;
                 Point min = node->MinSize_;
 
                 Point max = node->MaxSize_;
@@ -238,32 +230,18 @@ int DivideSpace(Node* node)
                 }
             }
             node->child_[space_part]->src_triangles_.push_back(*triangle);
-            // triangle = node->src_triangles_.erase(triangle);
-            // std::cout << "The " << space_part << " child node has size " << node->child_[space_part]->src_triangles_.size() << std::endl;
         }
+
         else
         {
             node->node_triangles_.push_back(*triangle);
         }
     }
 
-    // node->Dump();
-
-    // std::cout << "The size of this main node "<< node << " after function is " << node->node_triangles_.size() << std::endl;
-
-    // for (size_t i = 0; i < 8; i++)
-    // {
-    //     if (node->child_[i])
-    //     {
-    //         std::cout << "The " << i << " child node "<< node->child_[i] <<" has size " << node->child_[i]->src_triangles_.size() << std::endl;
-    //     }
-    // }
-
     for (size_t i = 0; i < 8; i++)
     {
         if (node->child_[i])
         {
-            // std::cout << "Working with " << node->child_[i] << " " << i << std::endl;
             DivideSpace(node->child_[i]);
         }
     }

@@ -8,21 +8,16 @@ git clone git@github.com:Pelmeshka127/Triangles-3D.git
 
 cd Triangles-3D
 ```
-Запуск через Makefile
-```
-make
 
-./triangles
-```
 Запуск через CMake
 ```
 cmake -B build
 
-cd build
+cd build/src/
 
 cmake --build .
 
-./triangles
+./triangles <TestFile>
 ```
 
 В данный момент дорабатывается версия для CMake.

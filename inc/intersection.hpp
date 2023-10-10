@@ -4,7 +4,7 @@
 #include <set>
 
 #include "double_intersection.hpp"
-#include "../Octree/octree.hpp"
+#include "octree.hpp"
 
 //-------------------------------------------------------------------------------//
 

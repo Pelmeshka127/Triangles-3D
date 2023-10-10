@@ -1,6 +1,6 @@
 #include "triangle.hpp"
-#include "../MathLibs/coordinates.hpp"
-#include "../Intersection/double_intersection.hpp"
+#include "coordinates.hpp"
+#include "double_intersection.hpp"
 
 //-------------------------------------------------------------------------------//
 
@@ -55,8 +55,6 @@ Plane Triangle::GetPlane() const
 
 bool Triangle::IsPointInTriangle(const Point& point) const
 {
-    
-
     return (p1_.MinCoordinate(p2_, p3_, cords::X) <= point.X() && point.X() <= p1_.MaxCoordinate(p2_, p3_, cords::X) &&
             p1_.MinCoordinate(p2_, p3_, cords::Y) <= point.Y() && point.Y() <= p1_.MaxCoordinate(p2_, p3_, cords::Y) &&
             p1_.MinCoordinate(p2_, p3_, cords::Z) <= point.Z() && point.Z() <= p1_.MaxCoordinate(p2_, p3_, cords::Z));

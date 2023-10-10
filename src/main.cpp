@@ -3,11 +3,11 @@
 #include <fstream>
 #include <set>
 
-#include "Geometry/triangle.hpp"
-#include "Intersection/double_intersection.hpp"
-#include "Octree/octree.hpp"
-#include "MathLibs/coordinates.hpp"
-#include "Intersection/intersection.hpp"
+#include "triangle.hpp"
+#include "double_intersection.hpp"
+#include "octree.hpp"
+#include "coordinates.hpp"
+#include "intersection.hpp"
 
 //-------------------------------------------------------------------------------//
 
@@ -181,8 +181,6 @@ int main(int argc, char **argv)
 
         t.number = i;
 
-        // std::cout << t.number << std::endl;
-
         triangles.push_back(t);
 
         if (BoundingBoxX < p1.MaxCoordinate(p2, p3, cords::X))
@@ -205,13 +203,6 @@ int main(int argc, char **argv)
     DivideSpace(oct.Root());
 
     std::set<size_t> intersecting_triangles;
-
-    // TriangleIntersection(intersecting_triangles, oct.Root());
-
-    // for (auto x: intersecting_triangles)
-    // {
-    //     std::cout << x << std::endl;
-    // }
 
     bool *FlagArray = new bool [tr_numbers]{};
 
