@@ -7,6 +7,12 @@
 #include "line.hpp"
 #include "triangle.hpp"
 
+#include <vector>
+
+//-------------------------------------------------------------------------------//
+
+bool    IsExceptionCase(const Triangle& t1, const Triangle& t2);
+
 //-------------------------------------------------------------------------------//
 
 bool    AreSegmentsIntersect(const Segment& l1, const Segment& l2);

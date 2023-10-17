@@ -4,9 +4,15 @@
 
 int FindIntersectionsInNode(Node* const node, bool* FlagArray)
 {
-    for (auto t1 = node->node_triangles_.begin(); t1 != std::prev(node->node_triangles_.end()); t1++)
+    auto prev_end = std::prev(node->node_triangles_.end());
+
+    auto end      = node->node_triangles_.end();
+
+    auto begin    = node->node_triangles_.begin();
+
+    for (auto t1 = begin; t1 != prev_end; ++t1)
     {
-        for (auto t2 = std::next(t1); t2 != node->node_triangles_.end(); t2++)
+        for (auto t2 = std::next(t1); t2 != end; t2++)
         {
             if (TwoTriangleIntersection(*t1, *t2))
             {
@@ -38,7 +44,11 @@ int FindIntersectionsWithChildren(Node* const node, const Triangle& tr, bool* Fl
 
         std::list<Triangle> ChildList = node->child_[i]->node_triangles_;
 
-        for (auto t1 = ChildList.begin(); t1 != ChildList.end(); t1++)
+        auto begin  = ChildList.begin();
+
+        auto end    = ChildList.end();
+
+        for (auto t1 = begin; t1 != end; ++t1)
         {
             if (TwoTriangleIntersection(*t1, tr))
             {

@@ -76,6 +76,15 @@ double Point::MaxCoordinate(const Point& p1, const Point& p2, const int coordina
 
 //-------------------------------------------------------------------------------//
 
+bool Point::operator==(const Point p) const
+{
+    return (double_numbers::IsEqual(x_, p.x_) &&
+            double_numbers::IsEqual(y_, p.y_) &&
+            double_numbers::IsEqual(z_, p.z_));
+}
+
+//-------------------------------------------------------------------------------//
+
 Point Point::operator=(const Point p) const
 {
     return Point(p.x_, p.y_, p.z_);

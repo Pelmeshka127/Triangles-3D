@@ -16,16 +16,4 @@ int FindIntersectionsWithChildren(Node* const node, const Triangle& tr, bool* Fl
 
 //-------------------------------------------------------------------------------//
 
-// int TriangleIntersection(std::set<size_t>& intersects, Node* const root);
-
-// //-------------------------------------------------------------------------------//
-
-// int FindIntersectsInNode(std::set<size_t>& intersects, Node* const node);
-
-// //-------------------------------------------------------------------------------//
-
-// int FindIntersectionWithChildren(std::set<size_t>& intersects, const Triangle& triangle, Node* child);
-
-// //-------------------------------------------------------------------------------//
-
 #endif

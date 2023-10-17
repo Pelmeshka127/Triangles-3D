@@ -129,7 +129,11 @@ int DivideSpace(Node* node)
         return 0;
     }
 
-    for (auto triangle = node->src_triangles_.begin(); triangle != node->src_triangles_.end(); triangle++)
+    auto begin = node->src_triangles_.begin();
+
+    auto end   = node->src_triangles_.end();
+
+    for (auto triangle = begin; triangle != end; ++triangle)
     {
         int space_part = PartOfSpace(node, *triangle);
 

@@ -34,6 +34,8 @@ class Point
         double  MaxCoordinate(const Point& p1, const Point& p2, const int coordinate) const;
 
 
+        bool   operator==(const Point p) const;
+
         Point   operator=(const Point p) const;
 
         Point   operator-(const Point& p) const;
