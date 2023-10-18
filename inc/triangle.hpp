@@ -20,7 +20,7 @@ enum TriangleType
 {
     Point_t,
     Segment_t,
-    Trinagle_t,
+    Triangle_t,
 };
 
 //-------------------------------------------------------------------------------//
@@ -44,15 +44,20 @@ class Triangle
 
     public:
 
-        int number  = NonInitialized;
+        int number          = NonInitialized;
 
-        bool status = NonIntersect;
+        bool status         = NonIntersect;
+
+        TriangleType type_  = Triangle_t;
 
         Triangle(const Point &p1, const Point &p2, const Point &p3) : 
             p1_{p1}, p2_{p2}, p3_{p3}, 
             l1_{Segment(p1, p2)}, l2_{Segment(p2, p3)}, l3_{Segment(p3, p1)},
             v1_{Vector(p1_, p2_)}, v2_{Vector(p2_, p3_)}, v3_{Vector(p3_, p1_)},
-            triangle_plane_{Plane(p1, p2, p3)} {}
+            triangle_plane_{Plane(p1, p2, p3)} 
+        {
+            type_ = GetType();
+        }
 
         ~Triangle() {}
 

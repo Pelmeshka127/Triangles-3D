@@ -97,7 +97,7 @@ TriangleType Triangle::GetType() const
         return Segment_t;
     }
 
-    return Trinagle_t;
+    return Triangle_t;
 }
 
 //-------------------------------------------------------------------------------//
@@ -114,15 +114,25 @@ void Triangle::TriangleDump() const
     
     p3_.PrintPoint();
 
-    // std::cout << "The line segments of triangle are:" << std::endl;
+    std::cout << "The line segments of triangle are:" << std::endl;
 
-    // l1_.PrintSegment();
+    l1_.PrintSegment();
 
-    // l2_.PrintSegment();
+    l2_.PrintSegment();
 
-    // l3_.PrintSegment();
+    l3_.PrintSegment();
+
+    std::cout << "The vectors of triangle are:" << std::endl;
+
+    v1_.PrintVector();
+
+    v2_.PrintVector();
+
+    v3_.PrintVector();
 
     std::cout << "Triangle has number " << number << std::endl;
+
+    std::cout << "Triangle has type " << type_ << std::endl;
 
     std::cout << "Plane equation of the triangle" << std::endl;
     

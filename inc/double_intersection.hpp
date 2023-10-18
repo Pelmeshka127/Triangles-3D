@@ -11,11 +11,19 @@
 
 //-------------------------------------------------------------------------------//
 
-bool    IsExceptionCase(const Triangle& t1, const Triangle& t2);
+bool    TriangleIntersection(const Triangle& t1, const Triangle& t2);
 
 //-------------------------------------------------------------------------------//
 
-bool    AreSegmentsIntersect(const Segment& l1, const Segment& l2);
+bool    PointPointIntersection(const Point& p1, const Point& p2);
+
+bool PointSegmentIntersection(const Triangle& t1, const Triangle& t2);
+
+bool TriangleSegmentIntersection(const Triangle& t1, const Triangle& t2);
+
+//-------------------------------------------------------------------------------//
+
+bool    SegmentSegmentIntersection(const Segment& l1, const Segment& l2);
 
 //-------------------------------------------------------------------------------//
 
@@ -27,11 +35,11 @@ bool    IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
 
 //-------------------------------------------------------------------------------//
 
-bool    IsPointInTriangle(const Point& p, const Triangle& t);
+bool    TrianglePointIntersection(const Point& p, const Triangle& t);
 
 //-------------------------------------------------------------------------------//
 
-bool    TwoTriangleIntersection(const Triangle& t1, const Triangle& t2);
+bool    TriangleTriangleIntersection(const Triangle& t1, const Triangle& t2);
 
 //-------------------------------------------------------------------------------//
 

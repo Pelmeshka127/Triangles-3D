@@ -4,7 +4,93 @@
 
 //-------------------------------------------------------------------------------//
 
-bool TwoTriangleIntersection(const Triangle& t1, const Triangle& t2)
+bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
+{
+    TriangleType t1_type = t1.GetType();
+
+    TriangleType t2_type = t2.GetType();
+
+    switch (t1_type)
+    {
+        case Point_t:
+        {
+            switch (t2_type)
+            {
+                case Point_t:
+                    return PointPointIntersection(t1.P1(), t2.P1());
+                
+                case Segment_t:
+                    return PointSegmentIntersection(t1, t2);
+
+                case Triangle_t:
+                    return TrianglePointIntersection(t1.P1(), t2);
+            }
+        }
+        
+        break;
+
+        case Segment_t:
+        {
+            switch (t2_type)
+            {
+                case Point_t:
+                    return PointSegmentIntersection(t1, t2);
+
+                case Segment_t:
+                    return SegmentSegmentIntersection(t1.Line1(), t2.Line1());
+
+                case Triangle_t:
+                    return TriangleSegmentIntersection(t1, t2);
+            }
+        }
+
+        break;
+
+        case Triangle_t:
+        {
+            switch (t2_type)
+            {
+                case Point_t:
+                    return TrianglePointIntersection(t2.P1(), t1);
+
+                case Segment_t:
+                    return TriangleSegmentIntersection(t1, t2);
+
+                case Triangle_t:
+                    return TriangleTriangleIntersection(t1, t2);
+            }
+        }
+
+        break;
+    }
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool PointPointIntersection(const Point& p1, const Point& p2)
+{
+    return (p1 == p2);
+}
+
+//-------------------------------------------------------------------------------//
+
+bool PointSegmentIntersection(const Triangle& t1, const Triangle& t2)
+{
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool TriangleSegmentIntersection(const Triangle& t1, const Triangle& t2)
+{
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool TriangleTriangleIntersection(const Triangle& t1, const Triangle& t2)
 {
     // сначала рассмотрим случай треугольников, лежащих в параллельных
     // или совпадающих плоскостях
@@ -39,27 +125,20 @@ bool TwoTriangleIntersection(const Triangle& t1, const Triangle& t2)
 
 //-------------------------------------------------------------------------------//
 
-// bool IsExceptionCase(const Triangle& t1, const Triangle& t2)
-// {
-//     return t1.IsPoint() || t2.IsPoint() || t1.IsSegment() || t2.IsSegment();
-// }
-
-//-------------------------------------------------------------------------------//
-
 bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
 {
     // Проверка всех отрезков одного треугольника на пересечние
     // Со всеми отрезками другого треугольника
 
-    if (AreSegmentsIntersect (t1.Line1(),  t2.Line1())  || 
-        AreSegmentsIntersect (t1.Line1(),  t2.Line2())  || 
-        AreSegmentsIntersect (t1.Line1(),  t2.Line3())  ||
-        AreSegmentsIntersect (t1.Line2(),  t2.Line1())  || 
-        AreSegmentsIntersect (t1.Line2(),  t2.Line2())  || 
-        AreSegmentsIntersect (t1.Line2(),  t2.Line3())  ||
-        AreSegmentsIntersect (t1.Line3(),  t2.Line1())  || 
-        AreSegmentsIntersect (t1.Line3(),  t2.Line2())  || 
-        AreSegmentsIntersect (t1.Line3(),  t2.Line3())  ) 
+    if (SegmentSegmentIntersection (t1.Line1(),  t2.Line1())  || 
+        SegmentSegmentIntersection (t1.Line1(),  t2.Line2())  || 
+        SegmentSegmentIntersection (t1.Line1(),  t2.Line3())  ||
+        SegmentSegmentIntersection (t1.Line2(),  t2.Line1())  || 
+        SegmentSegmentIntersection (t1.Line2(),  t2.Line2())  || 
+        SegmentSegmentIntersection (t1.Line2(),  t2.Line3())  ||
+        SegmentSegmentIntersection (t1.Line3(),  t2.Line1())  || 
+        SegmentSegmentIntersection (t1.Line3(),  t2.Line2())  || 
+        SegmentSegmentIntersection (t1.Line3(),  t2.Line3())  ) 
     {
         // std::cout << "Segments intersect" << std::endl;
         return true;
@@ -68,7 +147,7 @@ bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
     // Достаточно проверить одну точку каждого треугольника 
     // Чтобы понять не находится ли один треугольник внутри другого
 
-    else if (IsPointInTriangle(t2.P1(), t1) || IsPointInTriangle(t1.P1(), t2))
+    else if (TrianglePointIntersection(t2.P1(), t1) || TrianglePointIntersection(t1.P1(), t2))
     {
         // std::cout << "One is in another" << std::endl;
         return true;
@@ -80,7 +159,7 @@ bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
 
 //-------------------------------------------------------------------------------//
 
-bool AreSegmentsIntersect(const Segment& l1, const Segment& l2)
+bool SegmentSegmentIntersection(const Segment& l1, const Segment& l2)
 {
     double drc1 = Direction(l2.Point1(), l2.Point2(), l1.Point1() );
     // std::cout << drc1 << std::endl;
@@ -134,7 +213,7 @@ bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3)
 
 //-------------------------------------------------------------------------------//
 
-bool IsPointInTriangle(const Point& p, const Triangle& t)
+bool TrianglePointIntersection(const Point& p, const Triangle& t)
 {
     Vector AB(t.P1(), t.P2());
     Vector AP(t.P1(), p);
