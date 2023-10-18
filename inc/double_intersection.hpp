@@ -17,21 +17,17 @@ bool    TriangleIntersection(const Triangle& t1, const Triangle& t2);
 
 bool    PointPointIntersection(const Point& p1, const Point& p2);
 
-bool PointSegmentIntersection(const Triangle& t1, const Triangle& t2);
+//-------------------------------------------------------------------------------//
 
-bool TriangleSegmentIntersection(const Triangle& t1, const Triangle& t2);
+bool    PointSegmentIntersection(const Point& p, const Segment& l);
+
+//-------------------------------------------------------------------------------//
+
+bool    TriangleSegmentIntersection(const Triangle& t, const Segment& l);
 
 //-------------------------------------------------------------------------------//
 
 bool    SegmentSegmentIntersection(const Segment& l1, const Segment& l2);
-
-//-------------------------------------------------------------------------------//
-
-double  Direction(const Point& p1, const Point& p2, const Point& p3);
-
-//-------------------------------------------------------------------------------//
-
-bool    IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
 
 //-------------------------------------------------------------------------------//
 
@@ -44,6 +40,18 @@ bool    TriangleTriangleIntersection(const Triangle& t1, const Triangle& t2);
 //-------------------------------------------------------------------------------//
 
 bool    CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2);
+
+//-------------------------------------------------------------------------------//
+
+Point   PlaneSegmentIntersection(const Plane& p, const Segment& l);
+
+//-------------------------------------------------------------------------------//
+
+double  Direction(const Point& p1, const Point& p2, const Point& p3);
+
+//-------------------------------------------------------------------------------//
+
+bool    IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
 
 //-------------------------------------------------------------------------------//
 

@@ -74,6 +74,32 @@ Plane Triangle::GetPlane() const
 
 //-------------------------------------------------------------------------------//
 
+Segment Triangle::GetNotZeroLine() const
+{
+    double v1_length  = v1_.SqrtLength();
+
+    double v2_length  = v2_.SqrtLength();
+
+    double v3_length  = v3_.SqrtLength();
+
+    double max_length = std::max(v1_length, std::max(v2_length, v3_length));
+
+    using namespace double_numbers;
+
+    if (IsEqual(v1_length, max_length))
+        return l1_;
+
+    if (IsEqual(v2_length, max_length))
+        return l2_;
+
+    if (IsEqual(v3_length, max_length))
+        return l3_;
+
+    return l1_;
+}
+
+//-------------------------------------------------------------------------------//
+
 bool Triangle::IsPointInTriangle(const Point& point) const
 {
     return (p1_.MinCoordinate(p2_, p3_, cords::X) <= point.X() && point.X() <= p1_.MaxCoordinate(p2_, p3_, cords::X) &&

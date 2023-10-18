@@ -59,7 +59,7 @@ class Vector
         bool    operator==(const Vector &v) const;
 
 
-        double  Length() const;
+        double  SqrtLength() const;
 
         double  DotProduct(const Vector &v1, const Vector &v2) const;
 

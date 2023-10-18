@@ -21,6 +21,8 @@ class Point
 
         ~Point() {}
 
+        bool    IsValid() const;
+
         double  X() const;
         
         double  Y() const;

@@ -52,9 +52,9 @@ class Triangle
 
         Triangle(const Point &p1, const Point &p2, const Point &p3) : 
             p1_{p1}, p2_{p2}, p3_{p3}, 
-            l1_{Segment(p1, p2)}, l2_{Segment(p2, p3)}, l3_{Segment(p3, p1)},
+            l1_{Segment(p1_, p2_)}, l2_{Segment(p2_, p3_)}, l3_{Segment(p3_, p1_)},
             v1_{Vector(p1_, p2_)}, v2_{Vector(p2_, p3_)}, v3_{Vector(p3_, p1_)},
-            triangle_plane_{Plane(p1, p2, p3)} 
+            triangle_plane_{Plane(p1_, p2_, p3_)} 
         {
             type_ = GetType();
         }
@@ -82,6 +82,8 @@ class Triangle
         Plane   GetPlane()  const;
 
         TriangleType GetType() const;
+
+        Segment GetNotZeroLine() const;
 
         bool    IsPointInTriangle(const Point& point) const;
 

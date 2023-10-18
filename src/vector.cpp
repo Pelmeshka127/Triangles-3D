@@ -125,9 +125,9 @@ Point Vector::operator+(const Point& p) const
 
 //-------------------------------------------------------------------------------//
 
-double Vector::Length() const
+double Vector::SqrtLength() const
 {
-    return (std::sqrt(x_ * x_ + y_ * y_ + z_ * z_));
+    return (x_ * x_ + y_ * y_ + z_ * z_);
 }
 
 //-------------------------------------------------------------------------------//

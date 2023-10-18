@@ -20,7 +20,7 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
                     return PointPointIntersection(t1.P1(), t2.P1());
                 
                 case Segment_t:
-                    return PointSegmentIntersection(t1, t2);
+                    return PointSegmentIntersection(t1.P1(), t2.GetNotZeroLine());
 
                 case Triangle_t:
                     return TrianglePointIntersection(t1.P1(), t2);
@@ -34,13 +34,13 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
             switch (t2_type)
             {
                 case Point_t:
-                    return PointSegmentIntersection(t1, t2);
+                    return PointSegmentIntersection(t2.P1(), t1.GetNotZeroLine());
 
                 case Segment_t:
-                    return SegmentSegmentIntersection(t1.Line1(), t2.Line1());
+                    return SegmentSegmentIntersection(t1.GetNotZeroLine(), t2.GetNotZeroLine());
 
                 case Triangle_t:
-                    return TriangleSegmentIntersection(t1, t2);
+                    return TriangleSegmentIntersection(t2, t1.GetNotZeroLine());
             }
         }
 
@@ -54,7 +54,7 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
                     return TrianglePointIntersection(t2.P1(), t1);
 
                 case Segment_t:
-                    return TriangleSegmentIntersection(t1, t2);
+                    return TriangleSegmentIntersection(t1, t2.GetNotZeroLine());
 
                 case Triangle_t:
                     return TriangleTriangleIntersection(t1, t2);
@@ -76,15 +76,33 @@ bool PointPointIntersection(const Point& p1, const Point& p2)
 
 //-------------------------------------------------------------------------------//
 
-bool PointSegmentIntersection(const Triangle& t1, const Triangle& t2)
+bool PointSegmentIntersection(const Point& p, const Segment& l)
 {
-    return false;
+    return IsOnSegment(l.Point1(), l.Point2(), p);
 }
 
 //-------------------------------------------------------------------------------//
 
-bool TriangleSegmentIntersection(const Triangle& t1, const Triangle& t2)
+bool TriangleSegmentIntersection(const Triangle& t, const Segment& l)
 {
+    if (TrianglePointIntersection(l.Point1(), t) || TrianglePointIntersection(l.Point2(), t))
+        return true;
+
+    if (SegmentSegmentIntersection(t.Line1(), l) ||
+        SegmentSegmentIntersection(t.Line2(), l) ||
+        SegmentSegmentIntersection(t.Line3(), l))
+    {
+        return true;
+    }
+
+    Point plane_point = PlaneSegmentIntersection(t.GetPlane(), l);
+
+    if (!plane_point.IsValid())
+        return false;
+
+    if (PointSegmentIntersection(plane_point, l) && TrianglePointIntersection(plane_point, t))
+        return true;
+
     return false;
 }
 
@@ -121,6 +139,40 @@ bool TriangleTriangleIntersection(const Triangle& t1, const Triangle& t2)
     }
 
     return false;
+}
+
+//-------------------------------------------------------------------------------//
+
+Point PlaneSegmentIntersection(const Plane& p, const Segment& l)
+{
+    using namespace double_numbers;
+
+    double denominator = l.DirVector().DotProduct(p.n(), l.DirVector());
+
+    double t = 0;
+
+    if (IsEqual(denominator, 0))
+    {
+        if (IsEqual(p.A() * l.Point1().X() + p.B() * l.Point1().Y() + p.C() * l.Point1().Z() + p.D(), 0))
+        {
+            t = 0;
+            return l.Point1();   
+        }
+        
+        else
+            return Point();
+    }
+
+    else
+    {
+        t = p.A() * l.Point1().X() + p.B() * l.Point1().Y() + p.C() * l.Point1().Z() + p.D();
+
+        t = -1 * t / denominator;
+
+        return Point(l.Point1().X() + t * l.DirVector().X() +
+                     l.Point1().Y() + t * l.DirVector().Y() +
+                     l.Point1().Z() + t * l.DirVector().Z());
+    }
 }
 
 //-------------------------------------------------------------------------------//
