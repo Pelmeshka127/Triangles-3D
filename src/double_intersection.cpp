@@ -17,12 +17,15 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
             switch (t2_type)
             {
                 case Point_t:
+                    // std::cout << "PointPoint for " << t1.number << " and " << t2.number<< std::endl;
                     return PointPointIntersection(t1.P1(), t2.P1());
                 
                 case Segment_t:
+                // std::cout << "PointSegment for " << t1.number << " and " << t2.number<< std::endl;
                     return PointSegmentIntersection(t1.P1(), t2.GetNotZeroLine());
 
                 case Triangle_t:
+                // std::cout << "PointTrinagle for " << t1.number << " and " << t2.number<< std::endl;
                     return TrianglePointIntersection(t1.P1(), t2);
             }
         }
@@ -34,12 +37,15 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
             switch (t2_type)
             {
                 case Point_t:
+                // std::cout << "SegmentPoint for " << t1.number << " and " << t2.number<< std::endl;
                     return PointSegmentIntersection(t2.P1(), t1.GetNotZeroLine());
 
                 case Segment_t:
+                // std::cout << "SegmentSegment for " << t1.number << " and " << t2.number<< std::endl;
                     return SegmentSegmentIntersection(t1.GetNotZeroLine(), t2.GetNotZeroLine());
 
                 case Triangle_t:
+                // std::cout << "SegmentTriangle for " << t1.number << " and " << t2.number<< std::endl;
                     return TriangleSegmentIntersection(t2, t1.GetNotZeroLine());
             }
         }
@@ -51,12 +57,15 @@ bool TriangleIntersection(const Triangle& t1, const Triangle& t2)
             switch (t2_type)
             {
                 case Point_t:
+                // std::cout << "TrianglePoint for " << t1.number << " and " << t2.number<< std::endl;
                     return TrianglePointIntersection(t2.P1(), t1);
 
                 case Segment_t:
+                // std::cout << "TriangleSegment for " << t1.number << " and " << t2.number<< std::endl;
                     return TriangleSegmentIntersection(t1, t2.GetNotZeroLine());
 
                 case Triangle_t:
+                // std::cout << "TriangleTriangle for " << t1.number << " and " << t2.number<< std::endl;
                     return TriangleTriangleIntersection(t1, t2);
             }
         }
@@ -86,14 +95,22 @@ bool PointSegmentIntersection(const Point& p, const Segment& l)
 bool TriangleSegmentIntersection(const Triangle& t, const Segment& l)
 {
     if (TrianglePointIntersection(l.Point1(), t) || TrianglePointIntersection(l.Point2(), t))
-        return true;
-
-    if (SegmentSegmentIntersection(t.Line1(), l) ||
-        SegmentSegmentIntersection(t.Line2(), l) ||
-        SegmentSegmentIntersection(t.Line3(), l))
     {
+        // std::cout << "here" << std::endl;
         return true;
     }
+
+    // if (SegmentSegmentIntersection(t.Line1(), l) ||
+    //     SegmentSegmentIntersection(t.Line2(), l) ||
+    //     SegmentSegmentIntersection(t.Line3(), l))
+    // {
+    //     t.Line1().PrintSegment();
+    //     // t.Line2().PrintSegment();
+    //     // t.Line3().PrintSegment();
+    //     // l.PrintSegment();
+    //     std::cout << "here" << std::endl;
+    //     return true;
+    // }
 
     Point plane_point = PlaneSegmentIntersection(t.GetPlane(), l);
 
@@ -213,6 +230,8 @@ bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
 
 bool SegmentSegmentIntersection(const Segment& l1, const Segment& l2)
 {
+    // l1.PrintSegment();
+    // l2.PrintSegment();
     double drc1 = Direction(l2.Point1(), l2.Point2(), l1.Point1() );
     // std::cout << drc1 << std::endl;
     
@@ -267,20 +286,41 @@ bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3)
 
 bool TrianglePointIntersection(const Point& p, const Triangle& t)
 {
-    Vector AB(t.P1(), t.P2());
-    Vector AP(t.P1(), p);
+    using namespace double_numbers;
 
-    Vector BC(t.P2(), t.P3());
-    Vector BP(t.P2(), p);
+    if (!IsEqual(t.GetPlane().A() * p.X() + t.GetPlane().B() * p.Y() + t.GetPlane().C() * p.Z() + t.GetPlane().D(), 0))
+        return false;
 
-    Vector CA(t.P3(), t.P1());
-    Vector CP(t.P3(), p);
+    if (!t.IsPointInTriangle(p))
+        return false;
 
-    double d1 = AB.CrossProductValue(AB, AP);
-    double d2 = BC.CrossProductValue(BC, BP);
-    double d3 = CA.CrossProductValue(CA, CP);
+    return true;
+    // // Vector AB(t.P1(), t.P2());
+    // Vector AP(t.P1(), p);
 
-    return (d1 * d2 >= 0 && d1 * d3 >=0 && d2 * d3 >= 0);
+    // // Vector BC(t.P2(), t.P3());
+    // Vector BP(t.P2(), p);
+
+    // // Vector CA(t.P3(), t.P1());
+    // Vector CP(t.P3(), p);
+
+    // AP.PrintVector();
+    // BP.PrintVector();
+    // CP.PrintVector();
+
+    // double d1 = t.Vector1().CrossProductValue(t.Vector1(), AP);
+    // double d2 = t.Vector2().CrossProductValue(t.Vector2(), BP);
+    // double d3 = t.Vector3().CrossProductValue(t.Vector3(), CP);
+
+    // std::cout << d1 << " " << d2 << " " << d3 << std::endl;
+
+    // t.TriangleDump();
+
+    // p.PrintPoint();
+
+    // // std::cout << (d1 * d2 >= 0 && d1 * d3 >=0 && d2 * d3 >= 0) <<std::endl;
+
+    // return (d1 * d2 > 0 && d1 * d3 > 0 && d2 * d3 > 0);
 }
 
 //-------------------------------------------------------------------------------//
