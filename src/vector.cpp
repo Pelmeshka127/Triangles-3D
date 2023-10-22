@@ -132,13 +132,6 @@ double Vector::SqrtLength() const
 
 //-------------------------------------------------------------------------------//
 
-// double Vector::DotProduct(const Vector& v, const Point& p) const
-// {
-//     return (v.x_ * p.X() + v.y_ * p.Y() + v.z_ * p.Z());
-// }
-
-//-------------------------------------------------------------------------------//
-
 double Vector::DotProduct(const Vector &v1, const Vector &v2) const
 {
     return (v1.x_ * v2.x_ + v1.y_ * v2.y_ + v1.z_ * v2.z_);

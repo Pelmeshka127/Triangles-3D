@@ -30,6 +30,8 @@ void Segment::PrintSegment() const
     FirstPoint_.PrintPoint();
     
     SecondPoint_.PrintPoint();
+
+    DirectionVector_.PrintVector();
     
     std::cout << "//------------//" << std::endl;
 }

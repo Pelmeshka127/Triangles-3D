@@ -100,17 +100,12 @@ bool TriangleSegmentIntersection(const Triangle& t, const Segment& l)
         return true;
     }
 
-    // if (SegmentSegmentIntersection(t.Line1(), l) ||
-    //     SegmentSegmentIntersection(t.Line2(), l) ||
-    //     SegmentSegmentIntersection(t.Line3(), l))
-    // {
-    //     t.Line1().PrintSegment();
-    //     // t.Line2().PrintSegment();
-    //     // t.Line3().PrintSegment();
-    //     // l.PrintSegment();
-    //     std::cout << "here" << std::endl;
-    //     return true;
-    // }
+    if (SegmentSegmentIntersection(t.Line1(), l) ||
+        SegmentSegmentIntersection(t.Line2(), l) ||
+        SegmentSegmentIntersection(t.Line3(), l))
+    {
+        return true;
+    }
 
     Point plane_point = PlaneSegmentIntersection(t.GetPlane(), l);
 
@@ -228,49 +223,39 @@ bool CoplanarTrianglesIntersection(const Triangle& t1, const Triangle& t2)
 
 //-------------------------------------------------------------------------------//
 
-bool SegmentSegmentIntersection(const Segment& l1, const Segment& l2)
+Point LineIntersection(const Segment& l1, const Segment& l2)
 {
-    // l1.PrintSegment();
-    // l2.PrintSegment();
-    double drc1 = Direction(l2.Point1(), l2.Point2(), l1.Point1() );
-    // std::cout << drc1 << std::endl;
-    
-    double drc2 = Direction(l2.Point1(), l2.Point2(), l1.Point2());
-    // std::cout << drc2 << std::endl;
-    
-    double drc3 = Direction(l1.Point1(), l1.Point2(), l2.Point1() );
-    // std::cout << drc3 << std::endl;
-    
-    double drc4 = Direction(l1.Point1(), l1.Point2(), l2.Point2());
-    // std::cout << drc4 << std::endl;
+    double param = (l2.Point1().X() - l1.Point1().X()) / (l1.DirVector().X() - l2.DirVector().X());
 
-    if ((drc1 * drc2 < 0) && (drc3 * drc4 < 0))
-        return true;
+    Point p1 = Point(l1.Point1().X() + param * l1.DirVector().X(), l1.Point1().Y() + param * l1.DirVector().Y(), l1.Point1().Z() + param * l1.DirVector().Z());
 
-    else if (drc1 == 0 && IsOnSegment(l2.Point1(), l2.Point2(), l1.Point1()))
-        return true;
+    if (p1.IsValid())
+        return p1;
 
-    else if (drc2 == 0 && IsOnSegment(l2.Point1(), l2.Point2(), l1.Point2()))
-        return true;
+    param = (l2.Point1().Y() - l1.Point1().Y()) / (l1.DirVector().Y() - l2.DirVector().Y());
 
-    else if (drc3 == 0 && IsOnSegment(l1.Point1(), l1.Point2(), l2.Point1()))
-        return true;
+    Point p2 = Point(l1.Point1().X() + param * l1.DirVector().X(), l1.Point1().Y() + param * l1.DirVector().Y(), l1.Point1().Z() + param * l1.DirVector().Z());
 
-    else if (drc4 == 0 && IsOnSegment(l1.Point1(), l1.Point2(), l2.Point2()))
-        return true;
+    if (p2.IsValid())
+        return p2;
 
-    return false;
+    param = (l2.Point1().Z() - l1.Point1().Z()) / (l1.DirVector().Z() - l2.DirVector().Z());
+
+    Point p3 = Point(l1.Point1().X() + param * l1.DirVector().X(), l1.Point1().Y() + param * l1.DirVector().Y(), l1.Point1().Z() + param * l1.DirVector().Z());
+
+    return p3;
 }
 
 //-------------------------------------------------------------------------------//
 
-double Direction(const Point& p1, const Point& p2, const Point& p3)
+bool SegmentSegmentIntersection(const Segment& l1, const Segment& l2)
 {
-    Vector v1(p1, p2);
-    
-    Vector v2(p1, p3);
+    Point p = LineIntersection(l1, l2);
 
-    return v1.CrossProductValue(v1, v2);
+    if (IsOnSegment(l1.Point1(), l1.Point2(), p) && IsOnSegment(l2.Point1(), l2.Point2(), p))
+        return true;
+
+    return false;
 }
 
 //-------------------------------------------------------------------------------//
@@ -295,32 +280,6 @@ bool TrianglePointIntersection(const Point& p, const Triangle& t)
         return false;
 
     return true;
-    // // Vector AB(t.P1(), t.P2());
-    // Vector AP(t.P1(), p);
-
-    // // Vector BC(t.P2(), t.P3());
-    // Vector BP(t.P2(), p);
-
-    // // Vector CA(t.P3(), t.P1());
-    // Vector CP(t.P3(), p);
-
-    // AP.PrintVector();
-    // BP.PrintVector();
-    // CP.PrintVector();
-
-    // double d1 = t.Vector1().CrossProductValue(t.Vector1(), AP);
-    // double d2 = t.Vector2().CrossProductValue(t.Vector2(), BP);
-    // double d3 = t.Vector3().CrossProductValue(t.Vector3(), CP);
-
-    // std::cout << d1 << " " << d2 << " " << d3 << std::endl;
-
-    // t.TriangleDump();
-
-    // p.PrintPoint();
-
-    // // std::cout << (d1 * d2 >= 0 && d1 * d3 >=0 && d2 * d3 >= 0) <<std::endl;
-
-    // return (d1 * d2 > 0 && d1 * d3 > 0 && d2 * d3 > 0);
 }
 
 //-------------------------------------------------------------------------------//

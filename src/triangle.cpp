@@ -116,9 +116,9 @@ TriangleType Triangle::GetType() const
     if (p1_ == p2_ && p1_ == p3_)
         return Point_t;
 
-    else if (IsEqual(v1_.CrossProductValue(v1_, v2_), 0) ||
-             IsEqual(v2_.CrossProductValue(v2_, v3_), 0) ||
-             IsEqual(v3_.CrossProductValue(v3_, v1_), 0))
+    else if (v1_.CrossProductVector(v1_, v2_) ==  NullVec ||
+             v2_.CrossProductVector(v2_, v3_) ==  NullVec ||
+             v3_.CrossProductVector(v3_, v1_) ==  NullVec)
     {
         return Segment_t;
     }

@@ -11,72 +11,72 @@
 
 //-------------------------------------------------------------------------------//
 
-int main()
-{
-    size_t tr_numbers = 0;
+// int main()
+// {
+//     size_t tr_numbers = 0;
 
-    std::cin >> tr_numbers;
+//     std::cin >> tr_numbers;
 
-    std::list<Triangle> triangles;
+//     std::list<Triangle> triangles;
 
-    double BoundingBoxX = 0, BoundingBoxY = 0, BoundingBoxZ = 0;
+//     double BoundingBoxX = 0, BoundingBoxY = 0, BoundingBoxZ = 0;
 
-    for (int i = 0; i < tr_numbers; i++)
-    {
-        double p1x = 0, p1y = 0, p1z = 0, p2x = 0, p2y = 0, p2z = 0, p3x = 0, p3y = 0, p3z = 0;
+//     for (int i = 0; i < tr_numbers; i++)
+//     {
+//         double p1x = 0, p1y = 0, p1z = 0, p2x = 0, p2y = 0, p2z = 0, p3x = 0, p3y = 0, p3z = 0;
 
-        std::cin >> p1x >> p1y >> p1z;
-        Point p1(p1x, p1y, p1z);
+//         std::cin >> p1x >> p1y >> p1z;
+//         Point p1(p1x, p1y, p1z);
 
-        std::cin >> p2x >> p2y >> p2z;
-        Point p2(p2x, p2y, p2z);
+//         std::cin >> p2x >> p2y >> p2z;
+//         Point p2(p2x, p2y, p2z);
 
-        std::cin >> p3x >> p3y >> p3z;
-        Point p3(p3x, p3y, p3z);
+//         std::cin >> p3x >> p3y >> p3z;
+//         Point p3(p3x, p3y, p3z);
 
-        Triangle t(p1, p2, p3);
+//         Triangle t(p1, p2, p3);
 
-        t.number = i;
+//         t.number = i;
 
-        triangles.push_back(t);
+//         triangles.push_back(t);
 
-        // t.TriangleDump();
+//         // t.TriangleDump();
 
-        if (BoundingBoxX < p1.MaxCoordinate(p2, p3, cords::X))
-            BoundingBoxX = p1.MaxCoordinate(p2, p3, cords::X);
+//         if (BoundingBoxX < p1.MaxCoordinate(p2, p3, cords::X))
+//             BoundingBoxX = p1.MaxCoordinate(p2, p3, cords::X);
 
-        if (BoundingBoxY < p1.MaxCoordinate(p2, p3, cords::Y))
-            BoundingBoxY = p1.MaxCoordinate(p2, p3, cords::Y);
+//         if (BoundingBoxY < p1.MaxCoordinate(p2, p3, cords::Y))
+//             BoundingBoxY = p1.MaxCoordinate(p2, p3, cords::Y);
 
-        if (BoundingBoxZ < p1.MaxCoordinate(p1, p2, cords::Z))
-            BoundingBoxZ = p1.MaxCoordinate(p1, p2, cords::Z);
-    }
+//         if (BoundingBoxZ < p1.MaxCoordinate(p1, p2, cords::Z))
+//             BoundingBoxZ = p1.MaxCoordinate(p1, p2, cords::Z);
+//     }
 
-    double CubeDimension = std::max(std::max(BoundingBoxX, BoundingBoxY), BoundingBoxZ);
+//     double CubeDimension = std::max(std::max(BoundingBoxX, BoundingBoxY), BoundingBoxZ);
     
-    Point MaxSize{CubeDimension, CubeDimension, CubeDimension};
-    Point MinSize{-1 * CubeDimension, -1 * CubeDimension, -1 * CubeDimension};
+//     Point MaxSize{CubeDimension, CubeDimension, CubeDimension};
+//     Point MinSize{-1 * CubeDimension, -1 * CubeDimension, -1 * CubeDimension};
 
-    Octree oct(MaxSize, MinSize, triangles);
+//     Octree oct(MaxSize, MinSize, triangles);
 
-    std::clock_t start = clock();
+//     std::clock_t start = clock();
 
-    DivideSpace(oct.Root());
+//     DivideSpace(oct.Root());
 
-    bool *FlagArray = new bool [tr_numbers]{};
+//     bool *FlagArray = new bool [tr_numbers]{};
 
-    FindIntersectionsInNode(oct.Root(), FlagArray);
+//     FindIntersectionsInNode(oct.Root(), FlagArray);
 
-    for (size_t i = 0; i < tr_numbers; i++)
-    {
-        if (FlagArray[i])
-            std::cout << i << std::endl;
-    }
+//     for (size_t i = 0; i < tr_numbers; i++)
+//     {
+//         if (FlagArray[i])
+//             std::cout << i << std::endl;
+//     }
 
-    std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
+//     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 
-    return 0;
-}
+//     return 0;
+// }
 
 //-------------------------------------------------------------------------------//
 
@@ -172,83 +172,83 @@ int main()
 
 //-------------------------------------------------------------------------------//
 
-// int main(int argc, char **argv)
-// {
-//     if (argc != 2)
-//     {
-//         std::cerr << "Incorrect value of args" << std::endl;
-//         return -1;
-//     }
+int main(int argc, char **argv)
+{
+    if (argc != 2)
+    {
+        std::cerr << "Incorrect value of args" << std::endl;
+        return -1;
+    }
 
-//     std::ifstream test_file;
+    std::ifstream test_file;
 
-//     test_file.open(argv[1]);
+    test_file.open(argv[1]);
 
-//     size_t tr_numbers = 0;
+    size_t tr_numbers = 0;
 
-//     test_file >> tr_numbers;
+    test_file >> tr_numbers;
 
-//     const std::clock_t start = clock();
+    const std::clock_t start = clock();
 
-//     std::list<Triangle> triangles;
+    std::list<Triangle> triangles;
 
-//     double BoundingBoxX = 0, BoundingBoxY = 0, BoundingBoxZ = 0;
+    double BoundingBoxX = 0, BoundingBoxY = 0, BoundingBoxZ = 0;
 
-//     for (int i = 0; i < tr_numbers; i++)
-//     {
-//         double p1x = 0, p1y = 0, p1z = 0, p2x = 0, p2y = 0, p2z = 0, p3x = 0, p3y = 0, p3z = 0;
+    for (int i = 0; i < tr_numbers; i++)
+    {
+        double p1x = 0, p1y = 0, p1z = 0, p2x = 0, p2y = 0, p2z = 0, p3x = 0, p3y = 0, p3z = 0;
 
-//         test_file >> p1x >> p1y >> p1z;
-//         Point p1(p1x, p1y, p1z);
+        test_file >> p1x >> p1y >> p1z;
+        Point p1(p1x, p1y, p1z);
 
-//         test_file >> p2x >> p2y >> p2z;
-//         Point p2(p2x, p2y, p2z);
+        test_file >> p2x >> p2y >> p2z;
+        Point p2(p2x, p2y, p2z);
 
-//         test_file >> p3x >> p3y >> p3z;
-//         Point p3(p3x, p3y, p3z);
+        test_file >> p3x >> p3y >> p3z;
+        Point p3(p3x, p3y, p3z);
 
-//         Triangle t(p1, p2, p3);
+        Triangle t(p1, p2, p3);
 
-//         t.number = i;
+        t.number = i;
 
-//         triangles.push_back(t);
+        triangles.push_back(t);
 
-//         // t.TriangleDump();
+        // t.TriangleDump();
 
-//         if (BoundingBoxX < p1.MaxCoordinate(p2, p3, cords::X))
-//             BoundingBoxX = p1.MaxCoordinate(p2, p3, cords::X);
+        if (BoundingBoxX < p1.MaxCoordinate(p2, p3, cords::X))
+            BoundingBoxX = p1.MaxCoordinate(p2, p3, cords::X);
 
-//         if (BoundingBoxY < p1.MaxCoordinate(p2, p3, cords::Y))
-//             BoundingBoxY = p1.MaxCoordinate(p2, p3, cords::Y);
+        if (BoundingBoxY < p1.MaxCoordinate(p2, p3, cords::Y))
+            BoundingBoxY = p1.MaxCoordinate(p2, p3, cords::Y);
 
-//         if (BoundingBoxZ < p1.MaxCoordinate(p1, p2, cords::Z))
-//             BoundingBoxZ = p1.MaxCoordinate(p1, p2, cords::Z);
-//     }
+        if (BoundingBoxZ < p1.MaxCoordinate(p1, p2, cords::Z))
+            BoundingBoxZ = p1.MaxCoordinate(p1, p2, cords::Z);
+    }
 
-//     double CubeDimension = std::max(std::max(BoundingBoxX, BoundingBoxY), BoundingBoxZ);
+    double CubeDimension = std::max(std::max(BoundingBoxX, BoundingBoxY), BoundingBoxZ);
 
-//     Point MaxSize{CubeDimension, CubeDimension, CubeDimension};
-//     Point MinSize{-1 * CubeDimension, -1 * CubeDimension, -1 * CubeDimension};
+    Point MaxSize{CubeDimension, CubeDimension, CubeDimension};
+    Point MinSize{-1 * CubeDimension, -1 * CubeDimension, -1 * CubeDimension};
 
-//     Octree oct(MaxSize, MinSize, triangles);
+    Octree oct(MaxSize, MinSize, triangles);
 
-//     DivideSpace(oct.Root());
+    DivideSpace(oct.Root());
 
-//     std::set<size_t> intersecting_triangles;
+    std::set<size_t> intersecting_triangles;
 
-//     bool *FlagArray = new bool [tr_numbers]{};
+    bool *FlagArray = new bool [tr_numbers]{};
 
-//     FindIntersectionsInNode(oct.Root(), FlagArray);
+    FindIntersectionsInNode(oct.Root(), FlagArray);
 
-//     for (size_t i = 0; i < tr_numbers; i++)
-//     {
-//         if (FlagArray[i])
-//             std::cout << i << std::endl;
-//     }
+    for (size_t i = 0; i < tr_numbers; i++)
+    {
+        if (FlagArray[i])
+            std::cout << i << std::endl;
+    }
 
-//     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
+    std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 
-//     return 0;
-// }
+    return 0;
+}
 
 // //-------------------------------------------------------------------------------//

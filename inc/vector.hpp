@@ -70,6 +70,8 @@ class Vector
         void    PrintVector() const;
 };
 
+const Vector NullVec = Vector{0, 0, 0};
+
 //-------------------------------------------------------------------------------//
 
 #endif

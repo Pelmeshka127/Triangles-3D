@@ -47,7 +47,7 @@ Point   PlaneSegmentIntersection(const Plane& p, const Segment& l);
 
 //-------------------------------------------------------------------------------//
 
-double  Direction(const Point& p1, const Point& p2, const Point& p3);
+Point   LineIntersection(const Segment& l1, const Segment& l2);
 
 //-------------------------------------------------------------------------------//
 
