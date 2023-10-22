@@ -2,17 +2,17 @@
 
 //-------------------------------------------------------------------------------//
 
-int FindIntersectionsInNode(Node* const node, bool* FlagArray)
+int FindIntersectionsInNode(OctNode* const node, bool* FlagArray)
 {
-    auto prev_end = std::prev(node->node_triangles_.end());
+    auto start = node->src_triangles_.begin();
 
-    auto end      = node->node_triangles_.end();
+    auto end = node->src_triangles_.end();
 
-    auto begin    = node->node_triangles_.begin();
+    auto prev_end = std::prev(node->src_triangles_.end());
 
-    for (auto t1 = begin; t1 != prev_end; ++t1)
+    for (auto t1 = start; t1 != prev_end; ++t1)
     {
-        for (auto t2 = std::next(t1); t2 != end; t2++)
+        for (auto t2 = std::next(t1); t2 != end; ++t2)
         {
             if (TriangleIntersection(*t1, *t2))
             {
@@ -26,8 +26,10 @@ int FindIntersectionsInNode(Node* const node, bool* FlagArray)
 
     for (size_t i = 0; i < 8; i++)
     {
-        if (node->child_[i])
-            FindIntersectionsInNode(node->child_[i], FlagArray);
+        if (!(node->active_node_mask_ & (1 << i)))
+            continue;
+        
+        FindIntersectionsInNode(node->child_[i], FlagArray);
     }
 
     return 0;
@@ -35,14 +37,20 @@ int FindIntersectionsInNode(Node* const node, bool* FlagArray)
 
 //-------------------------------------------------------------------------------//
 
-int FindIntersectionsWithChildren(Node* const node, const Triangle& tr, bool* FlagArray)
+int FindIntersectionsWithChildren(OctNode* const node, const Triangle& tr, bool* FlagArray)
 {
+    if (node->is_leaf_ || node->active_node_mask_ == 0)
+        return 0;
+
     for (size_t i = 0; i < 8; i++)
     {
-        if (!node->child_[i])
+        if (!(node->active_node_mask_ & (1 << i)))
             continue;
 
-        std::list<Triangle> ChildList = node->child_[i]->node_triangles_;
+        if (!IsTrianglePartInBoundingBox(tr, node->child_[i]->middle_, node->child_[i]->radius_))
+            continue;
+
+        std::list<Triangle> ChildList = node->child_[i]->src_triangles_;
 
         auto begin  = ChildList.begin();
 
