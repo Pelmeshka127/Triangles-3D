@@ -1,5 +1,6 @@
 # Triangles-3D
 
+![image](Images/debug.png)
 
 ## Установка и запуск проекта
 Для установки
