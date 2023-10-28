@@ -401,7 +401,7 @@ void OctreeNew::DeleteNode(OctNode* node)
 //     {
 //         if (node->child_[i])
 //         {
-//             node->active_node_mask_ |= (1 << i);
+//             // node->active_node_mask_ |= (1 << i);
 
 //             DivideSpace(node->child_[i]);
 //         }

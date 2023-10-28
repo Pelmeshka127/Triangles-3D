@@ -56,8 +56,6 @@ int main()
 
     OctreeNew oct(triangles, bounding_box);
 
-    std::set<size_t> intersecting_triangles;
-
     bool *FlagArray = new bool [tr_numbers]{};
 
     std::clock_t start = clock();
@@ -151,7 +149,7 @@ int main()
 //     return 0;
 // }
 
-//-------------------------------------------------------------------------------//
+// //-------------------------------------------------------------------------------//
 
 
 // int main(int argc, char **argv)
@@ -220,18 +218,34 @@ int main()
 
 //     bool *FlagArray = new bool [tr_numbers]{};
 
-//     FindIntersectionsInNode(oct.Root(), FlagArray);
+//     // FindIntersectionsInNode(oct.Root(), FlagArray);
 
-//     for (size_t i = 0; i < tr_numbers; i++)
+//     // for (size_t i = 0; i < tr_numbers; i++)
+//     // {
+//     //     if (FlagArray[i])
+//     //         std::cout << i << std::endl;
+//     // }
+
+//     for (auto i = triangles.begin(); i != triangles.end(); i++)
 //     {
-//         if (FlagArray[i])
-//             std::cout << i << std::endl;
+//         for (auto j = triangles.begin(); j != triangles.end(); j++)
+//         {
+//             if (i != j && TriangleIntersection(*i, *j))
+//             {
+//                 intersecting_triangles.insert(i->number);
+//                 intersecting_triangles.insert(j->number);
+//             }
+
+//         }
 //     }
+
+//     for (auto i = intersecting_triangles.begin(); i != intersecting_triangles.end(); i++)
+//         std::cout << *i << std::endl;
 
 //     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 
-//     for (int i = 0; i < 8; i++)
-//         std::cout << (4 & (1 << i)) << std::endl;
+//     // for (int i = 0; i < 8; i++)
+//     //     std::cout << (4 & (1 << i)) << std::endl;
 
 //     return 0;
 // }

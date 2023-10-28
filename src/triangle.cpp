@@ -102,9 +102,24 @@ Segment Triangle::GetNotZeroLine() const
 
 bool Triangle::IsPointInTriangle(const Point& point) const
 {
-    return (p1_.MinCoordinate(p2_, p3_, cords::X) <= point.X() && point.X() <= p1_.MaxCoordinate(p2_, p3_, cords::X) &&
-            p1_.MinCoordinate(p2_, p3_, cords::Y) <= point.Y() && point.Y() <= p1_.MaxCoordinate(p2_, p3_, cords::Y) &&
-            p1_.MinCoordinate(p2_, p3_, cords::Z) <= point.Z() && point.Z() <= p1_.MaxCoordinate(p2_, p3_, cords::Z));
+    Vector AP(p1_, point);
+    Vector BP(p2_, point);
+    Vector CP(p3_, point);
+
+    double d1 = AP.CrossProductValue(v1_, AP);
+
+    double d2 = BP.CrossProductValue(v2_, BP);
+
+    double d3 = CP.CrossProductValue(v3_, CP);
+
+    if (d1 * d2 < 0 || d1 * d3 < 0 || d2 * d3 < 0)
+        return false;
+    
+    return true;
+
+    // return (p1_.MinCoordinate(p2_, p3_, cords::X) <= point.X() && point.X() <= p1_.MaxCoordinate(p2_, p3_, cords::X) &&
+    //         p1_.MinCoordinate(p2_, p3_, cords::Y) <= point.Y() && point.Y() <= p1_.MaxCoordinate(p2_, p3_, cords::Y) &&
+    //         p1_.MinCoordinate(p2_, p3_, cords::Z) <= point.Z() && point.Z() <= p1_.MaxCoordinate(p2_, p3_, cords::Z));
 }
 
 //-------------------------------------------------------------------------------//

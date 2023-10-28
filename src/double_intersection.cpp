@@ -273,6 +273,14 @@ bool TrianglePointIntersection(const Point& p, const Triangle& t)
 {
     using namespace double_numbers;
 
+    // p.PrintPoint();
+
+    // t.TriangleDump();
+
+    // std::cout << IsEqual(t.GetPlane().A() * p.X() + t.GetPlane().B() * p.Y() + t.GetPlane().C() * p.Z() + t.GetPlane().D(), 0) << std::endl;
+
+    // std::cout << t.IsPointInTriangle(p) << std::endl;
+
     if (!IsEqual(t.GetPlane().A() * p.X() + t.GetPlane().B() * p.Y() + t.GetPlane().C() * p.Z() + t.GetPlane().D(), 0))
         return false;
 

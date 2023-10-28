@@ -74,7 +74,7 @@ int FindIntersectionsWithChildren(OctNode* const node, const Triangle& tr, bool*
 // //-------------------------------------------------------------------------------//
 
 
-// //-------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------//
 
 // int FindIntersectionsInNode(Node* const node, bool* FlagArray)
 // {
@@ -110,8 +110,8 @@ int FindIntersectionsWithChildren(OctNode* const node, const Triangle& tr, bool*
 //     {
 //         if (node->child_[i])
 //         {
-//             if (!(node->active_node_mask_ & (1 << i)))
-//                 continue;
+//             // if (!(node->active_node_mask_ & (1 << i)))
+//             //     continue;
 //             FindIntersectionsInNode(node->child_[i], FlagArray);
 //         }
 //     }
@@ -128,11 +128,11 @@ int FindIntersectionsWithChildren(OctNode* const node, const Triangle& tr, bool*
 //         if (!node->child_[i])
 //             continue;
 
-//         if (!(node->active_node_mask_ & (1 << i)))
-//             continue;
+//         // if (!(node->active_node_mask_ & (1 << i)))
+//         //     continue;
 
-//         if (!IsTrianglePartInBoundingBox(tr, node->child_[i]->Middle_, node->child_[i]->Radius_))
-//             continue;
+//         // if (!IsTrianglePartInBoundingBox(tr, node->child_[i]->Middle_, node->child_[i]->Radius_))
+//         //     continue;
 
 //         std::list<Triangle> ChildList = node->child_[i]->node_triangles_;
 
