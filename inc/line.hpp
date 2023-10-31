@@ -7,10 +7,6 @@
 #include "point.hpp"
 #include "vector.hpp"
 
-// (x - x1) / (x1 - x2) = (y - y1) / (y1 - y2) = (z - z1) / (z - z2)
-
-// (x - x1) / p = (y - y1) / q = (z - z1) / s
-
 //-------------------------------------------------------------------------------//
 
 class Segment
@@ -34,16 +30,24 @@ class Segment
         Segment(const Point& p1, const Point& p2, const Vector& v) :
         FirstPoint_{p1}, SecondPoint_{p2}, DirectionVector_{v} {}
 
-        ~Segment() {}
-
         Point   Point1() const;
 
         Point   Point2() const;
 
         Vector  DirVector() const;
 
+        bool    PointSegmentIntersection(const Point& p) const;
+
+        Point   LineIntersection(const Segment& l) const;
+
+        bool    SegmentSegmentIntersection(const Segment& l) const;
+
         void PrintSegment() const;
 };
+
+//-------------------------------------------------------------------------------//
+
+bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
 
 //-------------------------------------------------------------------------------//
 

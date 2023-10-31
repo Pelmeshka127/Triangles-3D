@@ -36,7 +36,7 @@ class Point
         double  MaxCoordinate(const Point& p1, const Point& p2, const int coordinate) const;
 
 
-        bool   operator==(const Point p) const;
+        bool    operator==(const Point p) const;
 
         Point   operator=(const Point p) const;
 
@@ -50,6 +50,7 @@ class Point
 
         Point   operator*(const double& n) const;
 
+        bool    PointPointIntersection(const Point& p) const;
 
         void    PrintPoint() const;
 };

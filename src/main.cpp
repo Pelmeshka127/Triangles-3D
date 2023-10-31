@@ -11,87 +11,11 @@
 
 //-------------------------------------------------------------------------------//
 
-int main()
-{
-    size_t tr_numbers = 0;
-
-    std::cin >> tr_numbers;
-
-    std::list<Triangle> triangles;
-
-    double BoundingBoxX = 0, BoundingBoxY = 0, BoundingBoxZ = 0;
-
-    for (int i = 0; i < tr_numbers; i++)
-    {
-        double p1x = 0, p1y = 0, p1z = 0, p2x = 0, p2y = 0, p2z = 0, p3x = 0, p3y = 0, p3z = 0;
-
-        std::cin >> p1x >> p1y >> p1z;
-        Point p1(p1x, p1y, p1z);
-
-        std::cin >> p2x >> p2y >> p2z;
-        Point p2(p2x, p2y, p2z);
-
-        std::cin >> p3x >> p3y >> p3z;
-        Point p3(p3x, p3y, p3z);
-
-        Triangle t(p1, p2, p3);
-
-        t.number = i;
-
-        triangles.push_back(t);
-
-        // t.TriangleDump();
-
-        if (BoundingBoxX < p1.MaxCoordinate(p2, p3, cords::X))
-            BoundingBoxX = p1.MaxCoordinate(p2, p3, cords::X);
-
-        if (BoundingBoxY < p1.MaxCoordinate(p2, p3, cords::Y))
-            BoundingBoxY = p1.MaxCoordinate(p2, p3, cords::Y);
-
-        if (BoundingBoxZ < p1.MaxCoordinate(p1, p2, cords::Z))
-            BoundingBoxZ = p1.MaxCoordinate(p1, p2, cords::Z);
-    }
-
-    Point bounding_box(BoundingBoxX, BoundingBoxY, BoundingBoxZ);
-
-    OctreeNew oct(triangles, bounding_box);
-
-    bool *FlagArray = new bool [tr_numbers]{};
-
-    std::clock_t start = clock();
-
-    FindIntersectionsInNode(oct.root_, FlagArray);
-
-    for (size_t i = 0; i < tr_numbers; i++)
-    {
-        if (FlagArray[i])
-            std::cout << i << std::endl;
-    }
-
-    std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
-
-    return 0;
-}
-
-//-------------------------------------------------------------------------------//
-
-// int main(int argc, char **argv)
+// int main()
 // {
-//     if (argc != 2)
-//     {
-//         std::cerr << "Incorrect value of args" << std::endl;
-//         return -1;
-//     }
-
-//     std::ifstream test_file;
-
-//     test_file.open(argv[1]);
-
 //     size_t tr_numbers = 0;
 
-//     test_file >> tr_numbers;
-
-//     const std::clock_t start = clock();
+//     std::cin >> tr_numbers;
 
 //     std::list<Triangle> triangles;
 
@@ -101,13 +25,13 @@ int main()
 //     {
 //         double p1x = 0, p1y = 0, p1z = 0, p2x = 0, p2y = 0, p2z = 0, p3x = 0, p3y = 0, p3z = 0;
 
-//         test_file >> p1x >> p1y >> p1z;
+//         std::cin >> p1x >> p1y >> p1z;
 //         Point p1(p1x, p1y, p1z);
 
-//         test_file >> p2x >> p2y >> p2z;
+//         std::cin >> p2x >> p2y >> p2z;
 //         Point p2(p2x, p2y, p2z);
 
-//         test_file >> p3x >> p3y >> p3z;
+//         std::cin >> p3x >> p3y >> p3z;
 //         Point p3(p3x, p3y, p3z);
 
 //         Triangle t(p1, p2, p3);
@@ -116,23 +40,25 @@ int main()
 
 //         triangles.push_back(t);
 
-//         if (BoundingBoxX < std::max(std::abs(p1.X()), std::max(std::abs(p2.X()), std::abs(p3.X()))))
-//             BoundingBoxX = std::max(std::abs(p1.X()), std::max(std::abs(p2.X()), std::abs(p3.X())));
+//         // t.TriangleDump();
 
-//         if (BoundingBoxY < std::max(std::abs(p1.Y()), std::max(std::abs(p2.Y()), std::abs(p3.Y()))))
-//             BoundingBoxY = std::max(std::abs(p1.Y()), std::max(std::abs(p2.Y()), std::abs(p3.Y())));
+//         if (BoundingBoxX < p1.MaxCoordinate(p2, p3, cords::X))
+//             BoundingBoxX = p1.MaxCoordinate(p2, p3, cords::X);
 
-//         if (BoundingBoxZ < std::max(std::abs(p1.Z()), std::max(std::abs(p2.Z()), std::abs(p3.Z()))))
-//             BoundingBoxZ = std::max(std::abs(p1.Z()), std::max(std::abs(p2.Z()), std::abs(p3.Z())));
+//         if (BoundingBoxY < p1.MaxCoordinate(p2, p3, cords::Y))
+//             BoundingBoxY = p1.MaxCoordinate(p2, p3, cords::Y);
+
+//         if (BoundingBoxZ < p1.MaxCoordinate(p1, p2, cords::Z))
+//             BoundingBoxZ = p1.MaxCoordinate(p1, p2, cords::Z);
 //     }
 
 //     Point bounding_box(BoundingBoxX, BoundingBoxY, BoundingBoxZ);
 
 //     OctreeNew oct(triangles, bounding_box);
 
-//     std::set<size_t> intersecting_triangles;
-
 //     bool *FlagArray = new bool [tr_numbers]{};
+
+//     std::clock_t start = clock();
 
 //     FindIntersectionsInNode(oct.root_, FlagArray);
 
@@ -144,108 +70,83 @@ int main()
 
 //     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 
-//     test_file.close();
-
 //     return 0;
 // }
 
-// //-------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------//
 
+int main(int argc, char **argv)
+{
+    if (argc != 2)
+    {
+        std::cerr << "Incorrect value of args" << std::endl;
+        return -1;
+    }
 
-// int main(int argc, char **argv)
-// {
-//     if (argc != 2)
-//     {
-//         std::cerr << "Incorrect value of args" << std::endl;
-//         return -1;
-//     }
+    std::ifstream test_file;
 
-//     std::ifstream test_file;
+    test_file.open(argv[1]);
 
-//     test_file.open(argv[1]);
+    size_t tr_numbers = 0;
 
-//     size_t tr_numbers = 0;
+    test_file >> tr_numbers;
 
-//     test_file >> tr_numbers;
+    const std::clock_t start = clock();
 
-//     const std::clock_t start = clock();
+    std::list<Triangle> triangles;
 
-//     std::list<Triangle> triangles;
+    double BoundingBoxX = 0, BoundingBoxY = 0, BoundingBoxZ = 0;
 
-//     double BoundingBoxX = 0, BoundingBoxY = 0, BoundingBoxZ = 0;
+    for (int i = 0; i < tr_numbers; i++)
+    {
+        double p1x = 0, p1y = 0, p1z = 0, p2x = 0, p2y = 0, p2z = 0, p3x = 0, p3y = 0, p3z = 0;
 
-//     for (int i = 0; i < tr_numbers; i++)
-//     {
-//         double p1x = 0, p1y = 0, p1z = 0, p2x = 0, p2y = 0, p2z = 0, p3x = 0, p3y = 0, p3z = 0;
+        test_file >> p1x >> p1y >> p1z;
+        Point p1(p1x, p1y, p1z);
 
-//         test_file >> p1x >> p1y >> p1z;
-//         Point p1(p1x, p1y, p1z);
+        test_file >> p2x >> p2y >> p2z;
+        Point p2(p2x, p2y, p2z);
 
-//         test_file >> p2x >> p2y >> p2z;
-//         Point p2(p2x, p2y, p2z);
+        test_file >> p3x >> p3y >> p3z;
+        Point p3(p3x, p3y, p3z);
 
-//         test_file >> p3x >> p3y >> p3z;
-//         Point p3(p3x, p3y, p3z);
+        Triangle t(p1, p2, p3);
 
-//         Triangle t(p1, p2, p3);
+        t.number = i;
 
-//         t.number = i;
+        triangles.push_back(t);
 
-//         triangles.push_back(t);
+        if (BoundingBoxX < std::max(std::abs(p1.X()), std::max(std::abs(p2.X()), std::abs(p3.X()))))
+            BoundingBoxX = std::max(std::abs(p1.X()), std::max(std::abs(p2.X()), std::abs(p3.X())));
 
-//         // t.TriangleDump();
+        if (BoundingBoxY < std::max(std::abs(p1.Y()), std::max(std::abs(p2.Y()), std::abs(p3.Y()))))
+            BoundingBoxY = std::max(std::abs(p1.Y()), std::max(std::abs(p2.Y()), std::abs(p3.Y())));
 
-//         if (BoundingBoxX < std::max(std::abs(p1.X()), std::max(std::abs(p2.X()), std::abs(p3.X()))))
-//             BoundingBoxX = std::max(std::abs(p1.X()), std::max(std::abs(p2.X()), std::abs(p3.X())));
+        if (BoundingBoxZ < std::max(std::abs(p1.Z()), std::max(std::abs(p2.Z()), std::abs(p3.Z()))))
+            BoundingBoxZ = std::max(std::abs(p1.Z()), std::max(std::abs(p2.Z()), std::abs(p3.Z())));
+    }
 
-//         if (BoundingBoxY < std::max(std::abs(p1.Y()), std::max(std::abs(p2.Y()), std::abs(p3.Y()))))
-//             BoundingBoxY = std::max(std::abs(p1.Y()), std::max(std::abs(p2.Y()), std::abs(p3.Y())));
+    Point bounding_box(BoundingBoxX, BoundingBoxY, BoundingBoxZ);
 
-//         if (BoundingBoxZ < std::max(std::abs(p1.Z()), std::max(std::abs(p2.Z()), std::abs(p3.Z()))))
-//             BoundingBoxZ = std::max(std::abs(p1.Z()), std::max(std::abs(p2.Z()), std::abs(p3.Z())));
-//     }
+    OctreeNew oct(triangles, bounding_box);
 
-//     double CubeDimension = std::max(std::max(BoundingBoxX, BoundingBoxY), BoundingBoxZ);
+    std::set<size_t> intersecting_triangles;
 
-//     Point MaxSize{CubeDimension, CubeDimension, CubeDimension};
-//     Point MinSize{-1 * CubeDimension, -1 * CubeDimension, -1 * CubeDimension};
+    bool *FlagArray = new bool [tr_numbers]{};
 
-//     Octree oct(MaxSize, MinSize, triangles);
+    FindIntersectionsInNode(oct.root_, FlagArray);
 
-//     DivideSpace(oct.Root());
+    for (size_t i = 0; i < tr_numbers; i++)
+    {
+        if (FlagArray[i])
+            std::cout << i << std::endl;
+    }
 
-//     std::set<size_t> intersecting_triangles;
+    std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
 
-//     bool *FlagArray = new bool [tr_numbers]{};
+    test_file.close();
 
-//     // FindIntersectionsInNode(oct.Root(), FlagArray);
+    return 0;
+}
 
-//     // for (size_t i = 0; i < tr_numbers; i++)
-//     // {
-//     //     if (FlagArray[i])
-//     //         std::cout << i << std::endl;
-//     // }
-
-//     for (auto i = triangles.begin(); i != triangles.end(); i++)
-//     {
-//         for (auto j = triangles.begin(); j != triangles.end(); j++)
-//         {
-//             if (i != j && TriangleIntersection(*i, *j))
-//             {
-//                 intersecting_triangles.insert(i->number);
-//                 intersecting_triangles.insert(j->number);
-//             }
-
-//         }
-//     }
-
-//     for (auto i = intersecting_triangles.begin(); i != intersecting_triangles.end(); i++)
-//         std::cout << *i << std::endl;
-
-//     std::cout << "Total time is " << (clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
-
-//     // for (int i = 0; i < 8; i++)
-//     //     std::cout << (4 & (1 << i)) << std::endl;
-
-//     return 0;
-// }
+//-------------------------------------------------------------------------------//

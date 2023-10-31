@@ -3,41 +3,6 @@
 
 //-------------------------------------------------------------------------------//
 
-double Plane::A() const
-{
-    return A_;
-}
-
-//-------------------------------------------------------------------------------//
-
-double Plane::B() const
-{
-    return B_;
-}
-
-//-------------------------------------------------------------------------------//
-
-double Plane::C() const
-{
-    return C_;
-}
-
-//-------------------------------------------------------------------------------//
-
-double Plane::D() const
-{
-    return D_;
-}
-
-//-------------------------------------------------------------------------------//
-
-Vector Plane::n() const
-{
-    return normal_vector_;
-}
-
-//-------------------------------------------------------------------------------//
-
 bool Plane::ArePlanesParallel(const Plane& plane) const
 {
     return double_numbers::IsEqual(B_ * plane.C_ - C_ * plane.B_ +
@@ -57,6 +22,40 @@ bool Plane::ArePlanesEqual(const Plane& plane) const
     return (ArePlanesParallel(plane) && IsEqual(A_ * plane.plane_point_.X() + 
                                                 B_ * plane.plane_point_.Y() + 
                                                 C_ * plane.plane_point_.Z() + D_, 0));
+}
+
+//-------------------------------------------------------------------------------//
+
+Point Plane::PlaneSegmentIntersection(const Segment& l) const
+{
+    using namespace double_numbers;
+
+    double denominator = l.DirVector().DotProduct(n(), l.DirVector());
+
+    double t = 0;
+
+    if (IsEqual(denominator, 0))
+    {
+        if (IsEqual(A() * l.Point1().X() + B() * l.Point1().Y() + C() * l.Point1().Z() + D(), 0))
+        {
+            t = 0;
+            return l.Point1();   
+        }
+        
+        else
+            return Point();
+    }
+
+    else
+    {
+        t = A() * l.Point1().X() + B() * l.Point1().Y() + C() * l.Point1().Z() + D();
+
+        t = -1 * t / denominator;
+
+        return Point(l.Point1().X() + t * l.DirVector().X() +
+                     l.Point1().Y() + t * l.DirVector().Y() +
+                     l.Point1().Z() + t * l.DirVector().Z());
+    }
 }
 
 //-------------------------------------------------------------------------------//

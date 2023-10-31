@@ -6,8 +6,7 @@
 
 #include "point.hpp"
 #include "vector.hpp"
-
-// Ax + By + Cz + D = 0 //
+#include "line.hpp"
 
 //-------------------------------------------------------------------------------//
 
@@ -19,7 +18,7 @@ class Plane
         const double C_;
         const double D_;
 
-        const Point  plane_point_; // рандомная точка, лежащая в плоскости
+        const Point  plane_point_;
 
         const Vector normal_vector_;
 
@@ -35,19 +34,21 @@ class Plane
 
         ~Plane() {}
 
-        double  A()  const;
+        double  A()  const { return A_; }
 
-        double  B()  const;
+        double  B()  const { return B_; }
         
-        double  C()  const;
+        double  C()  const { return C_; }
 
-        double  D()  const;
+        double  D()  const { return D_; }
 
-        Vector  n()  const;
+        Vector  n()  const { return normal_vector_; }
 
         bool    ArePlanesParallel(const Plane& plane)           const;
 
         bool    ArePlanesEqual(const Plane& plane)              const;
+
+        Point   PlaneSegmentIntersection(const Segment& l)      const;
 
         void    PlaneDump()                                     const;
 }; 

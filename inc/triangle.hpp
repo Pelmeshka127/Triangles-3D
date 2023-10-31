@@ -61,31 +61,41 @@ class Triangle
 
         ~Triangle() {}
 
-        Point   P1()    const;
+        Point   P1()    const { return p1_; }
 
-        Point   P2()    const;
+        Point   P2()    const { return p2_; }
 
-        Point   P3()    const;
+        Point   P3()    const { return p3_; }
 
-        Segment Line1()     const;
+        Segment Line1()     const { return l1_; }
 
-        Segment Line2()     const;
+        Segment Line2()     const { return l2_; }
 
-        Segment Line3()     const;
+        Segment Line3()     const { return l3_; }
 
-        Vector  Vector1()   const;
+        Vector  Vector1()   const { return v1_; }
 
-        Vector  Vector2()   const;
+        Vector  Vector2()   const { return v2_; }
 
-        Vector  Vector3()   const;
+        Vector  Vector3()   const { return v3_; }
 
-        Plane   GetPlane()  const;
+        Plane   GetPlane()  const { return triangle_plane_; }
 
         TriangleType GetType() const;
 
         Segment GetNotZeroLine() const;
 
         bool    IsPointInTriangle(const Point& point) const;
+
+        bool    TrianglePointIntersection(const Point& p) const;
+
+        bool    TriangleSegmentIntersection(const Segment& l) const;
+
+        bool    CoplanarTrianglesIntersection(const Triangle& t) const;
+
+        bool    FindTrianglesIntersectionByLine(const Triangle& t) const;
+
+        bool    TriangleTriangleIntersection(const Triangle& t) const;
 
         void    TriangleDump() const;
 };

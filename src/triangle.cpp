@@ -4,72 +4,21 @@
 
 //-------------------------------------------------------------------------------//
 
-Point Triangle::P1() const
+TriangleType Triangle::GetType() const
 {
-    return p1_;
-}
+    using namespace double_numbers;
 
-//-------------------------------------------------------------------------------//
+    if (p1_ == p2_ && p1_ == p3_)
+        return Point_t;
 
-Point Triangle::P2() const
-{
-    return p2_;
-}
+    else if (v1_.CrossProductVector(v1_, v2_) ==  NullVec ||
+             v2_.CrossProductVector(v2_, v3_) ==  NullVec ||
+             v3_.CrossProductVector(v3_, v1_) ==  NullVec)
+    {
+        return Segment_t;
+    }
 
-//-------------------------------------------------------------------------------//
-
-Point Triangle::P3() const
-{
-    return p3_;
-}
-
-//-------------------------------------------------------------------------------//
-
-Segment Triangle::Line1() const
-{
-    return l1_;
-}
-
-//-------------------------------------------------------------------------------//
-
-Segment Triangle::Line2() const
-{
-    return l2_;
-}
-
-//-------------------------------------------------------------------------------//
-
-Segment Triangle::Line3() const
-{
-    return l3_;
-}
-
-//-------------------------------------------------------------------------------//
-
-Vector Triangle::Vector1() const
-{
-    return v1_;
-}
-
-//-------------------------------------------------------------------------------//
-
-Vector Triangle::Vector2() const
-{
-    return v2_;
-}
-
-//-------------------------------------------------------------------------------//
-
-Vector Triangle::Vector3() const
-{
-    return v3_;
-}
-
-//-------------------------------------------------------------------------------//
-
-Plane Triangle::GetPlane() const
-{
-    return triangle_plane_;
+    return Triangle_t;
 }
 
 //-------------------------------------------------------------------------------//
@@ -116,29 +65,142 @@ bool Triangle::IsPointInTriangle(const Point& point) const
         return false;
     
     return true;
-
-    // return (p1_.MinCoordinate(p2_, p3_, cords::X) <= point.X() && point.X() <= p1_.MaxCoordinate(p2_, p3_, cords::X) &&
-    //         p1_.MinCoordinate(p2_, p3_, cords::Y) <= point.Y() && point.Y() <= p1_.MaxCoordinate(p2_, p3_, cords::Y) &&
-    //         p1_.MinCoordinate(p2_, p3_, cords::Z) <= point.Z() && point.Z() <= p1_.MaxCoordinate(p2_, p3_, cords::Z));
 }
 
 //-------------------------------------------------------------------------------//
 
-TriangleType Triangle::GetType() const
+bool Triangle::TrianglePointIntersection(const Point& p) const
 {
     using namespace double_numbers;
 
-    if (p1_ == p2_ && p1_ == p3_)
-        return Point_t;
+    if (!IsEqual(GetPlane().A() * p.X() + GetPlane().B() * p.Y() + GetPlane().C() * p.Z() + GetPlane().D(), 0))
+        return false;
 
-    else if (v1_.CrossProductVector(v1_, v2_) ==  NullVec ||
-             v2_.CrossProductVector(v2_, v3_) ==  NullVec ||
-             v3_.CrossProductVector(v3_, v1_) ==  NullVec)
+    if (!IsPointInTriangle(p))
+        return false;
+
+    return true;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool Triangle::TriangleSegmentIntersection(const Segment& l) const
+{
+    if (TrianglePointIntersection(l.Point1()) || TrianglePointIntersection(l.Point2()))
+        return true;
+
+    if (l.SegmentSegmentIntersection(l1_) ||
+        l.SegmentSegmentIntersection(l2_) ||
+        l.SegmentSegmentIntersection(l3_))
     {
-        return Segment_t;
+        return true;
     }
 
-    return Triangle_t;
+    Point plane_point = GetPlane().PlaneSegmentIntersection(l);
+
+    if (!plane_point.IsValid())
+        return false;
+
+    if (l.PointSegmentIntersection(plane_point) && TrianglePointIntersection(plane_point))
+        return true;
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool Triangle::CoplanarTrianglesIntersection(const Triangle& t) const
+{
+    // Проверка всех отрезков одного треугольника на пересечние
+    // Со всеми отрезками другого треугольника
+
+    if (Line1().SegmentSegmentIntersection (t.Line1())  || 
+        Line1().SegmentSegmentIntersection (t.Line2())  || 
+        Line1().SegmentSegmentIntersection (t.Line3())  ||
+        Line2().SegmentSegmentIntersection (t.Line1())  || 
+        Line2().SegmentSegmentIntersection (t.Line2())  || 
+        Line2().SegmentSegmentIntersection (t.Line3())  ||
+        Line3().SegmentSegmentIntersection (t.Line1())  || 
+        Line3().SegmentSegmentIntersection (t.Line2())  || 
+        Line3().SegmentSegmentIntersection (t.Line3())  ) 
+    {
+        // std::cout << "Segments intersect" << std::endl;
+        return true;
+    }
+
+    // Достаточно проверить одну точку каждого треугольника 
+    // Чтобы понять не находится ли один треугольник внутри другого
+
+    else if (TrianglePointIntersection(t.P1()) || t.TrianglePointIntersection(P1()))
+    {
+        // std::cout << "One is in another" << std::endl;
+        return true;
+    }
+
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool Triangle::FindTrianglesIntersectionByLine(const Triangle& t) const
+{
+    Segment int_line = SegmentOfPlanesIntersection(t1.GetPlane(), t2.GetPlane());
+
+    std::vector<double> dist_from_t1_to_points(3), dist_from_t2_to_points(3);
+
+    dist_from_t1_to_points[0] = DistanceFromPointToTriangle(t1, t2.P1());
+
+    dist_from_t1_to_points[1] = DistanceFromPointToTriangle(t1, t2.P2());
+
+    dist_from_t1_to_points[2] = DistanceFromPointToTriangle(t1, t2.P3());
+
+    dist_from_t2_to_points[0] = DistanceFromPointToTriangle(t2, t1.P1());
+
+    dist_from_t2_to_points[1] = DistanceFromPointToTriangle(t2, t1.P2());
+
+    dist_from_t2_to_points[2] = DistanceFromPointToTriangle(t2, t1.P3());
+
+    std::vector<double> t_options_1 = GetLineOptions(t1, dist_from_t2_to_points, int_line);
+
+    std::vector<double> t_options_2 = GetLineOptions(t2, dist_from_t1_to_points, int_line);
+
+    return IntervalOverlap(t_options_1, t_options_2);
+}
+
+//-------------------------------------------------------------------------------//
+
+bool Triangle::TriangleTriangleIntersection(const Triangle& t) const
+{
+    // сначала рассмотрим случай треугольников, лежащих в параллельных
+    // или совпадающих плоскостях
+
+    if (GetPlane().ArePlanesEqual(t.GetPlane()))
+    {
+        // std::cout << "Coplanar triangles" << std::endl;
+        return CoplanarTrianglesIntersection(t);
+    }
+
+    // если все точки одного треугольника лежат по одну сторону от плоскости
+    // другого тругольника, то пересечение невозможно
+
+    if (DistancesFromPointsToPlaneHaveOneSign(GetPlane(), t.P1(), t.P2(), t.P3()) ||
+        DistancesFromPointsToPlaneHaveOneSign(t.GetPlane(), P1(), P2(), P3()) )
+    {
+        // std::cout << "All distances from T1 points to P2 have one sign" << std::endl;
+        return false;        
+    }
+
+    // рассматриваем случай пересечния тругольников по линии
+    // пересечения их плоскостей
+
+    else
+    {
+        // std::cout << "Triangles segment" << std::endl;
+        return FindTrianglesIntersectionByLine(*this, t);
+    }
+
+    return false;
 }
 
 //-------------------------------------------------------------------------------//

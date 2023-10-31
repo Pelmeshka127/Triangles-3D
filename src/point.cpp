@@ -1,6 +1,4 @@
 #include "point.hpp"
-// #include "coordinates.hpp"
-// #include "vector.hpp"x
 
 //-------------------------------------------------------------------------------//
 
@@ -134,6 +132,13 @@ Point Point::operator*(const Point& p) const
 Point Point::operator*(const double& n) const
 {
     return Point(x_ * n, y_ * n, z_ * n);
+}
+
+//-------------------------------------------------------------------------------//
+
+bool Point::PointPointIntersection(const Point& p) const
+{
+    return (*this == p);
 }
 
 //-------------------------------------------------------------------------------//

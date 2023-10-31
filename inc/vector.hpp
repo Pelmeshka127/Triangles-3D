@@ -27,11 +27,20 @@ class Vector
 
         ~Vector() {}
 
-        double  X() const;
+        double  X() const
+        {
+            return x_;
+        }
         
-        double  Y() const;
+        double  Y() const
+        {
+            return y_;
+        }
 
-        double  Z() const;
+        double  Z() const
+        {
+            return z_;
+        }
 
         bool    IsNullVector(const Vector &v1) const;
 
