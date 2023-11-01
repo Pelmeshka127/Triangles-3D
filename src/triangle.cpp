@@ -113,17 +113,10 @@ bool Triangle::CoplanarTrianglesIntersection(const Triangle& t) const
     // Проверка всех отрезков одного треугольника на пересечние
     // Со всеми отрезками другого треугольника
 
-    if (Line1().SegmentSegmentIntersection (t.Line1())  || 
-        Line1().SegmentSegmentIntersection (t.Line2())  || 
-        Line1().SegmentSegmentIntersection (t.Line3())  ||
-        Line2().SegmentSegmentIntersection (t.Line1())  || 
-        Line2().SegmentSegmentIntersection (t.Line2())  || 
-        Line2().SegmentSegmentIntersection (t.Line3())  ||
-        Line3().SegmentSegmentIntersection (t.Line1())  || 
-        Line3().SegmentSegmentIntersection (t.Line2())  || 
-        Line3().SegmentSegmentIntersection (t.Line3())  ) 
+    if (t.TriangleSegmentIntersection(Line1()) ||
+        t.TriangleSegmentIntersection(Line2()) ||
+        t.TriangleSegmentIntersection(Line3()))
     {
-        // std::cout << "Segments intersect" << std::endl;
         return true;
     }
 

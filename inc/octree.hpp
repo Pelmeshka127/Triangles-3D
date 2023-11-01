@@ -5,6 +5,7 @@
 #include <vector>
 #include <iterator>
 #include <list>
+#include <array>
 
 #include "triangle.hpp"
 
@@ -44,7 +45,7 @@ class OctNode
 
         OctNode* parent_ = nullptr;
 
-        OctNode* child_[8] = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+        std::array<OctNode*, 8> child_ = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
 
         const Point middle_ = {NAN, NAN, NAN};
 
