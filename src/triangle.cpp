@@ -1,6 +1,5 @@
 #include "triangle.hpp"
 #include "coordinates.hpp"
-#include "double_intersection.hpp"
 
 //-------------------------------------------------------------------------------//
 
@@ -143,27 +142,85 @@ bool Triangle::CoplanarTrianglesIntersection(const Triangle& t) const
 
 //-------------------------------------------------------------------------------//
 
+double Triangle::DistanceFromPointToTriangle(const Point& p) const
+{
+    return (GetPlane().n() * p + GetPlane().D());
+}
+
+//-------------------------------------------------------------------------------//
+
+std::vector<double> Triangle::GetLineOptions(const std::vector<double>& dis, const Segment& int_line) const
+{
+    double p0 = int_line.DirVector() * P1()  - int_line.DirVector() * int_line.Point1();
+
+    double p1 = int_line.DirVector() * P2()  - int_line.DirVector() * int_line.Point1();
+
+    double p2 = int_line.DirVector() * P3()  - int_line.DirVector() * int_line.Point1();
+
+    std::vector<double> t_options(2);
+
+    if (dis[0] * dis[1] >= 0 && DistancesAreNotZero(dis[1], dis[2]) && DistancesAreNotZero(dis[0], dis[2]))
+    {
+        t_options[0] = p0 + (p2 - p0) * (dis[0] / (dis[0] - dis[2]));
+
+        t_options[1] = p1 + (p2 - p1) * (dis[1] / (dis[1] - dis[2]));
+
+        if (t_options[0] > t_options[1])
+            std::swap(t_options[0], t_options[1]);
+
+        return t_options;
+    }
+
+    if (dis[0] * dis[2] >= 0 && DistancesAreNotZero(dis[0], dis[1]) && DistancesAreNotZero(dis[2], dis[1]))
+    {
+        t_options[0] = p0 + (p1 - p0) * (dis[0] / (dis[0] - dis[1]));
+
+        t_options[1] = p2 + (p1 - p2) * (dis[2] / (dis[2] - dis[1]));
+
+        if (t_options[0] > t_options [1])
+            std::swap(t_options[0], t_options[1]);
+
+        return t_options;
+    }
+
+    if (dis[1] * dis[2] >= 0 && DistancesAreNotZero(dis[1], dis[0]) && DistancesAreNotZero(dis[2], dis[0]))
+    {
+        t_options[0] = p1 + (p0 - p1) * (dis[1] / (dis[1] - dis[0]));
+
+        t_options[1] = p2 + (p0 - p2) * (dis[2] / (dis[2] - dis[0]));
+
+        if (t_options[0] > t_options[1])
+            std::swap(t_options[0], t_options[1]);
+
+        return t_options;
+    }
+
+    return t_options;
+}
+
+//-------------------------------------------------------------------------------//
+
 bool Triangle::FindTrianglesIntersectionByLine(const Triangle& t) const
 {
-    Segment int_line = SegmentOfPlanesIntersection(t1.GetPlane(), t2.GetPlane());
+    Segment int_line = GetPlane().SegmentOfPlanesIntersection(t.GetPlane());
 
     std::vector<double> dist_from_t1_to_points(3), dist_from_t2_to_points(3);
 
-    dist_from_t1_to_points[0] = DistanceFromPointToTriangle(t1, t2.P1());
+    dist_from_t1_to_points[0] = DistanceFromPointToTriangle(t.P1());
 
-    dist_from_t1_to_points[1] = DistanceFromPointToTriangle(t1, t2.P2());
+    dist_from_t1_to_points[1] = DistanceFromPointToTriangle(t.P2());
 
-    dist_from_t1_to_points[2] = DistanceFromPointToTriangle(t1, t2.P3());
+    dist_from_t1_to_points[2] = DistanceFromPointToTriangle(t.P3());
 
-    dist_from_t2_to_points[0] = DistanceFromPointToTriangle(t2, t1.P1());
+    dist_from_t2_to_points[0] = t.DistanceFromPointToTriangle(P1());
 
-    dist_from_t2_to_points[1] = DistanceFromPointToTriangle(t2, t1.P2());
+    dist_from_t2_to_points[1] = t.DistanceFromPointToTriangle(P2());
 
-    dist_from_t2_to_points[2] = DistanceFromPointToTriangle(t2, t1.P3());
+    dist_from_t2_to_points[2] = t.DistanceFromPointToTriangle(P3());
 
-    std::vector<double> t_options_1 = GetLineOptions(t1, dist_from_t2_to_points, int_line);
+    std::vector<double> t_options_1 = GetLineOptions(dist_from_t2_to_points, int_line);
 
-    std::vector<double> t_options_2 = GetLineOptions(t2, dist_from_t1_to_points, int_line);
+    std::vector<double> t_options_2 = t.GetLineOptions(dist_from_t1_to_points, int_line);
 
     return IntervalOverlap(t_options_1, t_options_2);
 }
@@ -184,8 +241,8 @@ bool Triangle::TriangleTriangleIntersection(const Triangle& t) const
     // если все точки одного треугольника лежат по одну сторону от плоскости
     // другого тругольника, то пересечение невозможно
 
-    if (DistancesFromPointsToPlaneHaveOneSign(GetPlane(), t.P1(), t.P2(), t.P3()) ||
-        DistancesFromPointsToPlaneHaveOneSign(t.GetPlane(), P1(), P2(), P3()) )
+    if (GetPlane().DistancesFromPointsToPlaneHaveOneSign(t.P1(), t.P2(), t.P3()) ||
+        t.GetPlane().DistancesFromPointsToPlaneHaveOneSign(P1(), P2(), P3()) )
     {
         // std::cout << "All distances from T1 points to P2 have one sign" << std::endl;
         return false;        
@@ -197,8 +254,104 @@ bool Triangle::TriangleTriangleIntersection(const Triangle& t) const
     else
     {
         // std::cout << "Triangles segment" << std::endl;
-        return FindTrianglesIntersectionByLine(*this, t);
+        return FindTrianglesIntersectionByLine(t);
     }
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool Triangle::TriangleIntersection(const Triangle& t) const
+{
+    TriangleType t1_type = GetType();
+
+    TriangleType t2_type = t.GetType();
+
+    switch (t1_type)
+    {
+        case Point_t:
+        {
+            switch (t2_type)
+            {
+                case Point_t:
+                    // std::cout << "PointPoint for " << number << " and " << t.number<< std::endl;
+                    return P1().PointPointIntersection(P1());
+                
+                case Segment_t:
+                // std::cout << "PointSegment for " << number << " and " << t.number<< std::endl;
+                    return t.GetNotZeroLine().PointSegmentIntersection(P1());
+
+                case Triangle_t:
+                // std::cout << "PointTrinagle for " << number << " and " << t.number<< std::endl;
+                    return t.TrianglePointIntersection(P1());
+            }
+        }
+        
+        break;
+
+        case Segment_t:
+        {
+            switch (t2_type)
+            {
+                case Point_t:
+                // std::cout << "SegmentPoint for " << number << " and " << t.number<< std::endl;
+                    return GetNotZeroLine().PointSegmentIntersection(t.P1());
+
+                case Segment_t:
+                // std::cout << "SegmentSegment for " << number << " and " << t.number<< std::endl;
+                    return GetNotZeroLine().SegmentSegmentIntersection(t.GetNotZeroLine());
+
+                case Triangle_t:
+                // std::cout << "SegmentTriangle for " << number << " and " << t.number<< std::endl;
+                    return t.TriangleSegmentIntersection(GetNotZeroLine());
+            }
+        }
+
+        break;
+
+        case Triangle_t:
+        {
+            switch (t2_type)
+            {
+                case Point_t:
+                // std::cout << "TrianglePoint for " << number << " and " << t.number<< std::endl;
+                    return TrianglePointIntersection(t.P1());
+
+                case Segment_t:
+                // std::cout << "TriangleSegment for " << number << " and " << t.number<< std::endl;
+                    return TriangleSegmentIntersection(t.GetNotZeroLine());
+
+                case Triangle_t:
+                // std::cout << "TriangleTriangle for " << number << " and " << t.number<< std::endl;
+                    return TriangleTriangleIntersection(t);
+            }
+        }
+
+        break;
+    }
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool DistancesAreNotZero(double d1, double d2)
+{
+    using namespace double_numbers;
+
+    return (!IsEqual(d1 - d2, 0));
+}
+
+//-------------------------------------------------------------------------------//
+
+bool IntervalOverlap(std::vector<double>& t1, std::vector<double>& t2)
+{
+    if (t1[0] <= t2[0] && t2[0] <= t1[1])
+        return true;
+
+    if (t2[0] <= t1[0] && t1[0] <= t2[1])
+        return true;
 
     return false;
 }

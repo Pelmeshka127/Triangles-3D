@@ -14,7 +14,7 @@ int FindIntersectionsInNode(OctNode* const node, bool* FlagArray)
     {
         for (auto t2 = std::next(t1); t2 != end; ++t2)
         {
-            if (TriangleIntersection(*t1, *t2))
+            if (t1->TriangleIntersection(*t2))
             {
                 FlagArray[t1->number] = Intersect;
                 FlagArray[t2->number] = Intersect;
@@ -58,7 +58,7 @@ int FindIntersectionsWithChildren(OctNode* const node, const Triangle& tr, bool*
 
         for (auto t1 = begin; t1 != end; ++t1)
         {
-            if (TriangleIntersection(*t1, tr))
+            if (t1->TriangleIntersection(tr))
             {
                 FlagArray[t1->number] = Intersect;
                 FlagArray[tr.number]  = Intersect;

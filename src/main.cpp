@@ -4,7 +4,6 @@
 #include <set>
 
 #include "triangle.hpp"
-#include "double_intersection.hpp"
 #include "octree.hpp"
 #include "coordinates.hpp"
 #include "intersection.hpp"

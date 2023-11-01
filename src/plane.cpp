@@ -60,6 +60,72 @@ Point Plane::PlaneSegmentIntersection(const Segment& l) const
 
 //-------------------------------------------------------------------------------//
 
+Segment Plane::SegmentOfPlanesIntersection(const Plane& p) const
+{
+    Vector direct_vector = n().CrossProductVector(n(), p.n());
+
+    if (direct_vector.IsNullVector(direct_vector))
+    {
+        std::cerr << "Zero vector in " << __PRETTY_FUNCTION__ << std::endl;
+    }
+
+    double s1 = -D();
+    
+    double s2 = -p.D();
+
+    double n1_n2_dot = n().DotProduct(n(), p.n());
+
+    double n1_sqr    = n().DotProduct(n(), n());
+
+    double n2_sqr    = p.n().DotProduct(p.n(), p.n());
+
+    double a = (s2 * n1_n2_dot - s1 * n2_sqr) / (n1_n2_dot * n1_n2_dot - n1_sqr * n2_sqr);
+
+    double b = (s1 * n1_n2_dot - s2 * n1_sqr) / (n1_n2_dot * n1_n2_dot - n1_sqr * n2_sqr);
+
+    Point line_point1(a * A() + b * p.A(), a * B() + b * p.B(), a * C() + b * p.C());
+
+    Segment intersection_line(line_point1, direct_vector);
+
+    return intersection_line;
+}
+
+//-------------------------------------------------------------------------------//
+
+double Plane::DistanceFromPointToPlane(const Point& point) const
+{
+    using namespace double_numbers;
+
+    if (IsEqual(A() * A() + B() * B() + C() * C(), 0))
+        return -1;
+
+    if (IsEqual(point.X() * A() + point.Y() * B() + point.Z() * C() + D(), 0))
+    {
+        // point is in the plane
+        return 0;
+    }
+
+    double distance = (A() * point.X() + B() * point.Y() + C() * point.Z() + D());
+
+    return distance;
+}
+
+//-------------------------------------------------------------------------------//
+
+bool Plane::DistancesFromPointsToPlaneHaveOneSign(const Point&p1, const Point& p2, const Point& p3) const
+{
+    if (DistanceFromPointToPlane(p1) > 0 && DistanceFromPointToPlane(p2) > 0 &&
+        DistanceFromPointToPlane(p3) > 0 || DistanceFromPointToPlane(p1) < 0 &&
+        DistanceFromPointToPlane(p2) < 0 && DistanceFromPointToPlane(p3) < 0)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------//
+
 void Plane::PlaneDump() const
 {
     std::cout << "//=====Plane Equation=====//\n"

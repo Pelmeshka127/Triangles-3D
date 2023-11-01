@@ -50,6 +50,12 @@ class Plane
 
         Point   PlaneSegmentIntersection(const Segment& l)      const;
 
+        Segment SegmentOfPlanesIntersection(const Plane& p1)    const;
+
+        double  DistanceFromPointToPlane(const Point& point)    const;
+
+        bool    DistancesFromPointsToPlaneHaveOneSign(const Point&p1, const Point& p2, const Point& p3) const;
+
         void    PlaneDump()                                     const;
 }; 
 

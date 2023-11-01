@@ -3,7 +3,6 @@
 
 #include <set>
 
-#include "double_intersection.hpp"
 #include "octree.hpp"
 
 //-------------------------------------------------------------------------------//

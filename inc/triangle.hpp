@@ -8,6 +8,8 @@
 #include "line.hpp"
 #include "vector.hpp"
 
+#include <vector>
+
 static const int NonInitialized = -1;
 
 enum TriangleState
@@ -93,12 +95,26 @@ class Triangle
 
         bool    CoplanarTrianglesIntersection(const Triangle& t) const;
 
+        double  DistanceFromPointToTriangle(const Point& p) const;
+
         bool    FindTrianglesIntersectionByLine(const Triangle& t) const;
+
+        std::vector<double> GetLineOptions(const std::vector<double>& dis, const Segment& int_line) const;
 
         bool    TriangleTriangleIntersection(const Triangle& t) const;
 
+        bool    TriangleIntersection(const Triangle& t) const;
+
         void    TriangleDump() const;
 };
+
+//-------------------------------------------------------------------------------//
+
+bool    DistancesAreNotZero(double d1, double d2);
+
+//-------------------------------------------------------------------------------//
+
+bool    IntervalOverlap(std::vector<double>& t1, std::vector<double>& t2);
 
 //-------------------------------------------------------------------------------//
 
