@@ -11,15 +11,6 @@ bool Vector::IsNullVector(const Vector &v1) const
 
 //-------------------------------------------------------------------------------//
 
-Point Vector::GetVectorCoordinates(const Vector &v1) const
-{
-    Point p(v1.x_, v1.y_, v1.z_);
-
-    return p;
-}
-
-//-------------------------------------------------------------------------------//
-
 Vector Vector::operator=(const Vector &v)
 {
     return Vector(v.x_, v.y_, v.z_);
@@ -100,13 +91,6 @@ bool Vector::operator==(const Vector &v) const
 Point Vector::operator+(const Point& p) const
 {
     return Point(x_ + p.X(), y_ + p.Y(), z_ + p.Z());
-}
-
-//-------------------------------------------------------------------------------//
-
-double Vector::SqrtLength() const
-{
-    return (x_ * x_ + y_ * y_ + z_ * z_);
 }
 
 //-------------------------------------------------------------------------------//

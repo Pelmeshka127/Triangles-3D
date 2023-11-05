@@ -18,6 +18,8 @@ int FindIntersectionsInNode(OctNode* const node, bool* FlagArray)
             {
                 FlagArray[t1->number] = Intersect;
                 FlagArray[t2->number] = Intersect;
+
+                // std::cout << t1->number << " and " << t2->number << std::endl;
             }
         }
 

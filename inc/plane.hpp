@@ -32,8 +32,6 @@ class Plane
             normal_vector_{A_, B_, C_}
             {}
 
-        ~Plane() {}
-
         double  A()  const { return A_; }
 
         double  B()  const { return B_; }

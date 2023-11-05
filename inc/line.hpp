@@ -9,6 +9,10 @@
 
 //-------------------------------------------------------------------------------//
 
+bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
+
+//-------------------------------------------------------------------------------//
+
 class Segment
 {
     private:
@@ -30,13 +34,16 @@ class Segment
         Segment(const Point& p1, const Point& p2, const Vector& v) :
         FirstPoint_{p1}, SecondPoint_{p2}, DirectionVector_{v} {}
 
-        Point   Point1() const;
+        Point   Point1() const { return FirstPoint_; }
 
-        Point   Point2() const;
+        Point   Point2() const { return SecondPoint_; }
 
-        Vector  DirVector() const;
+        Vector  DirVector() const { return DirectionVector_; }
 
-        bool    PointSegmentIntersection(const Point& p) const;
+        bool    PointSegmentIntersection(const Point& p) const
+        {
+            return IsOnSegment(Point1(), Point2(), p);
+        }
 
         Point   LineIntersection(const Segment& l) const;
 
@@ -44,10 +51,6 @@ class Segment
 
         void PrintSegment() const;
 };
-
-//-------------------------------------------------------------------------------//
-
-bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
 
 //-------------------------------------------------------------------------------//
 

@@ -16,9 +16,6 @@ bool Plane::ArePlanesEqual(const Plane& plane) const
 {
     using namespace double_numbers;
 
-    // плоскости равны, если коллинераны векторы нормали и точка, принадлежащая первой плоскости
-    // удовлетворяет уравнению второй плоскости
-
     return (ArePlanesParallel(plane) && IsEqual(A_ * plane.plane_point_.X() + 
                                                 B_ * plane.plane_point_.Y() + 
                                                 C_ * plane.plane_point_.Z() + D_, 0));

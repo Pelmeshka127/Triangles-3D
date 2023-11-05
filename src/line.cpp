@@ -2,39 +2,11 @@
 
 //-------------------------------------------------------------------------------//
 
-Point Segment::Point1() const
-{
-    return FirstPoint_;
-}
-
-//-------------------------------------------------------------------------------//
-
-Point Segment::Point2() const
-{
-    return SecondPoint_;
-}
-
-//-------------------------------------------------------------------------------//
-
-Vector Segment::DirVector() const
-{
-    return DirectionVector_;
-}
-
-//-------------------------------------------------------------------------------//
-
 bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3)
 {
     return (std::min(p1.X(), p2.X()) <= p3.X() && p3.X() <= std::max(p1.X(), p2.X()) &&
             std::min(p1.Y(), p2.Y()) <= p3.Y() && p3.Y() <= std::max(p1.Y(), p2.Y()) &&
             std::min(p1.Z(), p2.Z()) <= p3.Z() && p3.Z() <= std::max(p1.Z(), p2.Z()) );
-}
-
-//-------------------------------------------------------------------------------//
-
-bool Segment::PointSegmentIntersection(const Point& p) const
-{
-    return IsOnSegment(Point1(), Point2(), p);
 }
 
 //-------------------------------------------------------------------------------//

@@ -2,34 +2,6 @@
 
 //-------------------------------------------------------------------------------//
 
-bool Point::IsValid() const
-{
-    return (std::isfinite(x_) && std::isfinite(y_) && std::isfinite(z_));
-}
-
-//-------------------------------------------------------------------------------//
-
-double Point::X() const
-{
-    return x_;
-}
-
-//-------------------------------------------------------------------------------//
-
-double Point::Y() const
-{
-    return y_;
-}
-
-//-------------------------------------------------------------------------------//
-
-double Point::Z() const
-{
-    return z_;
-}
-
-//-------------------------------------------------------------------------------//
-
 bool Point::IsEqual(const Point &point) const
 {
     return (double_numbers::IsEqual(x_, point.x_) &&
@@ -132,13 +104,6 @@ Point Point::operator*(const Point& p) const
 Point Point::operator*(const double& n) const
 {
     return Point(x_ * n, y_ * n, z_ * n);
-}
-
-//-------------------------------------------------------------------------------//
-
-bool Point::PointPointIntersection(const Point& p) const
-{
-    return (*this == p);
 }
 
 //-------------------------------------------------------------------------------//

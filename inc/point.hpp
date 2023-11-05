@@ -19,15 +19,16 @@ class Point
     public:
         Point(double x = NAN, double y = NAN, double z = NAN) : x_{x}, y_{y}, z_{z} {}
 
-        ~Point() {}
+        bool    IsValid() const
+        {
+            return (std::isfinite(x_) && std::isfinite(y_) && std::isfinite(z_));
+        }
 
-        bool    IsValid() const;
-
-        double  X() const;
+        double  X() const { return x_; }
         
-        double  Y() const;
+        double  Y() const { return y_; }
         
-        double  Z() const;
+        double  Z() const { return z_;}
 
         bool    IsEqual(const Point &point) const;
         
@@ -50,7 +51,7 @@ class Point
 
         Point   operator*(const double& n) const;
 
-        bool    PointPointIntersection(const Point& p) const;
+        bool    PointPointIntersection(const Point& p) const { return (*this == p); }
 
         void    PrintPoint() const;
 };

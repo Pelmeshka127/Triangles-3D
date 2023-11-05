@@ -110,18 +110,12 @@ bool Triangle::TriangleSegmentIntersection(const Segment& l) const
 
 bool Triangle::CoplanarTrianglesIntersection(const Triangle& t) const
 {
-    // Проверка всех отрезков одного треугольника на пересечние
-    // Со всеми отрезками другого треугольника
-
     if (t.TriangleSegmentIntersection(Line1()) ||
         t.TriangleSegmentIntersection(Line2()) ||
         t.TriangleSegmentIntersection(Line3()))
     {
         return true;
     }
-
-    // Достаточно проверить одну точку каждого треугольника 
-    // Чтобы понять не находится ли один треугольник внутри другого
 
     else if (TrianglePointIntersection(t.P1()) || t.TrianglePointIntersection(P1()))
     {
@@ -222,17 +216,11 @@ bool Triangle::FindTrianglesIntersectionByLine(const Triangle& t) const
 
 bool Triangle::TriangleTriangleIntersection(const Triangle& t) const
 {
-    // сначала рассмотрим случай треугольников, лежащих в параллельных
-    // или совпадающих плоскостях
-
     if (GetPlane().ArePlanesEqual(t.GetPlane()))
     {
         // std::cout << "Coplanar triangles" << std::endl;
         return CoplanarTrianglesIntersection(t);
     }
-
-    // если все точки одного треугольника лежат по одну сторону от плоскости
-    // другого тругольника, то пересечение невозможно
 
     if (GetPlane().DistancesFromPointsToPlaneHaveOneSign(t.P1(), t.P2(), t.P3()) ||
         t.GetPlane().DistancesFromPointsToPlaneHaveOneSign(P1(), P2(), P3()) )
@@ -240,9 +228,6 @@ bool Triangle::TriangleTriangleIntersection(const Triangle& t) const
         // std::cout << "All distances from T1 points to P2 have one sign" << std::endl;
         return false;        
     }
-
-    // рассматриваем случай пересечния тругольников по линии
-    // пересечения их плоскостей
 
     else
     {

@@ -25,8 +25,6 @@ class Vector
         Vector(const Point &p1, const Point &p2) : 
             x_{p2.X() - p1.X()}, y_{p2.Y() - p1.Y()}, z_{p2.Z() - p1.Z()} {}
 
-        ~Vector() {}
-
         double  X() const
         {
             return x_;
@@ -42,9 +40,19 @@ class Vector
             return z_;
         }
 
-        bool    IsNullVector(const Vector &v1) const;
+        Point   GetVectorCoordinates() const
+        {
+            Point p(x_, y_, z_);
 
-        Point   GetVectorCoordinates(const Vector &v1) const;
+            return p;
+        }
+
+        double  SqrtLength() const
+        {
+            return (x_ * x_ + y_ * y_ + z_ * z_);
+        }
+        
+        bool    IsNullVector(const Vector &v1) const;
         
 
         Vector  operator=(const Vector &v);
@@ -67,8 +75,6 @@ class Vector
 
         bool    operator==(const Vector &v) const;
 
-
-        double  SqrtLength() const;
 
         double  DotProduct(const Vector &v1, const Vector &v2) const;
 
