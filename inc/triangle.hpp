@@ -30,19 +30,19 @@ enum TriangleType
 class Triangle 
 {
     private:
-        const Point p1_;
-        const Point p2_;
-        const Point p3_;
+        Point p1_;
+        Point p2_;
+        Point p3_;
 
-        const Segment l1_;
-        const Segment l2_;
-        const Segment l3_;
+        Segment l1_;
+        Segment l2_;
+        Segment l3_;
 
-        const Vector v1_;
-        const Vector v2_;
-        const Vector v3_;
+        Vector v1_;
+        Vector v2_;
+        Vector v3_;
 
-        const Plane triangle_plane_;
+        Plane triangle_plane_;
 
     public:
 

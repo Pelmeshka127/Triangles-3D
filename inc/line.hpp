@@ -16,11 +16,11 @@ bool IsOnSegment(const Point& p1, const Point& p2, const Point& p3);
 class Segment
 {
     private:
-        const Point FirstPoint_;
+        Point FirstPoint_;
         
-        const Point SecondPoint_;
+        Point SecondPoint_;
 
-        const Vector DirectionVector_;
+        Vector DirectionVector_;
 
     public:
         Segment(const Point &p1, const Point &p2) : 

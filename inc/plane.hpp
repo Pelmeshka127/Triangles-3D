@@ -13,14 +13,14 @@
 class Plane
 {
     private:
-        const double A_;
-        const double B_;
-        const double C_;
-        const double D_;
+        double A_;
+        double B_;
+        double C_;
+        double D_;
 
-        const Point  plane_point_;
+        Point  plane_point_;
 
-        const Vector normal_vector_;
+        Vector normal_vector_;
 
     public:
         Plane(const Point& p1, const Point& p2, const Point& p3) :
